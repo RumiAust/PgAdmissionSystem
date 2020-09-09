@@ -9,7 +9,7 @@ public class PgAdmissionApplication {
   //test
   public static void main(String[] args) {
     SpringApplication.run(PgAdmissionApplication.class, args);
-    
+
   }
 
 }

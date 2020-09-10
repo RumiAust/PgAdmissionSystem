@@ -11,6 +11,30 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <title>Hello, world!</title>
+    <style>
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+
+        .page-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 80px; /* Set the fixed height of the footer here */
+            /* line-height: 60px; Vertically center the text there */
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 960px;
+        }
+        .pricing-header {
+            max-width: 1000px;
+        }
+        h3{
+            color: chocolate;
+        }
+    </style>
 </head>
 <body>
 
@@ -25,8 +49,27 @@
         <a class="navbar-brand" href="#"><i class="fa fa-question" style="color: red"></i>&nbsp;FAQ</a>
     </form>
 </nav>
+<div style=";padding-top: 20px">
+    <div class="pricing-header px-3 py-3  pb-md-4 mx-auto text-center" style="border: 2px solid black">
+        <h3>Hello Applicant!!</h3>
+    </div>
+</div>
 
-<h1>Hello, world!</h1>
+<footer class="page-footer font-small blue-grey lighten-5">
+    <div style="background-color: aliceblue; font-size: small;" >
+        <div class="container" align="center" style="padding: 10px">
+            <strong>AUST ICT CENTER</strong>
+            <br/>
+            Admission Inquiry - <b>01773500054</b> & <b>01817646270</b> | Technical Support - 01718547200 & 01891802551 (From <font style="color: #CA2BC0">10:00 AM</font> to <font style="color: #CA2BC0">05:00 PM</font>).
+            <br/>
+            E-mail: <a href="mailto:ug.admission@aust.edu" style="color: deepskyblue;">ug.admission@aust.edu</a>
+        </div>
+    </div>
+</footer>
+
+
+
+
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

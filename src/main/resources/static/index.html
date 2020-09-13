@@ -23,6 +23,10 @@
         h3{
             color: chocolate;
         }
+        .form-group.required .input-group-prepend:before {
+            content:"*";
+            color:red;
+        }
     </style>
 </head>
 <body>
@@ -45,8 +49,8 @@
         <h1>Ahsanullah University of Science and Technology</h1>
         <h2 style="color: dimgray">Master's Program Application Form</h2>
         <h3>Semester : Srping 2020</h3>
-    </div>
-
+    </div> </br>
+    <h6><strong>All field's with <em style="color: red">*</em> sign must be filled up by the applicant</strong></h6>
     <div class="container border" style="margin-top: 10px;margin-bottom: 20px">
         <div class="card border-secondary mb-3" style="margin-top: 10px">
             <div class="card-header" style="max-height: 50px">
@@ -56,10 +60,92 @@
                </strong>
             </div>
             <div class="card-body">
-                <h1>My First Bootstrap Page</h1>
-                <p>This part is inside a .container class.</p>
-                <p>The .container class provides a responsive fixed width container.</p>
-                <p>Resize the browser window to see that its width (max-width) will change at different breakpoints.</p>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group required">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Full Name: </div>
+                                </div>
+                                <input type="text" class="form-control" id="inlineFormInputGroupUsername2"
+                                >
+                            </div>
+                        </div>
+                      </div>
+                </div>
+
+
+                <!-- father name -->
+                <div class="row">
+                    <!-- father_name -->
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group required">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Father's Name: </div>
+                                </div>
+                                <input type="text" class="form-control" id="inlineFormInGroupUsername2"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- mother name -->
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group required">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Mother's Name: </div>
+                                </div>
+                                <input type="text" class="form-control" id="inlineFormInputGroupUname2"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- date_of_birth, national_id_number, contact_number -->
+                <div class="row">
+                    <!-- Date of Birth -->
+                    <div class="col-sm-12 col-md-4">
+                        <div class="form-group required">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Date of Birth: </div>
+                                </div>
+                                <input type="text" class="form-control" id="inlineFoupUsername2"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- national_id_number -->
+                    <div class="col-sm-12 col-md-4">
+                        <div class="form-group required">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">National ID: </div>
+                                </div>
+                                <input type="text" class="form-control" id="inlineUsername2"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- contact_number -->
+                    <div class="col-sm-12 col-md-4">
+                        <div class="form-group required">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Conatct No: </div>
+                                </div>
+                                <input type="text" class="form-control" id="inlineFormInpuGroupUsername2"
+
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -72,7 +158,6 @@
                 </strong>
             </div>
             <div class="card-body">
-                <h1>My First Bootstrap Page</h1>
                 <p>This part is inside a .container class.</p>
                 <p>The .container class provides a responsive fixed width container.</p>
                 <p>Resize the browser window to see that its width (max-width) will change at different breakpoints.</p>

@@ -1,0 +1,740 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Application Form</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <title>Aust Master's Admission Portal</title>
+    <style>
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+
+        h3{
+            color: chocolate;
+        }
+        .form-group.required .input-group-prepend:before {
+            content:"*";
+            color:red;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#" style="font-size: 25px;font-family: 'Times New Roman'">
+        <img src="logo-aust.png" width="40" height="40" alt=""> AUST Master's Admission
+    </a>
+    <form class="form-inline my-2 my-lg-0">
+        <a class="navbar-brand" href="#"><i class="fa fa-fw fa-home" style="color: chartreuse"></i>Home</a>
+        <a class="navbar-brand" href="#"><i class="fa fa-fw fa-search" style="color: deepskyblue"></i>Application Status</a>
+        <a class="navbar-brand" href="#"><i class="fa fa-info-circle"  style="color: deeppink"></i>&nbsp;How to Apply</a>
+        <a class="navbar-brand" href="#"><i class="fa fa-question" style="color: red"></i>&nbsp;FAQ</a>
+    </form>
+</nav>
+
+<div class="overflow-auto">
+    <div class="container" style="border: 2px solid black;margin-top: 40px;margin-bottom: 20px">
+        <div align="center">
+            <h1>Ahsanullah University of Science and Technology</h1>
+            <h2 style="color: dimgray">Master's Program Application Form</h2>
+            <h3>Semester : Srping 2020</h3>
+        </div> </br>
+        <h6><strong>All field's with <em style="color: red">*</em> sign must be filled up by the applicant</strong></h6>
+
+        <div class="container border" style="margin-top: 10px;margin-bottom: 20px">
+            <div class="card border-secondary mb-3" style="margin-top: 10px">
+                <div class="card-body">
+                    <div align="center">
+                        <h2><label for="cars">Select Program:</label>&nbsp;&nbsp;
+                            <select name="cars" id="cars">
+                                <option value="volvo">MBA</option>
+                                <option value="saab">EMBA</option>
+                                <option value="opel">M.Sc.(EEE)</option>
+                                <option value="audi">M.Sc.(CE)</option>
+                                <option value="opel">M.Sc.(Arch)</option>
+                                <option value="audi">M.Sc.(Math)</option>
+                            </select>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container border" style="margin-top: 10px;margin-bottom: 20px">
+            <div class="card border-secondary mb-3" style="margin-top: 10px">
+                <div class="card-header" style="max-height: 50px">
+                    <strong style="font-size: 20px;color: deeppink">
+                        <i class="fa fa-user-plus"  style="color: lightskyblue" ></i>
+                        Personal Information
+                    </strong>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group required">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Name(as in SSC/GEC 'O' Level): </div>
+                                    </div>
+                                    <input type="text" class="form-control" id="inlineFormInputGroupUsername2"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- father name -->
+                    <div class="row">
+                        <!-- father_name -->
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group required">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Father's Name: </div>
+                                    </div>
+                                    <input type="text" class="form-control" id="inlineFormInGroupUsername2"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- mother name -->
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group required">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Mother's Name: </div>
+                                    </div>
+                                    <input type="text" class="form-control" id="inlineFormInputGroupUname2"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- date_of_birth, national_id_number, contact_number -->
+                    <div class="row">
+                        <!-- Date of Birth -->
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group required">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Date of Birth: </div>
+                                    </div>
+                                    <input type="date" class="form-control" id="inlineFoupUsername2"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- national_id_number -->
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group required">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Nationality: </div>
+                                    </div>
+                                    <input type="text" class="form-control" id="inlineUsername2"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- contact_number -->
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group required">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Religion: </div>
+                                    </div>
+                                    <input type="text" class="form-control" id="inlineFormInpuGroupUsername2"
+
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Email, Sex, marital status-->
+                    <div class="row">
+                        <!-- Date of Birth -->
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group required">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Email: </div>
+                                    </div>
+                                    <input type="email" class="form-control" id="inleFoupUsername2"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- national_id_number -->
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group required">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Gender: </div>
+                                    </div>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <div style="margin-top: 5px">
+                                        <input   type="radio"  value="Male"> Male
+                                        <input   type="radio"  value="Female"> Female
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- contact_number -->
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group required">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Marital Status: </div>
+                                    </div>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <div style="margin-top: 5px">
+                                        <input   type="radio"  value="Male"> Married
+                                        <input   type="radio"  value="Female"> Unmarried
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container border" style="margin-top: 10px;margin-bottom: 20px">
+            <div class="card border-secondary mb-3" style="margin-top: 10px">
+                <div class="card-header" style="max-height: 50px">
+                    <strong style="font-size: 20px;color: deeppink">
+                        <i class="fa fa-graduation-cap" style="color: lightskyblue" ></i>
+                        Educational Information
+                    </strong>
+                </div>
+                <div class="card-body">
+                    <div style="background: lightgrey;margin-bottom: 10px">
+                        <strong>SSC or Equivalent</strong>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">School/College/Institution: </div>
+                                        </div>
+                                        <input type="text" class="form-control" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- Date of Birth -->
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Board</div>
+                                        </div>
+                                        <input type="text" class="form-control"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Total Marks/Grade</div>
+                                        </div>
+                                        <input type="text" class="form-control"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Division/Class/Grade</div>
+                                        </div>
+                                        <input type="text" class="form-control"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Year of Passing</div>
+                                        </div>
+                                        <input type="number" class="form-control"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-8">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Upload</div>
+                                        </div>
+                                        <input type="file" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div style="background: aliceblue;margin-bottom: 10px">
+                        <strong>HSC or Equivalent</strong>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">School/College/Institution: </div>
+                                        </div>
+                                        <input type="text" class="form-control" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- Date of Birth -->
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Board</div>
+                                        </div>
+                                        <input type="text" class="form-control"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Total Marks/Grade</div>
+                                        </div>
+                                        <input type="text" class="form-control"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Division/Class/Grade</div>
+                                        </div>
+                                        <input type="text" class="form-control"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Year of Passing</div>
+                                        </div>
+                                        <input type="number" class="form-control"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-8">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Upload</div>
+                                        </div>
+                                        <input type="file" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div style="background: lightgrey;margin-bottom: 10px">
+                        <strong>BBA/B.Com/B.Sc./B.A./Equivalent</strong>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">School/College/Institution: </div>
+                                        </div>
+                                        <input type="text" class="form-control" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- Date of Birth -->
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Board</div>
+                                        </div>
+                                        <input type="text" class="form-control"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Total Marks/Grade</div>
+                                        </div>
+                                        <input type="text" class="form-control"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Division/Class/Grade</div>
+                                        </div>
+                                        <input type="text" class="form-control"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Year of Passing</div>
+                                        </div>
+                                        <input type="number" class="form-control"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-8">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Upload</div>
+                                        </div>
+                                        <input type="file" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div style="background: aliceblue;margin-bottom: 10px">
+                        <strong>M.Com/M.A./MBA/M.Sc.</strong>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">School/College/Institution: </div>
+                                        </div>
+                                        <input type="text" class="form-control" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- Date of Birth -->
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Board</div>
+                                        </div>
+                                        <input type="text" class="form-control"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Total Marks/Grade</div>
+                                        </div>
+                                        <input type="text" class="form-control"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Division/Class/Grade</div>
+                                        </div>
+                                        <input type="text" class="form-control"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Year of Passing</div>
+                                        </div>
+                                        <input type="number" class="form-control"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-8">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Upload</div>
+                                        </div>
+                                        <input type="file" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container border" style="margin-top: 10px;margin-bottom: 20px">
+            <div class="card border-secondary mb-3" style="margin-top: 10px">
+                <div class="card-header" style="max-height: 50px">
+                    <strong style="font-size: 20px;color: deeppink">
+                        <i class="fa fa-list"  style="color: lightskyblue" ></i>
+                        Work Experience
+                    </strong>
+                </div>
+                <div class="card-body">
+                    <button type="button" class="btn btn-primary btn-xs">Add Experience</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container border" style="margin-top: 10px;margin-bottom: 20px">
+            <div class="card border-secondary mb-3" style="margin-top: 10px">
+                <div class="card-header" style="max-height: 50px">
+                    <strong style="font-size: 20px;color: deeppink">
+                        <i class="fa fa-address-card-o" style="color: lightskyblue" ></i>
+                        Contact Information
+                    </strong>
+                </div>
+                <div class="card-body">
+                    <strong>Present Address</strong>
+                    <div class="row">
+                        <!-- Date of Birth -->
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group required">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Division </div>
+                                    </div>
+                                    <input type="email" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- national_id_number -->
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group required">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">District: </div>
+                                    </div>
+                                    <input type="email" class="form-control">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- contact_number -->
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group required">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Thana: </div>
+                                    </div>
+                                    <input type="email" class="form-control">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- Date of Birth -->
+                        <div class="col-sm-12">
+                            <div class="form-group required">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Address </div>
+                                    </div>
+                                    <input type="email" class="form-control"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <strong>Permanent Address</strong>
+                    <div class="row">
+                        <!-- Date of Birth -->
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group required">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Division </div>
+                                    </div>
+                                    <input type="email" class="form-control" id="inlrname2"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- national_id_number -->
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group required">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">District: </div>
+                                    </div>
+                                    <input type="email" class="form-control">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- contact_number -->
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group required">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Thana: </div>
+                                    </div>
+                                    <input type="email" class="form-control">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- Date of Birth -->
+                        <div class="col-sm-12">
+                            <div class="form-group required">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Address </div>
+                                    </div>
+                                    <input type="email" class="form-control" id="inUsername2"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container border" style="margin-top: 10px;margin-bottom: 20px">
+            <div class="card border-secondary mb-3" style="margin-top: 10px">
+                <div class="card-header" style="max-height: 50px">
+                    <strong style="font-size: 20px;color: deeppink">
+                        <i class="fa fa-camera-retro" style="color: lightskyblue" ></i>
+                        Photo and Signature
+                    </strong>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6" style="border: 1px solid lightgrey">
+                            <div class="form-group required">
+                                <h3>Photo</h3>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6" style="border: 1px solid lightgrey">
+                            <div class="form-group required">
+                                <h3>Signature</h3>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h6> <input  type="checkbox"   id="married"> I do hereby declare that the information as stated in the Admission application form is true. If any of the information is found incorrect, my admission is liable to be cancelled. If any of the certificates/academic transcripts/documents attached with this form is found altered/forged, my admission is also liable to be cancelled.I also declare that I will abide by all the existing as well as any new rules and regulations of the University, if made in future, and the orders of the AUST authority; otherwise my admission is liable to be cancelled.</h6>
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-md-12" align="center">
+                    <input type="submit" class="btn btn-success" value="Submit" />
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<footer class="page-footer font-small blue-grey lighten-5">
+    <div style="background-color: aliceblue; font-size: small;" >
+        <div class="container" align="center" style="padding: 10px">
+            <strong>AUST ICT CENTER</strong>
+            <br/>
+            Admission Inquiry - <b>01773500054</b> & <b>01817646270</b> | Technical Support - 01718547200 & 01891802551 (From <font style="color: #CA2BC0">10:00 AM</font> to <font style="color: #CA2BC0">05:00 PM</font>).
+            <br/>
+            E-mail: <a href="mailto:pg.admission@aust.edu" style="color: deepskyblue;">pg.admission@aust.edu</a>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+</html>

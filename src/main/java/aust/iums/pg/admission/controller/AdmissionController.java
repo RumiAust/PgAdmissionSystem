@@ -15,7 +15,7 @@ import java.util.List;
 public class AdmissionController {
 
   @GetMapping("/apply")
-  public String ifElseForm(Model model) {
+  public String applicationForm(Model model) {
     return "application-form";
   }
 }

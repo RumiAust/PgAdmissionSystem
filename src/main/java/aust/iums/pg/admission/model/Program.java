@@ -21,6 +21,10 @@ public class Program {
   @NotNull
   @Column(name = "PROGRAM_ID")
   private String programId;
+
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "PROGRAM_ID",referencedColumnName = "PROGRAM_ID",insertable=false, updatable=false)
+  Applicant mApplicant;
   
   @NotNull
   @Column(name = "PROGRAM_NAME_SHORT")

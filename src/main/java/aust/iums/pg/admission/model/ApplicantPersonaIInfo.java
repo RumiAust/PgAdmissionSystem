@@ -23,6 +23,10 @@ public class ApplicantPersonaIInfo {
   @Column(name = "APPLICANTION_SN")
   private String applicationSn;
 
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "APPLICANTION_SN",referencedColumnName = "APPLICANTION_SN",insertable=false, updatable=false)
+  Applicant mApplicant;
+
   @NotNull
   @Column(name = "FIRST_NAME")
   private String firstName;

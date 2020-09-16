@@ -19,6 +19,10 @@ public class ApplicantAddress {
   @Column(name = "APPLICANTION_SN")
   private String applicationSn;
 
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "APPLICANTION_SN",referencedColumnName = "APPLICANTION_SN",insertable=false, updatable=false)
+  Applicant mApplicant;
+
   @NotNull
   @Column(name = "ADDRESS_TYPE")
   private String addressType;

@@ -22,6 +22,10 @@ public class Semester {
   @Column(name = "SEMESTER_ID")
   private String semesterId;
 
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "SEMESTER_ID",referencedColumnName = "SEMESTER_ID",insertable=false, updatable=false)
+  Applicant mApplicant;
+
   @NotNull
   @Column(name = "SEMESTER_NAME")
   private String semesterName;

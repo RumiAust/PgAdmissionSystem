@@ -3,6 +3,8 @@ package aust.iums.pg.admission.pojo;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * Created by Rumi on 9/16/2020.
  */
@@ -47,6 +49,16 @@ public class ApplicationForm {
   private MultipartFile mscFile;
   //work experience
   private MultipartFile workExperienceFile;
+  List<WorkExperienceList> experienceListList;
+
+  public List<WorkExperienceList> getExperienceListList() {
+    return experienceListList;
+  }
+
+  public void setExperienceListList(List<WorkExperienceList> pExperienceListList) {
+    experienceListList = pExperienceListList;
+  }
+
   //contact info
   private String presentDivision;
   private String presentDistrict;

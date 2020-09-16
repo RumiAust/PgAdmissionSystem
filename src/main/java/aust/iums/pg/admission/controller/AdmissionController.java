@@ -35,4 +35,5 @@ public class AdmissionController {
     String name=greeting.getContent();*/
     return "form-view";
   }
+
 }

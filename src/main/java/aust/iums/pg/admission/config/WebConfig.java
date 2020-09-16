@@ -1,7 +1,18 @@
 package aust.iums.pg.admission.config;
 
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.*;
+
 /**
- * Created by Monjur-E-Morshed on 9/16/2020.
+ * Created by Rumi on 9/16/2020.
  */
-public class WebConfig {
+@Configuration
+@EnableWebMvc
+public class WebConfig implements WebMvcConfigurer {
+
+  @Override
+  public void addViewControllers(ViewControllerRegistry registry) {
+    registry.addRedirectViewController("/", "apply");
+  }
 }

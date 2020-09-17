@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Handling Form Submission</title>
+    <title>Applicant Information</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -15,6 +15,8 @@
 <div class="container">
     <div style="padding-top: 10px">
         <p>Name: <b th:text="'' + ${applicant.fullName}"/></p>
+        <p>ProgramId: <b th:text="'' + ${applicant.programId}"/></p>
+        <p>ProgramName: <b th:text="'' + ${applicant.programName}"/></p>
 <!--        <p>Email: <b th:text="${greeting.email}"/></p>-->
 <!--        <p>Password: <b th:text="'' + ${greeting.password}"/></p>-->
 <!--        <p>Date: <b th:text="${greeting.start}"/></p>-->
@@ -24,7 +26,7 @@
 <!--        <p>T & C Status: <b th:text="${greeting.termsAccepted}"/></p>-->
     </div>
 
-    <a href="/apply">Back to Application</a>
+    <a href="/applicationForm">Back to Application</a>
 </div>
 
 </body>

@@ -58,14 +58,9 @@
             <div class="card border-secondary mb-3" style="margin-top: 10px">
                 <div class="card-body">
                     <div align="center">
-                        <h4><label for="cars">Select Program:</label>&nbsp;&nbsp;
-                            <select name="cars" id="cars">
-                                <option value="volvo">MBA</option>
-                                <option value="saab">EMBA</option>
-                                <option value="opel">M.Sc.(EEE)</option>
-                                <option value="audi">M.Sc.(CE)</option>
-                                <option value="opel">M.Sc.(Arch)</option>
-                                <option value="audi">M.Sc.(Math)</option>
+                        <h4><label >Select Program:</label>&nbsp;&nbsp;
+                            <select th:field="*{programId}">
+                                <option class="form-control form-control-sm" th:each="p : ${programList}" th:value="${p.getDesignation()+'-'+p.getOrganizationName()}" th:text="${p.getOrganizationName()}"  ></option>
                             </select>
                         </h4>
                     </div>
@@ -89,7 +84,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Name(as in SSC/GEC 'O' Level): </div>
                                     </div>
-                                    <input type="text"  th:field="*{fullName}"class="form-control">
+                                    <input type="text"  th:field="*{fullName}" class="form-control">
                                 </div>
                             </div>
                         </div>

@@ -1,4 +1,4 @@
-package aust.iums.pg.admission.pojo;
+package aust.iums.pg.admission.dto;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,6 +11,7 @@ import java.util.List;
 public class ApplicationForm {
   //program info
    private String programId;
+   private String programName;
    //personal info
    private String fullName;
    private String fatherName;
@@ -50,15 +51,6 @@ public class ApplicationForm {
   //work experience
   private MultipartFile workExperienceFile;
   List<WorkExperienceList> experienceListList;
-
-  public List<WorkExperienceList> getExperienceListList() {
-    return experienceListList;
-  }
-
-  public void setExperienceListList(List<WorkExperienceList> pExperienceListList) {
-    experienceListList = pExperienceListList;
-  }
-
   //contact info
   private String presentDivision;
   private String presentDistrict;
@@ -79,6 +71,14 @@ public class ApplicationForm {
 
   public void setProgramId(String pProgramId) {
     programId = pProgramId;
+  }
+
+  public String getProgramName() {
+    return programName;
+  }
+
+  public void setProgramName(String pProgramName) {
+    programName = pProgramName;
   }
 
   public String getFullName() {
@@ -439,5 +439,13 @@ public class ApplicationForm {
 
   public void setDeclaration(boolean pDeclaration) {
     declaration = pDeclaration;
+  }
+
+  public List<WorkExperienceList> getExperienceListList() {
+    return experienceListList;
+  }
+
+  public void setExperienceListList(List<WorkExperienceList> pExperienceListList) {
+    experienceListList = pExperienceListList;
   }
 }

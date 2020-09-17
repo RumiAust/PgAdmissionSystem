@@ -1,6 +1,7 @@
 package aust.iums.pg.admission.controller;
 
-import aust.iums.pg.admission.pojo.ApplicationForm;
+import aust.iums.pg.admission.dto.ApplicationForm;
+import aust.iums.pg.admission.dto.WorkExperienceList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +19,16 @@ import java.util.List;
 @Controller
 public class AdmissionController {
 
-  @GetMapping("/apply")
+  @GetMapping("/applicationForm")
   public String applicationForm(Model model) {
     ApplicationForm applicationForm = new ApplicationForm();
-    /*List<String> professions= Arrays.asList("Software Engineer","Lecturer","System Engineer","Business Analyst");
-    model.addAttribute("professionList",professions);*/
+    List<WorkExperienceList> programs= new ArrayList<>();
+    programs.add(new WorkExperienceList("MBA","100","a","b","c"));
+    programs.add(new WorkExperienceList("EMBA","101","a","b","c"));
+    programs.add(new WorkExperienceList("M.Sc. CE","102","a","b","c"));
+    programs.add(new WorkExperienceList("M.Sc. in Math","103","a","b","c"));
+    programs.add(new WorkExperienceList("M.Sc. in EEE","104","a","b","c"));
+    model.addAttribute("programList",programs);
     model.addAttribute("applicant",applicationForm );
     return "application-form";
   }
@@ -31,9 +37,18 @@ public class AdmissionController {
   public String greetingSubmit(@ModelAttribute ApplicationForm applicant, Model model) {
     model.addAttribute("applicant", applicant);
     String name = applicant.getFullName();
+    String program=applicant.getProgramId();
+    String programInfo[]=applicant.getProgramId().split("-");
+    applicant.setProgramId(programInfo[0]);
+    applicant.setProgramName(programInfo[1]);
     /*int id=  greeting.getId();
     String name=greeting.getContent();*/
     return "form-view";
+  }
+
+  @GetMapping("/statusCheck")
+  public String statusCheck(Model model) {
+    return "status-check";
   }
 
 }

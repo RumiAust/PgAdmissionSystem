@@ -1,4 +1,4 @@
-package aust.iums.pg.admission.pojo;
+package aust.iums.pg.admission.dto;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -13,6 +13,14 @@ public class WorkExperienceList {
   private String fromDate;
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private String toDate;
+
+  public WorkExperienceList(String pOrganizationName, String pDesignation, String pJobResponsibility, String pFromDate, String pToDate) {
+    organizationName = pOrganizationName;
+    designation = pDesignation;
+    jobResponsibility = pJobResponsibility;
+    fromDate = pFromDate;
+    toDate = pToDate;
+  }
 
   public WorkExperienceList() {
   }

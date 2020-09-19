@@ -2,6 +2,8 @@ package aust.iums.pg.admission.controller;
 
 import aust.iums.pg.admission.dto.ApplicationForm;
 import aust.iums.pg.admission.dto.WorkExperienceList;
+import aust.iums.pg.admission.helper.AdmissionHelper;
+import aust.iums.pg.admission.model.Program;
 import aust.iums.pg.admission.model.Semester;
 import aust.iums.pg.admission.repository.SemesterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,28 +23,14 @@ import java.util.List;
 
 @Controller
 public class AdmissionController {
-
   @Autowired
-  SemesterRepository mSemesterRepository;
+  AdmissionHelper mHelper;
 
 
   @GetMapping("/applicationForm")
   public String applicationForm(Model model) {
     ApplicationForm applicationForm = new ApplicationForm();
-    List<WorkExperienceList> programs= new ArrayList<>();
-    programs.add(new WorkExperienceList("MBA","100","a","b","c"));
-    programs.add(new WorkExperienceList("EMBA","101","a","b","c"));
-    programs.add(new WorkExperienceList("M.Sc. CE","102","a","b","c"));
-    programs.add(new WorkExperienceList("M.Sc. in Math","103","a","b","c"));
-    programs.add(new WorkExperienceList("M.Sc. in EEE","104","a","b","c"));
-    Semester s= new Semester();
-    s.setIsActive(0);
-    s.setSemesterId("110300");
-    s.setSemesterName("Fall 18");
-    mSemesterRepository.save(s);
-
-    List<Semester>semesters= (List<Semester>) mSemesterRepository.findAll();
-    Semester data=mSemesterRepository.findAllByIsActive(1);
+    List<Program> programs=mHelper.getPrograms();
     model.addAttribute("programList",programs);
     model.addAttribute("applicant",applicationForm );
     return "application-form";

@@ -46,6 +46,7 @@ public class AdmissionController {
   @PostMapping("/apply")
   public String greetingSubmit(@ModelAttribute ApplicationForm applicant, Model model) {
     model.addAttribute("applicant", applicant);
+    System.out.println(applicant);
     String name = applicant.getFullName();
     String program=applicant.getProgramId();
     String programInfo[]=applicant.getProgramId().split("-");

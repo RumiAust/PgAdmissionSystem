@@ -27,8 +27,21 @@ public class District {
   @Column(name = "DISTRICT_NAME")
   private String districtName;
 
+  @NotNull
+  @Column(name = "CODE")
+  private String code;
+
+
   public District() {
 
+  }
+
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String pCode) {
+    code = pCode;
   }
 
   public Long getId() {

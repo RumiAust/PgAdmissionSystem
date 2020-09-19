@@ -32,8 +32,8 @@ public class AdmissionController {
     ApplicationForm applicationForm = new ApplicationForm();
     List<Program> programs=mHelper.getPrograms();
     Semester semester =mHelper.getSemesters();
-    model.addAttribute("programList",programs);
     model.addAttribute("semester",semester);
+    model.addAttribute("programList",programs);
     model.addAttribute("applicant",applicationForm );
     return "application-form";
   }

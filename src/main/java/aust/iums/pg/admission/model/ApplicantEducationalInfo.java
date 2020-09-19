@@ -3,6 +3,7 @@ package aust.iums.pg.admission.model;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * Created by Monjur-E-Morshed on 9/11/2020.
@@ -20,9 +21,6 @@ public class ApplicantEducationalInfo {
   @Column(name = "APPLICANTION_SN")
   private String applicationSn;
 
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "APPLICANTION_SN",referencedColumnName = "APPLICANTION_SN",insertable=false, updatable=false)
-  Applicant mApplicant;
 
   @NotNull
   @Column(name = "Exam_Type")
@@ -48,8 +46,20 @@ public class ApplicantEducationalInfo {
   @Column(name = "PASSING_YEAR")
   private Integer passingYear;
 
+  @OneToOne
+  @JoinColumn(name = "APPLICANT_ID", referencedColumnName = "ID",updatable=false)
+  Applicant mApplicant;
+
   public ApplicantEducationalInfo() {
 
+  }
+
+  public Applicant getApplicant() {
+    return mApplicant;
+  }
+
+  public void setApplicant(Applicant pApplicant) {
+    mApplicant = pApplicant;
   }
 
   public Long getId() {
@@ -114,6 +124,27 @@ public class ApplicantEducationalInfo {
 
   public void setPassingYear(Integer pPassingYear) {
     passingYear = pPassingYear;
+  }
+
+  @Override
+  public boolean equals(Object pO) {
+    if (this == pO) return true;
+    if (!(pO instanceof ApplicantEducationalInfo)) return false;
+    ApplicantEducationalInfo that = (ApplicantEducationalInfo) pO;
+    return Objects.equals(getId(), that.getId()) &&
+        Objects.equals(getApplicationSn(), that.getApplicationSn()) &&
+        Objects.equals(getExamType(), that.getExamType()) &&
+        Objects.equals(getInstituteName(), that.getInstituteName()) &&
+        Objects.equals(getBoard(), that.getBoard()) &&
+        Objects.equals(getTotalMarks(), that.getTotalMarks()) &&
+        Objects.equals(getDivisionClassGrade(), that.getDivisionClassGrade()) &&
+        Objects.equals(getPassingYear(), that.getPassingYear()) &&
+        Objects.equals(getApplicant(), that.getApplicant());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getId(), getApplicationSn(), getExamType(), getInstituteName(), getBoard(), getTotalMarks(), getDivisionClassGrade(), getPassingYear(), getApplicant());
   }
 
   @Override

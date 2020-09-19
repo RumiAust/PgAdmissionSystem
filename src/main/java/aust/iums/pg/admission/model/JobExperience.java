@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Objects;
 
 /**
  * Created by Monjur-E-Morshed on 9/11/2020.
@@ -22,7 +23,7 @@ public class JobExperience {
   private String applicationSn;
 
   @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "APPLICANTION_SN",referencedColumnName = "APPLICANTION_SN",insertable=false, updatable=false)
+  @JoinColumn(name = "APPLICANT_ID",referencedColumnName = "ID",updatable=false)
   Applicant mApplicant;
 
   @NotNull
@@ -47,6 +48,14 @@ public class JobExperience {
 
   public JobExperience() {
 
+  }
+
+  public Applicant getApplicant() {
+    return mApplicant;
+  }
+
+  public void setApplicant(Applicant pApplicant) {
+    mApplicant = pApplicant;
   }
 
   public Long getId() {
@@ -106,6 +115,26 @@ public class JobExperience {
   }
 
   @Override
+  public boolean equals(Object pO) {
+    if (this == pO) return true;
+    if (!(pO instanceof JobExperience)) return false;
+    JobExperience that = (JobExperience) pO;
+    return Objects.equals(getId(), that.getId()) &&
+        Objects.equals(getApplicationSn(), that.getApplicationSn()) &&
+        Objects.equals(getApplicant(), that.getApplicant()) &&
+        Objects.equals(getOrganizationName(), that.getOrganizationName()) &&
+        Objects.equals(getDesignation(), that.getDesignation()) &&
+        Objects.equals(getJobResponsibilities(), that.getJobResponsibilities()) &&
+        Objects.equals(getFromDate(), that.getFromDate()) &&
+        Objects.equals(getToDate(), that.getToDate());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getId(), getApplicationSn(), getApplicant(), getOrganizationName(), getDesignation(), getJobResponsibilities(), getFromDate(), getToDate());
+  }
+
+  @Override
   public String toString() {
     return "JobExperience{" +
         "id=" + id +
@@ -117,4 +146,5 @@ public class JobExperience {
         ", toDate=" + toDate +
         '}';
   }
+
 }

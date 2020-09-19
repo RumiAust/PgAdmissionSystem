@@ -3,6 +3,7 @@ package aust.iums.pg.admission.model;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * Created by Monjur-E-Morshed on 9/11/2020.
@@ -19,9 +20,6 @@ public class ApplicantAddress {
   @Column(name = "APPLICANTION_SN")
   private String applicationSn;
 
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "APPLICANTION_SN",referencedColumnName = "APPLICANTION_SN",insertable=false, updatable=false)
-  Applicant mApplicant;
 
   @NotNull
   @Column(name = "ADDRESS_TYPE")
@@ -51,8 +49,20 @@ public class ApplicantAddress {
   @Column(name = "LINE2")
   private String line2;
 
+  @OneToOne
+  @JoinColumn(name = "APPLICANT_ID", referencedColumnName = "ID",updatable=false)
+  Applicant mApplicant;
+
   public ApplicantAddress() {
 
+  }
+
+  public Applicant getApplicant() {
+    return mApplicant;
+  }
+
+  public void setApplicant(Applicant pApplicant) {
+    mApplicant = pApplicant;
   }
 
   public Long getId() {
@@ -125,6 +135,28 @@ public class ApplicantAddress {
 
   public void setLine2(String pLine2) {
     line2 = pLine2;
+  }
+
+  @Override
+  public boolean equals(Object pO) {
+    if (this == pO) return true;
+    if (!(pO instanceof ApplicantAddress)) return false;
+    ApplicantAddress that = (ApplicantAddress) pO;
+    return Objects.equals(getId(), that.getId()) &&
+        Objects.equals(getApplicationSn(), that.getApplicationSn()) &&
+        Objects.equals(getAddressType(), that.getAddressType()) &&
+        Objects.equals(getDivisionId(), that.getDivisionId()) &&
+        Objects.equals(getDistrictId(), that.getDistrictId()) &&
+        Objects.equals(getThanaId(), that.getThanaId()) &&
+        Objects.equals(getThanaOther(), that.getThanaOther()) &&
+        Objects.equals(getLine1(), that.getLine1()) &&
+        Objects.equals(getLine2(), that.getLine2()) &&
+        Objects.equals(getApplicant(), that.getApplicant());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getId(), getApplicationSn(), getAddressType(), getDivisionId(), getDistrictId(), getThanaId(), getThanaOther(), getLine1(), getLine2(), getApplicant());
   }
 
   @Override

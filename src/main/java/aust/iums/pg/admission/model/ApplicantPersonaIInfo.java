@@ -7,6 +7,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Created by Monjur-E-Morshed on 9/11/2020.
@@ -23,9 +24,7 @@ public class ApplicantPersonaIInfo {
   @Column(name = "APPLICANTION_SN")
   private String applicationSn;
 
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "APPLICANTION_SN",referencedColumnName = "APPLICANTION_SN",insertable=false, updatable=false)
-  Applicant mApplicant;
+
 
   @NotNull
   @Column(name = "FIRST_NAME")
@@ -87,8 +86,20 @@ public class ApplicantPersonaIInfo {
   @LastModifiedDate
   private Instant updatedOn;
 
+  @OneToOne
+  @JoinColumn(name = "APPLICANT_ID", referencedColumnName = "ID",updatable=false)
+  Applicant mApplicant;
+
   public ApplicantPersonaIInfo() {
 
+  }
+
+  public Applicant getApplicant() {
+    return mApplicant;
+  }
+
+  public void setApplicant(Applicant pApplicant) {
+    mApplicant = pApplicant;
   }
 
   public Long getId() {
@@ -225,6 +236,36 @@ public class ApplicantPersonaIInfo {
 
   public void setUpdatedOn(Instant pUpdatedOn) {
     updatedOn = pUpdatedOn;
+  }
+
+  @Override
+  public boolean equals(Object pO) {
+    if (this == pO) return true;
+    if (!(pO instanceof ApplicantPersonaIInfo)) return false;
+    ApplicantPersonaIInfo that = (ApplicantPersonaIInfo) pO;
+    return Objects.equals(getId(), that.getId()) &&
+        Objects.equals(getApplicationSn(), that.getApplicationSn()) &&
+        Objects.equals(getFirstName(), that.getFirstName()) &&
+        Objects.equals(getMiddleName(), that.getMiddleName()) &&
+        Objects.equals(getLastName(), that.getLastName()) &&
+        Objects.equals(getFatherName(), that.getFatherName()) &&
+        Objects.equals(getMotherName(), that.getMotherName()) &&
+        Objects.equals(getGender(), that.getGender()) &&
+        Objects.equals(getReligion(), that.getReligion()) &&
+        Objects.equals(getNationality(), that.getNationality()) &&
+        Objects.equals(getDateOfBirth(), that.getDateOfBirth()) &&
+        Objects.equals(getPlaceOfBirth(), that.getPlaceOfBirth()) &&
+        Objects.equals(getMobileNumber(), that.getMobileNumber()) &&
+        Objects.equals(getEmailAddress(), that.getEmailAddress()) &&
+        Objects.equals(getMaritalStatus(), that.getMaritalStatus()) &&
+        Objects.equals(getCreatedOn(), that.getCreatedOn()) &&
+        Objects.equals(getUpdatedOn(), that.getUpdatedOn()) &&
+        Objects.equals(getApplicant(), that.getApplicant());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getId(), getApplicationSn(), getFirstName(), getMiddleName(), getLastName(), getFatherName(), getMotherName(), getGender(), getReligion(), getNationality(), getDateOfBirth(), getPlaceOfBirth(), getMobileNumber(), getEmailAddress(), getMaritalStatus(), getCreatedOn(), getUpdatedOn(), getApplicant());
   }
 
   @Override

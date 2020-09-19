@@ -22,16 +22,13 @@ public class Program {
   @Column(name = "PROGRAM_ID")
   private String programId;
 
-  @ManyToOne(optional = false)
-  @JoinColumn(name = "PROGRAM_ID",referencedColumnName = "PROGRAM_ID",insertable=false, updatable=false)
-  Applicant mApplicant;
   
   @NotNull
   @Column(name = "PROGRAM_NAME_SHORT")
   private String  programShortName;
   
   @NotNull
-  @Column(name = "PROGRAM_NAM_LONG")
+  @Column(name = "PROGRAM_NAME_LONG")
   private String programLongName;
   
   @Column(name = "CREATED_ON")

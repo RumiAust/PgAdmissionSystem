@@ -6,6 +6,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Objects;
 
 /**
  * Created by Monjur-E-Morshed on 9/11/2020.
@@ -56,8 +57,94 @@ public class Applicant {
   @LastModifiedDate
   private Instant updatedOn;
 
+  @ManyToOne
+  @JoinColumn(name = "DIVISION_ID", referencedColumnName = "ID",updatable=false)
+  Division mDivision;
+
+  @ManyToOne
+  @JoinColumn(name = "DISTRCIT_ID", referencedColumnName = "ID",updatable=false)
+  District mDistrict;
+
+  @ManyToOne
+  @JoinColumn(name = "THANA_ID", referencedColumnName = "ID",updatable=false)
+  Thana mThana;
+
+  @OneToOne
+  @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ID",updatable=false)
+  ApplicantAddress mApplicantAddress;
+
+  @OneToOne
+  @JoinColumn(name = "EDUCATION_INFO_ID", referencedColumnName = "ID",updatable=false)
+  ApplicantEducationalInfo mApplicantEducationalInfo;
+
+  @OneToOne
+  @JoinColumn(name = "PERSONAL_INFO_ID", referencedColumnName = "ID",updatable=false)
+  ApplicantPersonaIInfo mApplicantPersonaIInfo;
+
+  @OneToOne
+  @JoinColumn(name = "JOB_EXPERIENCE_ID", referencedColumnName = "ID",updatable=false)
+  JobExperience mJobExperience;
+
+
+
   public Applicant() {
 
+  }
+
+  public Division getDivision() {
+    return mDivision;
+  }
+
+  public void setDivision(Division pDivision) {
+    mDivision = pDivision;
+  }
+
+  public District getDistrict() {
+    return mDistrict;
+  }
+
+  public void setDistrict(District pDistrict) {
+    mDistrict = pDistrict;
+  }
+
+  public Thana getThana() {
+    return mThana;
+  }
+
+  public void setThana(Thana pThana) {
+    mThana = pThana;
+  }
+
+  public ApplicantAddress getApplicantAddress() {
+    return mApplicantAddress;
+  }
+
+  public void setApplicantAddress(ApplicantAddress pApplicantAddress) {
+    mApplicantAddress = pApplicantAddress;
+  }
+
+  public ApplicantEducationalInfo getApplicantEducationalInfo() {
+    return mApplicantEducationalInfo;
+  }
+
+  public void setApplicantEducationalInfo(ApplicantEducationalInfo pApplicantEducationalInfo) {
+    mApplicantEducationalInfo = pApplicantEducationalInfo;
+  }
+
+  public ApplicantPersonaIInfo getApplicantPersonaIInfo() {
+    return mApplicantPersonaIInfo;
+  }
+
+  public void setApplicantPersonaIInfo(ApplicantPersonaIInfo pApplicantPersonaIInfo) {
+    mApplicantPersonaIInfo = pApplicantPersonaIInfo;
+  }
+
+  public JobExperience getJobExperience() {
+    return mJobExperience;
+  }
+
+  public void setJobExperience(JobExperience pJobExperience) {
+    mJobExperience = pJobExperience;
   }
 
   public Long getId() {
@@ -138,6 +225,35 @@ public class Applicant {
 
   public void setUpdatedOn(Instant pUpdatedOn) {
     updatedOn = pUpdatedOn;
+  }
+
+  @Override
+  public boolean equals(Object pO) {
+    if (this == pO) return true;
+    if (!(pO instanceof Applicant)) return false;
+    Applicant applicant = (Applicant) pO;
+    return Objects.equals(getId(), applicant.getId()) &&
+        Objects.equals(getSemesterId(), applicant.getSemesterId()) &&
+        Objects.equals(getProgramId(), applicant.getProgramId()) &&
+        Objects.equals(getApplicationSn(), applicant.getApplicationSn()) &&
+        Objects.equals(getStatus(), applicant.getStatus()) &&
+        Objects.equals(getAppliedOn(), applicant.getAppliedOn()) &&
+        Objects.equals(getApplicationFeePaidOn(), applicant.getApplicationFeePaidOn()) &&
+        Objects.equals(getSelectedRejectedOn(), applicant.getSelectedRejectedOn()) &&
+        Objects.equals(getCreatedOn(), applicant.getCreatedOn()) &&
+        Objects.equals(getUpdatedOn(), applicant.getUpdatedOn()) &&
+        Objects.equals(getDivision(), applicant.getDivision()) &&
+        Objects.equals(getDistrict(), applicant.getDistrict()) &&
+        Objects.equals(getThana(), applicant.getThana()) &&
+        Objects.equals(getApplicantAddress(), applicant.getApplicantAddress()) &&
+        Objects.equals(getApplicantEducationalInfo(), applicant.getApplicantEducationalInfo()) &&
+        Objects.equals(getApplicantPersonaIInfo(), applicant.getApplicantPersonaIInfo()) &&
+        Objects.equals(getJobExperience(), applicant.getJobExperience());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getId(), getSemesterId(), getProgramId(), getApplicationSn(), getStatus(), getAppliedOn(), getApplicationFeePaidOn(), getSelectedRejectedOn(), getCreatedOn(), getUpdatedOn(), getDivision(), getDistrict(), getThana(), getApplicantAddress(), getApplicantEducationalInfo(), getApplicantPersonaIInfo(), getJobExperience());
   }
 
   @Override

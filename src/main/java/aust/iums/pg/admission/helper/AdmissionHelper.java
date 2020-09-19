@@ -1,9 +1,7 @@
 package aust.iums.pg.admission.helper;
 
-import aust.iums.pg.admission.model.Program;
-import aust.iums.pg.admission.model.Semester;
-import aust.iums.pg.admission.repository.ProgramRepository;
-import aust.iums.pg.admission.repository.SemesterRepository;
+import aust.iums.pg.admission.model.*;
+import aust.iums.pg.admission.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,14 +19,16 @@ public class AdmissionHelper {
   @Autowired
   ProgramRepository mProgramRepository;
 
+  @Autowired
+  DivisionRepository mDivisionRepository;
+
+  @Autowired
+  DistrictRepository mDistrictRepository;
+
+  @Autowired
+  ThanaRepository mThanaRepository;
+
   public Semester getSemesters(){
-     /* Semester s= new Semester();
-    s.setIsActive(0);
-    s.setSemesterId("110300");
-    s.setSemesterName("Fall 18");
-    mSemesterRepository.save(s);
-    List<Semester> semesters= (List<Semester>) mSemesterRepository.findAll();
-      */
     Semester semester=mSemesterRepository.findAllByIsActive(1);
     return semester;
   }
@@ -37,6 +37,19 @@ public class AdmissionHelper {
   public List<Program> getPrograms(){
     List<Program> programList= (List<Program>) mProgramRepository.findAll();
     return programList;
+  }
+
+  public List<Division> getDivisions(){
+    List<Division> divisions = (List<Division>) mDivisionRepository.findAll();
+    return divisions;
+  }
+  public List<District> getDistricts(){
+    List<District> districts= (List<District>) mDistrictRepository.findAll();
+    return districts;
+  }
+  public List<Thana> getThanas(){
+    List<Thana> thanas= (List<Thana>) mThanaRepository.findAll();
+    return thanas;
   }
 
 }

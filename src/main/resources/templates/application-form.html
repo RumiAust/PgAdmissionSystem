@@ -566,7 +566,9 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Division </div>
                                     </div>
-                                    <input type="email" class="form-control">
+                                    <select th:field="*{presentDivisionId}">
+                                        <option class="form-control form-control-sm" th:each="p : ${divisionList}" th:value="${p.getId()+'-'+p.getDivisionName()}" th:text="${p.getDivisionName()}"  ></option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -578,7 +580,9 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">District: </div>
                                     </div>
-                                    <input type="email" class="form-control">
+                                    <select th:field="*{presentDistrictId}">
+                                        <option class="form-control form-control-sm" th:each="p : ${districtList}" th:value="${p.getId()+'-'+p.getDistrictName()}" th:text="${p.getDistrictName()}"  ></option>
+                                    </select>
 
                                 </div>
                             </div>
@@ -591,7 +595,9 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Thana: </div>
                                     </div>
-                                    <input type="email" class="form-control">
+                                    <select th:field="*{presentThanaId}">
+                                        <option class="form-control form-control-sm" th:each="p : ${thanaList}" th:value="${p.getId()+'-'+p.getThanaName()}" th:text="${p.getThanaName()}"  ></option>
+                                    </select>
 
                                 </div>
                             </div>
@@ -621,8 +627,9 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Division </div>
                                     </div>
-                                    <input type="email" class="form-control" id="inlrname2"
-                                    >
+                                    <select th:field="*{programId}">
+                                        <option class="form-control form-control-sm" th:each="p : ${programList}" th:value="${p.getProgramId()+'-'+p.getProgramShortName()}" th:text="${p.getProgramShortName()}"  ></option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -634,7 +641,9 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">District: </div>
                                     </div>
-                                    <input type="email" class="form-control">
+                                    <select th:field="*{programId}">
+                                        <option class="form-control form-control-sm" th:each="p : ${programList}" th:value="${p.getProgramId()+'-'+p.getProgramShortName()}" th:text="${p.getProgramShortName()}"  ></option>
+                                    </select>
 
                                 </div>
                             </div>
@@ -647,7 +656,9 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Thana: </div>
                                     </div>
-                                    <input type="email" class="form-control">
+                                    <select th:field="*{programId}">
+                                        <option class="form-control form-control-sm" th:each="p : ${programList}" th:value="${p.getProgramId()+'-'+p.getProgramShortName()}" th:text="${p.getProgramShortName()}"  ></option>
+                                    </select>
 
                                 </div>
                             </div>

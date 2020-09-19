@@ -52,12 +52,18 @@ public class ApplicationForm {
   private MultipartFile workExperienceFile;
   List<WorkExperienceList> experienceListList;
   //contact info
+  private String presentDivisionId;
   private String presentDivision;
+  private String presentDistrictId;
   private String presentDistrict;
+  private String presentThanaId;
   private String presentThana;
   private String presentAddress;
+  private String permanentDivisionId;
   private String permanentDivision;
+  private String permanentDistrictId;
   private String permanentDistrict;
+  private String permanentThanaId;
   private String permanentThana;
   private String permanentAddress;
   // photo and signature
@@ -415,6 +421,55 @@ public class ApplicationForm {
 
   public void setPermanentAddress(String pPermanentAddress) {
     permanentAddress = pPermanentAddress;
+  }
+
+
+  public String getPresentDivisionId() {
+    return presentDivisionId;
+  }
+
+  public void setPresentDivisionId(String pPresentDivisionId) {
+    presentDivisionId = pPresentDivisionId;
+  }
+
+  public String getPresentDistrictId() {
+    return presentDistrictId;
+  }
+
+  public void setPresentDistrictId(String pPresentDistrictId) {
+    presentDistrictId = pPresentDistrictId;
+  }
+
+  public String getPresentThanaId() {
+    return presentThanaId;
+  }
+
+  public void setPresentThanaId(String pPresentThanaId) {
+    presentThanaId = pPresentThanaId;
+  }
+
+  public String getPermanentDivisionId() {
+    return permanentDivisionId;
+  }
+
+  public void setPermanentDivisionId(String pPermanentDivisionId) {
+    permanentDivisionId = pPermanentDivisionId;
+  }
+
+  public String getPermanentDistrictId() {
+    return permanentDistrictId;
+  }
+
+  public void setPermanentDistrictId(String pPermanentDistrictId) {
+    permanentDistrictId = pPermanentDistrictId;
+  }
+
+  public String getPermanentThanaId() {
+    return permanentThanaId;
+  }
+
+  public void setPermanentThanaId(String pPermanentThanaId) {
+    permanentThanaId = pPermanentThanaId;
   }
 
   public MultipartFile getPhoto() {

@@ -3,8 +3,7 @@ package aust.iums.pg.admission.controller;
 import aust.iums.pg.admission.dto.ApplicationForm;
 import aust.iums.pg.admission.dto.WorkExperienceList;
 import aust.iums.pg.admission.helper.AdmissionHelper;
-import aust.iums.pg.admission.model.Program;
-import aust.iums.pg.admission.model.Semester;
+import aust.iums.pg.admission.model.*;
 import aust.iums.pg.admission.repository.SemesterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,9 +31,15 @@ public class AdmissionController {
     ApplicationForm applicationForm = new ApplicationForm();
     List<Program> programs=mHelper.getPrograms();
     Semester semester =mHelper.getSemesters();
+    List<Division> divisions=mHelper.getDivisions();
+    List<District> districts=mHelper.getDistricts();
+    List<Thana> thanas=mHelper.getThanas();
     model.addAttribute("semester",semester);
     model.addAttribute("programList",programs);
-    model.addAttribute("applicant",applicationForm );
+    model.addAttribute("divisionList",divisions);
+    model.addAttribute("districtList",districts);
+    model.addAttribute("thanaList",thanas);
+    model.addAttribute("applicant",applicationForm);
     return "application-form";
   }
 

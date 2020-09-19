@@ -21,15 +21,16 @@ public class AdmissionHelper {
   @Autowired
   ProgramRepository mProgramRepository;
 
-  public List<Semester> getSemesters(){
+  public Semester getSemesters(){
      /* Semester s= new Semester();
     s.setIsActive(0);
     s.setSemesterId("110300");
     s.setSemesterName("Fall 18");
-    mSemesterRepository.save(s);*/
+    mSemesterRepository.save(s);
     List<Semester> semesters= (List<Semester>) mSemesterRepository.findAll();
-    Semester data=mSemesterRepository.findAllByIsActive(1);
-    return semesters;
+      */
+    Semester semester=mSemesterRepository.findAllByIsActive(1);
+    return semester;
   }
 
 

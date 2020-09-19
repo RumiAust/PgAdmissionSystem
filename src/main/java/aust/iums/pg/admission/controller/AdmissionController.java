@@ -5,6 +5,8 @@ import aust.iums.pg.admission.dto.WorkExperienceList;
 import aust.iums.pg.admission.helper.AdmissionHelper;
 import aust.iums.pg.admission.model.*;
 import aust.iums.pg.admission.repository.SemesterRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +26,8 @@ import java.util.List;
 public class AdmissionController {
   @Autowired
   AdmissionHelper mHelper;
+
+  private final Logger log = LoggerFactory.getLogger(AdmissionController.class);
 
 
   @GetMapping("/applicationForm")
@@ -52,6 +56,7 @@ public class AdmissionController {
     String programInfo[]=applicant.getProgramId().split("-");
     applicant.setProgramId(programInfo[0]);
     applicant.setProgramName(programInfo[1]);
+    log.info(" [{}]: Applicant Infos ",applicant.toString());
     /*int id=  greeting.getId();
     String name=greeting.getContent();*/
     return "form-view";

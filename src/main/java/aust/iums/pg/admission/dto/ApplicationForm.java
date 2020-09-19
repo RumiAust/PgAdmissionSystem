@@ -503,4 +503,64 @@ public class ApplicationForm {
   public void setExperienceListList(List<WorkExperienceList> pExperienceListList) {
     experienceListList = pExperienceListList;
   }
+
+  @Override
+  public String toString() {
+    return "ApplicationForm{" +
+        "programId='" + programId + '\'' +
+        ", programName='" + programName + '\'' +
+        ", fullName='" + fullName + '\'' +
+        ", fatherName='" + fatherName + '\'' +
+        ", motherName='" + motherName + '\'' +
+        ", dateOfBirth='" + dateOfBirth + '\'' +
+        ", nationality='" + nationality + '\'' +
+        ", religion='" + religion + '\'' +
+        ", email='" + email + '\'' +
+        ", gender='" + gender + '\'' +
+        ", maritalStatus='" + maritalStatus + '\'' +
+        ", sscInstituteName='" + sscInstituteName + '\'' +
+        ", sscBoardName='" + sscBoardName + '\'' +
+        ", sscMarks='" + sscMarks + '\'' +
+        ", sscGrade='" + sscGrade + '\'' +
+        ", sscPassingYear=" + sscPassingYear +
+        ", sscFile=" + sscFile +
+        ", hscInstituteName='" + hscInstituteName + '\'' +
+        ", hscBoardName='" + hscBoardName + '\'' +
+        ", hscMarks='" + hscMarks + '\'' +
+        ", hscGrade='" + hscGrade + '\'' +
+        ", hscPassingYear=" + hscPassingYear +
+        ", hscFile=" + hscFile +
+        ", bscInstituteName='" + bscInstituteName + '\'' +
+        ", bscBoardName='" + bscBoardName + '\'' +
+        ", bscMarks='" + bscMarks + '\'' +
+        ", bscGrade='" + bscGrade + '\'' +
+        ", bscPassingYear=" + bscPassingYear +
+        ", bscFile=" + bscFile +
+        ", mscInstituteName='" + mscInstituteName + '\'' +
+        ", mscBoardName='" + mscBoardName + '\'' +
+        ", mscMarks='" + mscMarks + '\'' +
+        ", mscGrade='" + mscGrade + '\'' +
+        ", mscPassingYear=" + mscPassingYear +
+        ", mscFile=" + mscFile +
+        ", workExperienceFile=" + workExperienceFile +
+        ", experienceListList=" + experienceListList +
+        ", presentDivisionId='" + presentDivisionId + '\'' +
+        ", presentDivision='" + presentDivision + '\'' +
+        ", presentDistrictId='" + presentDistrictId + '\'' +
+        ", presentDistrict='" + presentDistrict + '\'' +
+        ", presentThanaId='" + presentThanaId + '\'' +
+        ", presentThana='" + presentThana + '\'' +
+        ", presentAddress='" + presentAddress + '\'' +
+        ", permanentDivisionId='" + permanentDivisionId + '\'' +
+        ", permanentDivision='" + permanentDivision + '\'' +
+        ", permanentDistrictId='" + permanentDistrictId + '\'' +
+        ", permanentDistrict='" + permanentDistrict + '\'' +
+        ", permanentThanaId='" + permanentThanaId + '\'' +
+        ", permanentThana='" + permanentThana + '\'' +
+        ", permanentAddress='" + permanentAddress + '\'' +
+        ", photo=" + photo +
+        ", signature=" + signature +
+        ", declaration=" + declaration +
+        '}';
+  }
 }

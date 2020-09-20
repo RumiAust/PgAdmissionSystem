@@ -150,7 +150,14 @@ public class AdmissionService {
       obj.setToDate(formatter.parse(data.getToDate()));
       workExperienceLists.add(obj);
     }
+
      mJobExperienceRepository.saveAll(workExperienceLists);
+    List<ApplicantEducationalInfo> educationalInfoList = new ArrayList<>();
+    ApplicantEducationalInfo eduInfo = new ApplicantEducationalInfo();
+    eduInfo.setExamType("SSC");
+    
+
+
     //method create
    /* mApplicantRepository.save(applicant);
 

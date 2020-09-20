@@ -108,9 +108,7 @@ public class AdmissionController {
 
 
       log.info(" [{}]: Applicant Infos ",applicant.toString());
-       mHelper.saveInfo(applicant);
-      fileStorageService.saveFile(applicant.getPhoto(),"photo");
-      fileStorageService.saveFile(applicant.getSignature(),"signature");
+      mHelper.saveInfo(applicant);
       applicant.setWorkExperienceDivId("");
 
       return "form-view";

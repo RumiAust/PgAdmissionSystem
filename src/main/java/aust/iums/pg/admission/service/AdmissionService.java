@@ -8,6 +8,7 @@ import aust.iums.pg.admission.enums.ExamTypeEnum;
 import aust.iums.pg.admission.enums.SemesterEnum;
 import aust.iums.pg.admission.model.*;
 import aust.iums.pg.admission.repository.*;
+import aust.iums.pg.admission.utils.PgUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -98,7 +99,7 @@ public class AdmissionService {
    applicant.setAppliedOn(Instant.now());
    applicant.setSelectedRejectedOn(Instant.now());
    applicant.setApplicationFeePaidOn(Instant.now());
-    mApplicantRepository.save(applicant);
+
     ApplicantPersonaIInfo app= new ApplicantPersonaIInfo();
     app.setFirstName(pApp.getFatherName());
     app.setMiddleName(pApp.getFullName());
@@ -111,20 +112,16 @@ public class AdmissionService {
     app.setReligion(pApp.getReligion());
     app.setNationality(pApp.getNationality());
     DateFormat formatter;
-    Date date;
-    formatter = new SimpleDateFormat("yyyy-MM-dd");
-    date = formatter.parse(pApp.getDateOfBirth());
-    app.setDateOfBirth(date);
+    app.setDateOfBirth(PgUtils.formateDate(pApp.getDateOfBirth()));
     app.setPlaceOfBirth("BD");
     app.setMobileNumber("1003");
     app.setEmailAddress(pApp.getEmail());
     app.setCreatedOn(Instant.now());
 
-    mApplicantPersonalInfoRepository.save(app);
 
     List<ApplicantAddress> addressList= new ArrayList<>();
     ApplicantAddress address = new ApplicantAddress();
-    address.setAddressType("PRESENT");
+    address.setAddressType(AddressTypeEnum.PRESENT.getLabel());
     address.setApplicationSn(applicantSerialNo);
     address.setDivisionId(Integer.parseInt(pApp.getPresentDivisionId()));
     address.setDistrictId(Integer.parseInt(pApp.getPresentDistrictId()));
@@ -132,14 +129,14 @@ public class AdmissionService {
     address.setLine1(pApp.getPresentAddress());
     addressList.add(address);
     address = new ApplicantAddress();
-    address.setAddressType("PERMANENT");
+    address.setAddressType(AddressTypeEnum.PERMANENT.getLabel());
     address.setApplicationSn(applicantSerialNo);
     address.setDivisionId(Integer.parseInt(pApp.getPermanentDivisionId()));
     address.setDistrictId(Integer.parseInt(pApp.getPermanentDistrictId()));
     address.setThanaId(Integer.parseInt(pApp.getPermanentThanaId()));
     address.setLine1(pApp.getPermanentAddress());
     addressList.add(address);
-    mApplicantAddressRepository.saveAll(addressList);
+
 
     List<JobExperience> workExperienceLists= new ArrayList<>();
     for(WorkExperienceList data: pApp.getWorkExperienceList()){
@@ -149,12 +146,12 @@ public class AdmissionService {
       obj.setOrganizationName(data.getOrganizationName());
       obj.setDesignation(data.getDesignation());
       obj.setJobResponsibilities(data.getJobResponsibility());
-      obj.setFromDate(formatter.parse(data.getFromDate()));
-      obj.setToDate(formatter.parse(data.getToDate()));
+      obj.setFromDate(PgUtils.formateDate(data.getFromDate()));
+      obj.setToDate(PgUtils.formateDate(data.getToDate()));
       workExperienceLists.add(obj);
     }
 
-    mJobExperienceRepository.saveAll(workExperienceLists);
+
     List<ApplicantEducationalInfo> educationalInfoList = new ArrayList<>();
     ApplicantEducationalInfo eduInfo = new ApplicantEducationalInfo();
     eduInfo.setExamType(ExamTypeEnum.SSC_EQU.name());
@@ -192,7 +189,7 @@ public class AdmissionService {
     eduInfo.setDivisionClassGrade(pApp.getMscGrade());
     eduInfo.setPassingYear(pApp.getMscPassingYear());
     educationalInfoList.add(eduInfo);
-    mApplicantEducationalInfoRepository.saveAll(educationalInfoList);
+
 
     List<MultipartFile> eduFile=new ArrayList<>();
     eduFile.add(pApp.getSscFile());
@@ -200,11 +197,20 @@ public class AdmissionService {
     eduFile.add(pApp.getBscFile());
     eduFile.add(pApp.getMscFile());
 
+    mApplicantRepository.save(applicant);
+    mApplicantPersonalInfoRepository.save(app);
+    mApplicantEducationalInfoRepository.saveAll(educationalInfoList);
+    mJobExperienceRepository.saveAll(workExperienceLists);
+    mApplicantAddressRepository.saveAll(addressList);
+
+
     for(MultipartFile file:eduFile){
       if (!file.isEmpty()){
         fileStorageService.saveFile(file,"document");
       }
     }
+    fileStorageService.saveFile(pApp.getPhoto(),"photo");
+    fileStorageService.saveFile(pApp.getSignature(),"signature");
 
   }
 

@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -112,7 +113,26 @@ public class AdmissionService {
     app.setCreatedOn(Instant.now());
 
     mApplicantPersonalInfoRepository.save(app);
-    
+
+    List<ApplicantAddress> addressList= new ArrayList<>();
+    ApplicantAddress address = new ApplicantAddress();
+    address.setAddressType("PRESENT");
+    address.setApplicationSn(applicantSerialNo);
+    address.setDivisionId(Integer.parseInt(pApp.getPresentDivisionId()));
+    address.setDistrictId(Integer.parseInt(pApp.getPresentDistrictId()));
+    address.setThanaId(Integer.parseInt(pApp.getPresentThanaId()));
+    address.setLine1(pApp.getPresentAddress());
+    addressList.add(address);
+    address = new ApplicantAddress();
+    address.setAddressType("PERMANENT");
+    address.setApplicationSn(applicantSerialNo);
+    address.setDivisionId(Integer.parseInt(pApp.getPermanentDivisionId()));
+    address.setDistrictId(Integer.parseInt(pApp.getPermanentDistrictId()));
+    address.setThanaId(Integer.parseInt(pApp.getPermanentThanaId()));
+    address.setLine1(pApp.getPermanentAddress());
+    addressList.add(address);
+    mApplicantAddressRepository.saveAll(addressList);
+
     //method create
    /* mApplicantRepository.save(applicant);
 

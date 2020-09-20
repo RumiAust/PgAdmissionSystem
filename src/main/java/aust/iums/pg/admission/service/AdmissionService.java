@@ -155,7 +155,7 @@ public class AdmissionService {
     List<ApplicantEducationalInfo> educationalInfoList = new ArrayList<>();
     ApplicantEducationalInfo eduInfo = new ApplicantEducationalInfo();
     eduInfo.setExamType("SSC");
-    
+
 
 
     //method create

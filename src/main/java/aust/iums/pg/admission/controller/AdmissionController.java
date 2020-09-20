@@ -33,11 +33,11 @@ public class AdmissionController {
   @GetMapping("/applicationForm")
   public String applicationForm(Model model) {
     ApplicationForm applicationForm = new ApplicationForm();
-    List<Program> programs=mHelper.getPrograms();
-    Semester semester =mHelper.getSemesters();
-    List<Division> divisions=mHelper.getDivisions();
-    List<District> districts=mHelper.getDistricts();
-    List<Thana> thanas=mHelper.getThanas();
+    List<Program> programs=mHelper.getAllPrograms();
+    Semester semester =mHelper.getActiveSemester();
+    List<Division> divisions=mHelper.getAllDivisions();
+    List<District> districts=mHelper.getAllDistricts();
+    List<Thana> thanas=mHelper.getAllThanas();
     model.addAttribute("semester",semester);
     model.addAttribute("programList",programs);
     model.addAttribute("divisionList",divisions);
@@ -50,7 +50,6 @@ public class AdmissionController {
   @PostMapping("/apply")
   public String greetingSubmit(@ModelAttribute ApplicationForm applicant, Model model) {
     model.addAttribute("applicant", applicant);
-    System.out.println(applicant);
     String name = applicant.getFullName();
     String program=applicant.getProgramId();
     String programInfo[]=applicant.getProgramId().split("-");

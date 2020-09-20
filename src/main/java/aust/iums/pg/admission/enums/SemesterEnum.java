@@ -8,8 +8,8 @@ import java.util.Map;
  * Created by Rumi on 9/20/2020.
  */
 public enum SemesterEnum {
-  SSC_BANGLA(0, "INACTIVE"),
-  SSC_ENGLISH(1, "ACTIVE");
+  INACTIVE(0, "INACTIVE"),
+  ACTIVE(1, "ACTIVE");
 
   private static final Map<Integer, SemesterEnum> Lookup = new HashMap<>();
   private static final Map<String, SemesterEnum> lookUpByLabel = new HashMap<>();

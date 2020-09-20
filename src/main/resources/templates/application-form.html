@@ -98,7 +98,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Father's Name: </div>
                                     </div>
-                                    <input type="text" class="form-control" id="inlineFormInGroupUsername2"
+                                    <input type="text" class="form-control" th:field="*{fatherName}"
                                     >
                                 </div>
                             </div>
@@ -111,7 +111,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Mother's Name: </div>
                                     </div>
-                                    <input type="text" class="form-control" id="inlineFormInputGroupUname2"
+                                    <input type="text" class="form-control" th:field="*{motherName}"
                                     >
                                 </div>
                             </div>
@@ -127,8 +127,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Date of Birth: </div>
                                     </div>
-                                    <input type="date" class="form-control" id="inlineFoupUsername2"
-                                    >
+                                    <input type="date" class="form-control" th:value="${applicant.dateOfBirth}" th:field="${applicant.dateOfBirth}">
                                 </div>
                             </div>
                         </div>
@@ -140,7 +139,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Nationality: </div>
                                     </div>
-                                    <input type="text" class="form-control" id="inlineUsername2"
+                                    <input type="text" class="form-control" th:field="*{nationality}"
                                     >
                                 </div>
                             </div>
@@ -153,7 +152,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Religion: </div>
                                     </div>
-                                    <input type="text" class="form-control" id="inlineFormInpuGroupUsername2"
+                                    <input type="text" class="form-control" th:field="*{religion}"
 
                                     >
                                 </div>
@@ -169,7 +168,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Email: </div>
                                     </div>
-                                    <input type="email" class="form-control" id="inleFoupUsername2"
+                                    <input type="email" class="form-control" th:field="*{email}"
                                     >
                                 </div>
                             </div>
@@ -184,8 +183,8 @@
                                     </div>
                                     &nbsp;&nbsp;&nbsp;
                                     <div style="margin-top: 5px">
-                                        <input   type="radio"  value="Male"> Male
-                                        <input   type="radio"  value="Female"> Female
+                                        <input   type="radio" th:field="*{gender}" value="Male"> Male
+                                        <input   type="radio" th:field="*{gender}" value="Female"> Female
                                     </div>
 
                                 </div>
@@ -201,8 +200,8 @@
                                     </div>
                                     &nbsp; &nbsp; &nbsp;
                                     <div style="margin-top: 5px">
-                                        <input   type="radio"  value="Male"> Married
-                                        <input   type="radio"  value="Female"> Unmarried
+                                        <input   type="radio"  th:field="*{maritalStatus}" value="Married"> Married
+                                        <input   type="radio"  th:field="*{maritalStatus}" value="Unmarried"> Unmarried
                                     </div>
 
                                 </div>
@@ -626,7 +625,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Division </div>
                                     </div>
-                                    <select th:field="*{presentDivisionId}">
+                                    <select th:field="*{permanentDivisionId}">
                                         <option class="form-control form-control-sm" th:each="p : ${divisionList}" th:value="${p.getId()+'-'+p.getDivisionName()}" th:text="${p.getDivisionName()}"  ></option>
                                     </select>
                                 </div>
@@ -640,7 +639,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">District: </div>
                                     </div>
-                                    <select th:field="*{presentDistrictId}">
+                                    <select th:field="*{permanentDistrictId}">
                                         <option class="form-control form-control-sm" th:each="p : ${districtList}" th:value="${p.getId()+'-'+p.getDistrictName()}" th:text="${p.getDistrictName()}"  ></option>
                                     </select>
 
@@ -655,7 +654,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Thana: </div>
                                     </div>
-                                    <select th:field="*{presentThanaId}">
+                                    <select th:field="*{permanentThanaId}">
                                         <option class="form-control form-control-sm" th:each="p : ${thanaList}" th:value="${p.getId()+'-'+p.getThanaName()}" th:text="${p.getThanaName()}"  ></option>
                                     </select>
 

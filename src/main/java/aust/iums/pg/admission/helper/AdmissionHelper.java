@@ -1,7 +1,9 @@
 package aust.iums.pg.admission.helper;
 
+import aust.iums.pg.admission.enums.SemesterEnum;
 import aust.iums.pg.admission.model.*;
 import aust.iums.pg.admission.repository.*;
+import aust.iums.pg.admission.service.AdmissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,41 +16,32 @@ import java.util.List;
 public class AdmissionHelper {
 
   @Autowired
-  SemesterRepository mSemesterRepository;
+  AdmissionService mAdmissionService;
 
-  @Autowired
-  ProgramRepository mProgramRepository;
+  public AdmissionHelper(AdmissionService pAdmissionService) {
+    this.mAdmissionService = pAdmissionService;
+  }
 
-  @Autowired
-  DivisionRepository mDivisionRepository;
-
-  @Autowired
-  DistrictRepository mDistrictRepository;
-
-  @Autowired
-  ThanaRepository mThanaRepository;
-
-  public Semester getSemesters(){
-    Semester semester=mSemesterRepository.findAllByIsActive(1);
+  public Semester getActiveSemester(){
+    Semester semester=mAdmissionService.getSemesters(SemesterEnum.ACTIVE.getValue());
     return semester;
   }
 
-
-  public List<Program> getPrograms(){
-    List<Program> programList= (List<Program>) mProgramRepository.findAll();
+  public List<Program> getAllPrograms(){
+    List<Program> programList=mAdmissionService.getPrograms();
     return programList;
   }
 
-  public List<Division> getDivisions(){
-    List<Division> divisions = (List<Division>) mDivisionRepository.findAll();
+  public List<Division> getAllDivisions(){
+    List<Division> divisions = mAdmissionService.getDivisions();
     return divisions;
   }
-  public List<District> getDistricts(){
-    List<District> districts= (List<District>) mDistrictRepository.findAll();
+  public List<District> getAllDistricts(){
+    List<District> districts= mAdmissionService.getDistricts();
     return districts;
   }
-  public List<Thana> getThanas(){
-    List<Thana> thanas= (List<Thana>) mThanaRepository.findAll();
+  public List<Thana> getAllThanas(){
+    List<Thana> thanas= mAdmissionService.getThanas();
     return thanas;
   }
 

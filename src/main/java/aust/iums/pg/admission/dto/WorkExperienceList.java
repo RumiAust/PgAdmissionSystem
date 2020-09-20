@@ -1,6 +1,7 @@
 package aust.iums.pg.admission.dto;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created by Rumi on 9/16/2020.
@@ -13,6 +14,16 @@ public class WorkExperienceList {
   private String fromDate;
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private String toDate;
+
+  public MultipartFile getExperienceFile() {
+    return experienceFile;
+  }
+
+  public void setExperienceFile(MultipartFile experienceFile) {
+    this.experienceFile = experienceFile;
+  }
+
+  private MultipartFile experienceFile;
 
   public WorkExperienceList(String pOrganizationName, String pDesignation, String pJobResponsibility, String pFromDate, String pToDate) {
     organizationName = pOrganizationName;

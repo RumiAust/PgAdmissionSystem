@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Application Form</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -21,12 +21,13 @@
             min-height: 100%;
         }
 
-        h3{
+        h3 {
             color: chocolate;
         }
+
         .form-group.required .input-group-prepend:before {
-            content:"*";
-            color:red;
+            content: "*";
+            color: red;
         }
     </style>
 </head>
@@ -39,689 +40,895 @@
     <form class="form-inline my-2 my-lg-0">
         <a class="navbar-brand" href="#"><i class="fa fa-fw fa-home" style="color: chartreuse"></i>Home</a>
         <a class="navbar-brand" href="#"><i class="fa fa-fw fa-search" style="color: deepskyblue"></i>Application Status</a>
-        <a class="navbar-brand" href="#"><i class="fa fa-info-circle"  style="color: deeppink"></i>&nbsp;How to Apply</a>
+        <a class="navbar-brand" href="#"><i class="fa fa-info-circle" style="color: deeppink"></i>&nbsp;How to Apply</a>
         <a class="navbar-brand" href="#"><i class="fa fa-question" style="color: red"></i>&nbsp;FAQ</a>
     </form>
 </nav>
 
 <div class="overflow-auto">
     <form action="#" th:action="@{/apply}" th:object="${applicant}" method="post" enctype="multipart/form-data">
-    <div class="container" style="border: 2px solid black;margin-top: 40px;margin-bottom: 20px">
-        <div align="center">
-            <h1>Ahsanullah University of Science and Technology</h1>
-            <h2 style="color: dimgray">Master's Program Application Form</h2>
-            <h3 th:text="'Semester: '+${semester.getSemesterName()}"></h3>
-        </div> </br>
-        <h6><strong>All field's with <em style="color: red">*</em> sign must be filled up by the applicant</strong></h6>
-
-        <div class="container border" style="margin-top: 10px;margin-bottom: 20px">
-            <div class="card border-secondary mb-3" style="margin-top: 10px">
-                <div class="card-body">
-                    <div align="center">
-                        <h4><label >Select Program:</label>&nbsp;&nbsp;
-                            <select th:field="*{programId}">
-                                <option class="form-control form-control-sm" th:each="p : ${programList}" th:value="${p.getProgramId()+'-'+p.getProgramShortName()}" th:text="${p.getProgramShortName()}"  ></option>
-                            </select>
-                        </h4>
-                    </div>
-                </div>
+        <div class="container" style="border: 2px solid black;margin-top: 40px;margin-bottom: 20px">
+            <div align="center">
+                <h1>Ahsanullah University of Science and Technology</h1>
+                <h2 style="color: dimgray">Master's Program Application Form</h2>
+                <h3 th:text="'Semester: '+${semester.getSemesterName()}"></h3>
             </div>
-        </div>
+            </br>
+            <h6><strong>All field's with <em style="color: red">*</em> sign must be filled up by the applicant</strong>
+            </h6>
 
-        <div class="container border" style="margin-top: 10px;margin-bottom: 20px">
-            <div class="card border-secondary mb-3" style="margin-top: 10px">
-                <div class="card-header" style="max-height: 50px">
-                    <strong style="font-size: 20px;color: deeppink">
-                        <i class="fa fa-user-plus"  style="color: lightskyblue" ></i>
-                        Personal Information
-                    </strong>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group required">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">Name(as in SSC/GEC 'O' Level): </div>
-                                    </div>
-                                    <input type="text"  th:field="*{fullName}" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- father name -->
-                    <div class="row">
-                        <!-- father_name -->
-                        <div class="col-sm-12 col-md-6">
-                            <div class="form-group required">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">Father's Name: </div>
-                                    </div>
-                                    <input type="text" class="form-control" th:field="*{fatherName}"
-                                    >
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- mother name -->
-                        <div class="col-sm-12 col-md-6">
-                            <div class="form-group required">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">Mother's Name: </div>
-                                    </div>
-                                    <input type="text" class="form-control" th:field="*{motherName}"
-                                    >
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- date_of_birth, national_id_number, contact_number -->
-                    <div class="row">
-                        <!-- Date of Birth -->
-                        <div class="col-sm-12 col-md-4">
-                            <div class="form-group required">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">Date of Birth: </div>
-                                    </div>
-                                    <input type="date" class="form-control" th:value="${applicant.dateOfBirth}" th:field="${applicant.dateOfBirth}">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- national_id_number -->
-                        <div class="col-sm-12 col-md-4">
-                            <div class="form-group required">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">Nationality: </div>
-                                    </div>
-                                    <input type="text" class="form-control" th:field="*{nationality}"
-                                    >
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- contact_number -->
-                        <div class="col-sm-12 col-md-4">
-                            <div class="form-group required">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">Religion: </div>
-                                    </div>
-                                    <input type="text" class="form-control" th:field="*{religion}"
-
-                                    >
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Email, Sex, marital status-->
-                    <div class="row">
-                        <!-- Date of Birth -->
-                        <div class="col-sm-12 col-md-4">
-                            <div class="form-group required">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">Email: </div>
-                                    </div>
-                                    <input type="email" class="form-control" th:field="*{email}"
-                                    >
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- national_id_number -->
-                        <div class="col-sm-12 col-md-4">
-                            <div class="form-group required">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">Gender: </div>
-                                    </div>
-                                    &nbsp;&nbsp;&nbsp;
-                                    <div style="margin-top: 5px">
-                                        <input   type="radio" th:field="*{gender}" value="Male"> Male
-                                        <input   type="radio" th:field="*{gender}" value="Female"> Female
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- contact_number -->
-                        <div class="col-sm-12 col-md-4">
-                            <div class="form-group required">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">Marital Status: </div>
-                                    </div>
-                                    &nbsp; &nbsp; &nbsp;
-                                    <div style="margin-top: 5px">
-                                        <input   type="radio"  th:field="*{maritalStatus}" value="Married"> Married
-                                        <input   type="radio"  th:field="*{maritalStatus}" value="Unmarried"> Unmarried
-                                    </div>
-
-                                </div>
-                            </div>
+            <div class="container border" style="margin-top: 10px;margin-bottom: 20px">
+                <div class="card border-secondary mb-3" style="margin-top: 10px">
+                    <div class="card-body">
+                        <div align="center">
+                            <h4><label>Select Program:</label>&nbsp;&nbsp;
+                                <select th:field="*{programId}">
+                                    <option class="form-control form-control-sm" th:each="p : ${programList}"
+                                            th:value="${p.getProgramId()+'-'+p.getProgramShortName()}"
+                                            th:text="${p.getProgramShortName()}"></option>
+                                </select>
+                            </h4>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="container border" style="margin-top: 10px;margin-bottom: 20px">
-            <div class="card border-secondary mb-3" style="margin-top: 10px">
-                <div class="card-header" style="max-height: 50px">
-                    <strong style="font-size: 20px;color: deeppink">
-                        <i class="fa fa-graduation-cap" style="color: lightskyblue" ></i>
-                        Educational Information
-                    </strong>
-                </div>
-                <div class="card-body">
-                    <div style="background: lightgrey;margin-bottom: 10px">
-                        <strong>SSC or Equivalent</strong>
+            <div class="container border" style="margin-top: 10px;margin-bottom: 20px">
+                <div class="card border-secondary mb-3" style="margin-top: 10px">
+                    <div class="card-header" style="max-height: 50px">
+                        <strong style="font-size: 20px;color: deeppink">
+                            <i class="fa fa-user-plus" style="color: lightskyblue"></i>
+                            Personal Information
+                        </strong>
+                    </div>
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">School/College/Institution: </div>
+                                            <div class="input-group-text">Name(as in SSC/GEC 'O' Level):</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{sscInstituteName}">
+                                        <input type="text" th:field="*{fullName}" class="form-control">
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- father name -->
+                        <div class="row">
+                            <!-- father_name -->
+                            <div class="col-sm-12 col-md-6">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Father's Name:</div>
+                                        </div>
+                                        <input type="text" class="form-control" th:field="*{fatherName}"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- mother name -->
+                            <div class="col-sm-12 col-md-6">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Mother's Name:</div>
+                                        </div>
+                                        <input type="text" class="form-control" th:field="*{motherName}"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- date_of_birth, national_id_number, contact_number -->
                         <div class="row">
                             <!-- Date of Birth -->
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">Board</div>
+                                            <div class="input-group-text">Date of Birth:</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{sscBoardName}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group required">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">Total Marks/Grade</div>
-                                        </div>
-                                        <input type="text" class="form-control" th:field="*{sscMarks}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group required">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">Division/Class/Grade</div>
-                                        </div>
-                                        <input type="text" class="form-control" th:field="*{sscGrade}">
+                                        <input type="date" class="form-control" th:value="${applicant.dateOfBirth}"
+                                               th:field="${applicant.dateOfBirth}">
                                     </div>
                                 </div>
                             </div>
 
-                        </div>
-                        <div class="row">
+                            <!-- national_id_number -->
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">Year of Passing</div>
+                                            <div class="input-group-text">Nationality:</div>
                                         </div>
-                                        <input type="number" class="form-control" th:field="*{sscPassingYear}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-8">
-                                <div class="form-group required">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">Upload</div>
-                                        </div>
-                                        <input type="file" class="form-control" th:field="*{sscFile}">
+                                        <input type="text" class="form-control" th:field="*{nationality}"
+                                        >
                                     </div>
                                 </div>
                             </div>
 
-                        </div>
-                    </div>
-
-                    <div style="background: aliceblue;margin-bottom: 10px">
-                        <strong>HSC or Equivalent</strong>
-                        <div class="row">
-                            <div class="col-sm-12">
+                            <!-- contact_number -->
+                            <div class="col-sm-12 col-md-4">
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">School/College/Institution: </div>
+                                            <div class="input-group-text">Religion:</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{hscInstituteName}">
+                                        <input type="text" class="form-control" th:field="*{religion}"
+
+                                        >
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- Email, Sex, marital status-->
                         <div class="row">
                             <!-- Date of Birth -->
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">Board</div>
+                                            <div class="input-group-text">Email:</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{hscBoardName}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group required">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">Total Marks/Grade</div>
-                                        </div>
-                                        <input type="text" class="form-control" th:field="*{hscMarks}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group required">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">Division/Class/Grade</div>
-                                        </div>
-                                        <input type="text" class="form-control" th:field="*{hscGrade}">
+                                        <input type="email" class="form-control" th:field="*{email}"
+                                        >
                                     </div>
                                 </div>
                             </div>
 
-                        </div>
-                        <div class="row">
+                            <!-- national_id_number -->
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">Year of Passing</div>
+                                            <div class="input-group-text">Gender:</div>
                                         </div>
-                                        <input type="number" class="form-control" th:field="*{hscPassingYear}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-8">
-                                <div class="form-group required">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">Upload</div>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <div style="margin-top: 5px">
+                                            <input type="radio" th:field="*{gender}" value="Male"> Male
+                                            <input type="radio" th:field="*{gender}" value="Female"> Female
                                         </div>
-                                        <input type="file" class="form-control" th:field="*{hscFile}">
+
                                     </div>
                                 </div>
                             </div>
 
+                            <!-- contact_number -->
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Marital Status:</div>
+                                        </div>
+                                        &nbsp; &nbsp; &nbsp;
+                                        <div style="margin-top: 5px">
+                                            <input type="radio" th:field="*{maritalStatus}" value="Married"> Married
+                                            <input type="radio" th:field="*{maritalStatus}" value="Unmarried"> Unmarried
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container border" style="margin-top: 10px;margin-bottom: 20px">
+                <div class="card border-secondary mb-3" style="margin-top: 10px">
+                    <div class="card-header" style="max-height: 50px">
+                        <strong style="font-size: 20px;color: deeppink">
+                            <i class="fa fa-graduation-cap" style="color: lightskyblue"></i>
+                            Educational Information
+                        </strong>
                     </div>
-
-                    <div style="background: lightgrey;margin-bottom: 10px">
-                        <strong>BBA/B.Com/B.Sc./B.A./Equivalent</strong>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group required">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">School/College/Institution: </div>
+                    <div class="card-body">
+                        <div style="background: lightgrey;margin-bottom: 10px">
+                            <strong>SSC or Equivalent</strong>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">School/College/Institution:</div>
+                                            </div>
+                                            <input type="text" class="form-control" th:field="*{sscInstituteName}">
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{bscInstituteName}">
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <!-- Date of Birth -->
+                                <div class="col-sm-12 col-md-4">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Board</div>
+                                            </div>
+                                            <input type="text" class="form-control" th:field="*{sscBoardName}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-4">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Total Marks/Grade</div>
+                                            </div>
+                                            <input type="text" class="form-control" th:field="*{sscMarks}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-4">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Division/Class/Grade</div>
+                                            </div>
+                                            <input type="text" class="form-control" th:field="*{sscGrade}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-4">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Year of Passing</div>
+                                            </div>
+                                            <input type="number" class="form-control" th:field="*{sscPassingYear}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-8">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Upload</div>
+                                            </div>
+                                            <input type="file" class="form-control" th:field="*{sscFile}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
+
+                        <div style="background: aliceblue;margin-bottom: 10px">
+                            <strong>HSC or Equivalent</strong>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">School/College/Institution:</div>
+                                            </div>
+                                            <input type="text" class="form-control" th:field="*{hscInstituteName}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- Date of Birth -->
+                                <div class="col-sm-12 col-md-4">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Board</div>
+                                            </div>
+                                            <input type="text" class="form-control" th:field="*{hscBoardName}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-4">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Total Marks/Grade</div>
+                                            </div>
+                                            <input type="text" class="form-control" th:field="*{hscMarks}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-4">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Division/Class/Grade</div>
+                                            </div>
+                                            <input type="text" class="form-control" th:field="*{hscGrade}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-4">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Year of Passing</div>
+                                            </div>
+                                            <input type="number" class="form-control" th:field="*{hscPassingYear}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-8">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Upload</div>
+                                            </div>
+                                            <input type="file" class="form-control" th:field="*{hscFile}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div style="background: lightgrey;margin-bottom: 10px">
+                            <strong>BBA/B.Com/B.Sc./B.A./Equivalent</strong>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">School/College/Institution:</div>
+                                            </div>
+                                            <input type="text" class="form-control" th:field="*{bscInstituteName}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- Date of Birth -->
+                                <div class="col-sm-12 col-md-4">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Board</div>
+                                            </div>
+                                            <input type="text" class="form-control" th:field="*{bscBoardName}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-4">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Total Marks/Grade</div>
+                                            </div>
+                                            <input type="text" class="form-control" th:field="*{bscMarks}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-4">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Division/Class/Grade</div>
+                                            </div>
+                                            <input type="text" class="form-control" th:field="*{bscGrade}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-4">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Year of Passing</div>
+                                            </div>
+                                            <input type="number" class="form-control" th:field="*{bscPassingYear}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-8">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Upload</div>
+                                            </div>
+                                            <input type="file" class="form-control" th:field="*{bscFile}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div style="background: aliceblue;margin-bottom: 10px">
+                            <strong>M.Com/M.A./MBA/M.Sc.</strong>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">School/College/Institution:</div>
+                                            </div>
+                                            <input type="text" class="form-control" th:field="*{mscInstituteName}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- Date of Birth -->
+                                <div class="col-sm-12 col-md-4">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Board</div>
+                                            </div>
+                                            <input type="text" class="form-control" th:field="*{mscBoardName}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-4">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Total Marks/Grade</div>
+                                            </div>
+                                            <input type="text" class="form-control" th:field="*{mscMarks}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-4">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Division/Class/Grade</div>
+                                            </div>
+                                            <input type="text" class="form-control" th:field="*{mscGrade}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-4">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Year of Passing</div>
+                                            </div>
+                                            <input type="number" class="form-control" th:field="*{mscPassingYear}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-8">
+                                    <div class="form-group required">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Upload</div>
+                                            </div>
+                                            <input type="file" class="form-control" th:field="*{mscFile}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div th:id="${applicant.workExperienceDivId}" class="container border" style="margin-top: 10px;margin-bottom: 20px">
+                <div class="card border-secondary mb-3" style="margin-top: 10px">
+                    <div class="card-header" style="max-height: 50px">
+                        <strong style="font-size: 20px;color: deeppink">
+                            <i class="fa fa-list" style="color: lightskyblue"></i>
+                            Work Experience
+                        </strong>
+                    </div>
+                    <div class="card-body">
+                        <table>
+                            <thead>
+                            <tr class="col-sm-12">
+                                <td class="col-sm-4" align="right" style="padding: 10px">
+                                    <button class="btn btn-success" type="submit" name="addRow">Add</button>
+                                </td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="border" style="margin: 20px;" th:each="row,rowStat : *{workExperienceList}">
+                                <td class="col-sm-12" style="padding: 20px;">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group required">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">Organization Name:</div>
+                                                    </div>
+                                                    <input type="text" class="form-control"
+                                                           th:field="*{workExperienceList[__${rowStat.index}__].organizationName}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <!-- Date of Birth -->
+                                        <div class="col-sm-12 col-md-6">
+                                            <div class="form-group required">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">Designation:</div>
+                                                    </div>
+                                                    <input type="text" class="form-control"
+                                                           th:field="*{workExperienceList[__${rowStat.index}__].designation}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6">
+                                            <div class="form-group required">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">jobResponsibility</div>
+                                                    </div>
+                                                    <input type="text" class="form-control"
+                                                           th:field="*{workExperienceList[__${rowStat.index}__].jobResponsibility}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-4">
+                                            <div class="form-group required">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">From Date</div>
+                                                    </div>
+                                                    <input type="date" class="form-control"
+                                                           th:field="*{workExperienceList[__${rowStat.index}__].fromDate}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-4">
+                                            <div class="form-group required">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">To Date:</div>
+                                                    </div>
+                                                    <input type="date" class="form-control"
+                                                           th:field="*{workExperienceList[__${rowStat.index}__].toDate}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-4">
+                                            <div class="form-group required">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">Upload</div>
+                                                    </div>
+                                                    <input type="file" class="form-control"
+                                                           th:field="*{workExperienceList[__${rowStat.index}__].experienceFile}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" >
+                                        <div class="col-md-4">
+
+                                        </div>
+                                        <div class="col-md-4"align="center">
+                                            <button class="btn btn-danger" type="submit" name="removeRow"
+                                                    th:value="${rowStat.index}">X
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container border" style="margin-top: 10px;margin-bottom: 20px">
+                <div class="card border-secondary mb-3" style="margin-top: 10px">
+                    <div class="card-header" style="max-height: 50px">
+                        <strong style="font-size: 20px;color: deeppink">
+                            <i class="fa fa-address-card-o" style="color: lightskyblue"></i>
+                            Contact Information
+                        </strong>
+                    </div>
+                    <div class="card-body">
+                        <strong>Present Address</strong>
                         <div class="row">
                             <!-- Date of Birth -->
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">Board</div>
+                                            <div class="input-group-text">Division</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{bscBoardName}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group required">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">Total Marks/Grade</div>
-                                        </div>
-                                        <input type="text" class="form-control" th:field="*{bscMarks}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group required">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">Division/Class/Grade</div>
-                                        </div>
-                                        <input type="text" class="form-control" th:field="*{bscGrade}">
+                                        <select th:field="*{presentDivisionId}">
+                                            <option class="form-control form-control-sm" th:each="p : ${divisionList}"
+                                                    th:value="${p.getId()+'-'+p.getDivisionName()}"
+                                                    th:text="${p.getDivisionName()}"></option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
 
-                        </div>
-                        <div class="row">
+                            <!-- national_id_number -->
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">Year of Passing</div>
+                                            <div class="input-group-text">District:</div>
                                         </div>
-                                        <input type="number" class="form-control" th:field="*{bscPassingYear}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-8">
-                                <div class="form-group required">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">Upload</div>
-                                        </div>
-                                        <input type="file" class="form-control" th:field="*{bscFile}">
+                                        <select th:field="*{presentDistrictId}">
+                                            <option class="form-control form-control-sm" th:each="p : ${districtList}"
+                                                    th:value="${p.getId()+'-'+p.getDistrictName()}"
+                                                    th:text="${p.getDistrictName()}"></option>
+                                        </select>
+
                                     </div>
                                 </div>
                             </div>
 
-                        </div>
-                    </div>
-
-                    <div style="background: aliceblue;margin-bottom: 10px">
-                        <strong>M.Com/M.A./MBA/M.Sc.</strong>
-                        <div class="row">
-                            <div class="col-sm-12">
+                            <!-- contact_number -->
+                            <div class="col-sm-12 col-md-4">
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">School/College/Institution: </div>
+                                            <div class="input-group-text">Thana:</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{mscInstituteName}">
+                                        <select th:field="*{presentThanaId}">
+                                            <option class="form-control form-control-sm" th:each="p : ${thanaList}"
+                                                    th:value="${p.getId()+'-'+p.getThanaName()}"
+                                                    th:text="${p.getThanaName()}"></option>
+                                        </select>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <!-- Date of Birth -->
-                            <div class="col-sm-12 col-md-4">
+                            <div class="col-sm-12">
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">Board</div>
+                                            <div class="input-group-text">Address</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{mscBoardName}">
+                                        <input type="text" class="form-control" th:field="*{presentAddress}">
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <strong>Permanent Address</strong>
+                        <div class="row">
+                            <!-- Date of Birth -->
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">Total Marks/Grade</div>
+                                            <div class="input-group-text">Division</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{mscMarks}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group required">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">Division/Class/Grade</div>
-                                        </div>
-                                        <input type="text" class="form-control" th:field="*{mscGrade}">
+                                        <select th:field="*{permanentDivisionId}">
+                                            <option class="form-control form-control-sm" th:each="p : ${divisionList}"
+                                                    th:value="${p.getId()+'-'+p.getDivisionName()}"
+                                                    th:text="${p.getDivisionName()}"></option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
 
+                            <!-- national_id_number -->
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">District:</div>
+                                        </div>
+                                        <select th:field="*{permanentDistrictId}">
+                                            <option class="form-control form-control-sm" th:each="p : ${districtList}"
+                                                    th:value="${p.getId()+'-'+p.getDistrictName()}"
+                                                    th:text="${p.getDistrictName()}"></option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- contact_number -->
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Thana:</div>
+                                        </div>
+                                        <select th:field="*{permanentThanaId}">
+                                            <option class="form-control form-control-sm" th:each="p : ${thanaList}"
+                                                    th:value="${p.getId()+'-'+p.getThanaName()}"
+                                                    th:text="${p.getThanaName()}"></option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12 col-md-4">
+                            <!-- Date of Birth -->
+                            <div class="col-sm-12">
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">Year of Passing</div>
+                                            <div class="input-group-text">Address</div>
                                         </div>
-                                        <input type="number" class="form-control" th:field="*{mscPassingYear}">
+                                        <input type="text" class="form-control" th:field="*{permanentAddress}">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-8">
-                                <div class="form-group required">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">Upload</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="container border" style="margin-top: 10px;margin-bottom: 20px">
+                <div class="card border-secondary mb-3" style="margin-top: 10px">
+                    <div class="card-header" style="max-height: 50px">
+                        <strong style="font-size: 20px;color: deeppink">
+                            <i class="fa fa-camera-retro" style="color: lightskyblue"></i>
+                            Photo and Signature
+                        </strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="row justify-content-end">
+                            <div class="col-md-12">
+                                <div class="alert alert-warning">
+                                    <ul style="max-height:150px;">
+                                        <li>Photo must have a dimensions of 300 px x 300 px (width x height). Maximum
+                                            allowed
+                                            photo size is 50KB.
+                                        </li>
+                                        <li>Signature must have a dimensions of 300 px x 80 px (width x height). Maximum
+                                            allowed
+                                            signature size is 50KB.
+                                        </li>
+                                        <li>Only "<b>jpg</b>" and "<b>jpeg</b>" extensions are allowed.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-6 justify-content-end"
+                                 style="border-style: solid;border-color: antiquewhite; border-width: 1px;">
+                                <div class="form-group" style="position: relative">
+                                    <label class="form-control-label" for="field_photo">Photo</label>
+                                    <div>
+                                        <div style="display: none" id="photo-div"
+                                             class="form-text text-danger clearfix">
+                                            <img id="photo" src="#" class="img-fluid rounded" width="170" height="165"
+                                                 alt="Photo"/>
                                         </div>
-                                        <input type="file" class="form-control" th:field="*{mscFile}">
+                                        <input class="form-control border" type="file" name="file" accept=".jpg, .jpeg"
+                                               id="file_photo" th:field="*{photo}"/>
                                     </div>
+                                    <input type="hidden" class="form-control" name="photo" id="field_photo"
+                                           formControlName="photo"/>
+                                    <input style="position: absolute; top: 50%;" type="hidden" class="form-control"
+                                           name="photoContentType" id="field_photoContentType"
+                                           formControlName="photoContentType"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6 justify-content-end"
+                                 style="border-style: solid;border-color: antiquewhite; border-width: 1px;">
+                                <div class="form-group" style="position: relative">
+                                    <label class="form-control-label" for="field_photo">Photo</label>
+                                    <div>
+                                        <div style="display: none" id="signature-div"
+                                             class="form-text text-danger clearfix">
+                                            <img id="signature" src="#" class="img-fluid rounded" width="170"
+                                                 height="165"
+                                                 alt="Photo"/>
+                                        </div>
+                                        <input class="form-control border" type="file" name="file" accept=".jpg, .jpeg"
+                                               id="file_signature" th:field="*{signature}"/>
+                                    </div>
+                                    <input type="hidden" class="form-control" name="photo" id="field_signature"
+                                           formControlName="photo"/>
+                                    <input style="position: absolute; top: 50%;" type="hidden" class="form-control"
+                                           name="photoContentType" id="field_signatureContentType"
+                                           formControlName="photoContentType"/>
                                 </div>
                             </div>
 
+
+                            <h1 th:text="${successmessage}"></h1>
+                            <h1 th:text="${errormessage}"></h1>
                         </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h6><input type="checkbox" th:field="*{declaration}"> I do hereby declare that the information as stated
+                    in the Admission application form is true. If any of the information is found incorrect, my
+                    admission is liable to be cancelled. If any of the certificates/academic transcripts/documents
+                    attached with this form is found altered/forged, my admission is also liable to be cancelled.I also
+                    declare that I will abide by all the existing as well as any new rules and regulations of the
+                    University, if made in future, and the orders of the AUST authority; otherwise my admission is
+                    liable to be cancelled.</h6>
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-md-12" align="center">
+                        <input type="submit" name="save" class="btn btn-success" value="Submit"/>
                     </div>
 
                 </div>
             </div>
+
         </div>
-
-        <div class="container border" style="margin-top: 10px;margin-bottom: 20px">
-            <div class="card border-secondary mb-3" style="margin-top: 10px">
-                <div class="card-header" style="max-height: 50px">
-                    <strong style="font-size: 20px;color: deeppink">
-                        <i class="fa fa-list"  style="color: lightskyblue" ></i>
-                        Work Experience
-                    </strong>
-                </div>
-                <div class="card-body">
-                    <button type="button" class="btn btn-primary btn-xs">Add Experience</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="container border" style="margin-top: 10px;margin-bottom: 20px">
-            <div class="card border-secondary mb-3" style="margin-top: 10px">
-                <div class="card-header" style="max-height: 50px">
-                    <strong style="font-size: 20px;color: deeppink">
-                        <i class="fa fa-address-card-o" style="color: lightskyblue" ></i>
-                        Contact Information
-                    </strong>
-                </div>
-                <div class="card-body">
-                    <strong>Present Address</strong>
-                    <div class="row">
-                        <!-- Date of Birth -->
-                        <div class="col-sm-12 col-md-4">
-                            <div class="form-group required">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">Division </div>
-                                    </div>
-                                    <select th:field="*{presentDivisionId}">
-                                        <option class="form-control form-control-sm" th:each="p : ${divisionList}" th:value="${p.getId()+'-'+p.getDivisionName()}" th:text="${p.getDivisionName()}"  ></option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- national_id_number -->
-                        <div class="col-sm-12 col-md-4">
-                            <div class="form-group required">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">District: </div>
-                                    </div>
-                                    <select th:field="*{presentDistrictId}">
-                                        <option class="form-control form-control-sm" th:each="p : ${districtList}" th:value="${p.getId()+'-'+p.getDistrictName()}" th:text="${p.getDistrictName()}"  ></option>
-                                    </select>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- contact_number -->
-                        <div class="col-sm-12 col-md-4">
-                            <div class="form-group required">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">Thana: </div>
-                                    </div>
-                                    <select th:field="*{presentThanaId}">
-                                        <option class="form-control form-control-sm" th:each="p : ${thanaList}" th:value="${p.getId()+'-'+p.getThanaName()}" th:text="${p.getThanaName()}"  ></option>
-                                    </select>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <!-- Date of Birth -->
-                        <div class="col-sm-12">
-                            <div class="form-group required">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">Address </div>
-                                    </div>
-                                    <input type="text" class="form-control" th:field="*{presentAddress}">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <strong>Permanent Address</strong>
-                    <div class="row">
-                        <!-- Date of Birth -->
-                        <div class="col-sm-12 col-md-4">
-                            <div class="form-group required">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">Division </div>
-                                    </div>
-                                    <select th:field="*{permanentDivisionId}">
-                                        <option class="form-control form-control-sm" th:each="p : ${divisionList}" th:value="${p.getId()+'-'+p.getDivisionName()}" th:text="${p.getDivisionName()}"  ></option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- national_id_number -->
-                        <div class="col-sm-12 col-md-4">
-                            <div class="form-group required">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">District: </div>
-                                    </div>
-                                    <select th:field="*{permanentDistrictId}">
-                                        <option class="form-control form-control-sm" th:each="p : ${districtList}" th:value="${p.getId()+'-'+p.getDistrictName()}" th:text="${p.getDistrictName()}"  ></option>
-                                    </select>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- contact_number -->
-                        <div class="col-sm-12 col-md-4">
-                            <div class="form-group required">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">Thana: </div>
-                                    </div>
-                                    <select th:field="*{permanentThanaId}">
-                                        <option class="form-control form-control-sm" th:each="p : ${thanaList}" th:value="${p.getId()+'-'+p.getThanaName()}" th:text="${p.getThanaName()}"  ></option>
-                                    </select>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <!-- Date of Birth -->
-                        <div class="col-sm-12">
-                            <div class="form-group required">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">Address </div>
-                                    </div>
-                                    <input type="text" class="form-control"  th:field="*{permanentAddress}" >
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div class="container border" style="margin-top: 10px;margin-bottom: 20px">
-            <div class="card border-secondary mb-3" style="margin-top: 10px">
-                <div class="card-header" style="max-height: 50px">
-                    <strong style="font-size: 20px;color: deeppink">
-                        <i class="fa fa-camera-retro" style="color: lightskyblue" ></i>
-                        Photo and Signature
-                    </strong>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-6" style="border: 1px solid lightgrey">
-                            <div class="form-group required">
-                                <h3>Photo</h3>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-12 col-md-6" style="border: 1px solid lightgrey">
-                            <div class="form-group required">
-                                <h3>Signature</h3>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <h6> <input  type="checkbox"   th:field="*{declaration}"> I do hereby declare that the information as stated in the Admission application form is true. If any of the information is found incorrect, my admission is liable to be cancelled. If any of the certificates/academic transcripts/documents attached with this form is found altered/forged, my admission is also liable to be cancelled.I also declare that I will abide by all the existing as well as any new rules and regulations of the University, if made in future, and the orders of the AUST authority; otherwise my admission is liable to be cancelled.</h6>
-            <div class="row" style="margin-bottom: 20px">
-                <div class="col-md-12" align="center">
-                    <input type="submit" class="btn btn-success" value="Submit" />
-                </div>
-
-            </div>
-        </div>
-
-    </div>
     </form>
 
 </div>
 
 
-
 <footer class="page-footer font-small blue-grey lighten-5">
-    <div style="background-color: aliceblue; font-size: small;" >
+    <div style="background-color: aliceblue; font-size: small;">
         <div class="container" align="center" style="padding: 10px">
             <strong>AUST ICT CENTER</strong>
             <br/>
-            Admission Inquiry - <b>01773500054</b> & <b>01817646270</b> | Technical Support - 01718547200 & 01891802551 (From <font style="color: #CA2BC0">10:00 AM</font> to <font style="color: #CA2BC0">05:00 PM</font>).
+            Admission Inquiry - <b>01773500054</b> & <b>01817646270</b> | Technical Support - 01718547200 & 01891802551
+            (From <font style="color: #CA2BC0">10:00 AM</font> to <font style="color: #CA2BC0">05:00 PM</font>).
             <br/>
             E-mail: <a href="mailto:pg.admission@aust.edu" style="color: deepskyblue;">pg.admission@aust.edu</a>
         </div>
     </div>
 </footer>
 
+<script>
+    $(document).ready(function () {
+        function readPhotoURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#photo').attr('src', e.target.result);
+                    $('#photo-div').attr('style', '');
+                }
+
+                reader.readAsDataURL(input.files[0]); // convert to base64 string
+            }
+        }
+
+        function readSignatureURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#signature').attr('src', e.target.result);
+                    $('#signature-div').attr('style', '');
+                }
+
+                reader.readAsDataURL(input.files[0]); // convert to base64 string
+            }
+        }
+
+        $("#file_photo").change(function () {
+            readPhotoURL(this);
+        });
+        $("#file_signature").change(function () {
+            readSignatureURL(this);
+        });
+
+    });
+    document.getElementById('workExperienceDivId').scrollIntoView(true);
+
+</script>
 
 </body>
 </html>

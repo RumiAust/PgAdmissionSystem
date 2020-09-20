@@ -3,7 +3,7 @@ package aust.iums.pg.admission.model;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
-import java.time.Instant;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -40,11 +40,11 @@ public class JobExperience {
 
   @NotNull
   @Column(name = "FROM_DATE", nullable = false)
-  private Instant fromDate;
+  private Date fromDate;
 
   @NotNull
   @Column(name = "TO_DATE", nullable = false)
-  private Instant toDate;
+  private Date toDate;
 
   public JobExperience() {
 
@@ -98,19 +98,19 @@ public class JobExperience {
     jobResponsibilities = pJobResponsibilities;
   }
 
-  public Instant getFromDate() {
+  public Date getFromDate() {
     return fromDate;
   }
 
-  public void setFromDate(Instant pFromDate) {
+  public void setFromDate(Date pFromDate) {
     fromDate = pFromDate;
   }
 
-  public Instant getToDate() {
+  public Date getToDate() {
     return toDate;
   }
 
-  public void setToDate(Instant pToDate) {
+  public void setToDate(Date pToDate) {
     toDate = pToDate;
   }
 

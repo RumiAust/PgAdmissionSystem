@@ -1,6 +1,7 @@
 package aust.iums.pg.admission.service;
 
 import aust.iums.pg.admission.dto.ApplicationForm;
+import aust.iums.pg.admission.dto.WorkExperienceList;
 import aust.iums.pg.admission.enums.AdmissionEnum;
 import aust.iums.pg.admission.enums.SemesterEnum;
 import aust.iums.pg.admission.model.*;
@@ -8,6 +9,7 @@ import aust.iums.pg.admission.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -54,6 +56,9 @@ public class AdmissionService {
   @Autowired
   JobExperienceRepository mJobExperienceRepository;
 
+  @Autowired
+  FileStorageService fileStorageService;
+
   public Semester getSemesters(Integer pStatus){
     Semester semester=mSemesterRepository.findAllByIsActive(pStatus.intValue());
     return semester;
@@ -79,7 +84,7 @@ public class AdmissionService {
     return thanas;
   }
 
-  public void save(ApplicationForm pApp) throws ParseException {
+  public void save(ApplicationForm pApp) throws ParseException, IOException {
    String applicantSerialNo= mApplicantRepository.getApplicantSerialNo().toString();
    Applicant applicant= new Applicant();
    applicant.setSemesterId(pApp.getSemesterId());
@@ -133,6 +138,19 @@ public class AdmissionService {
     addressList.add(address);
     mApplicantAddressRepository.saveAll(addressList);
 
+    List<JobExperience> workExperienceLists= new ArrayList<>();
+    for(WorkExperienceList data: pApp.getWorkExperienceList()){
+      JobExperience obj = new JobExperience();
+      fileStorageService.saveFile(data.getExperienceFile(),"document");
+      obj.setApplicationSn(applicantSerialNo);
+      obj.setOrganizationName(data.getOrganizationName());
+      obj.setDesignation(data.getDesignation());
+      obj.setJobResponsibilities(data.getJobResponsibility());
+      obj.setFromDate(formatter.parse(data.getFromDate()));
+      obj.setToDate(formatter.parse(data.getToDate()));
+      workExperienceLists.add(obj);
+    }
+     mJobExperienceRepository.saveAll(workExperienceLists);
     //method create
    /* mApplicantRepository.save(applicant);
 

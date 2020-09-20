@@ -8,6 +8,7 @@ import aust.iums.pg.admission.service.AdmissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class AdmissionHelper {
     return thanas;
   }
 
-  public void saveInfo(ApplicationForm pApplicationForm) throws ParseException {
+  public void saveInfo(ApplicationForm pApplicationForm) throws ParseException, IOException {
     mAdmissionService.save(pApplicationForm);
   }
 

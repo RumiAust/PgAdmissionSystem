@@ -8,8 +8,12 @@ import aust.iums.pg.admission.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -74,7 +78,7 @@ public class AdmissionService {
     return thanas;
   }
 
-  public void save(ApplicationForm pApp){
+  public void save(ApplicationForm pApp) throws ParseException {
    String applicantSerialNo= mApplicantRepository.getApplicantSerialNo().toString();
    Applicant applicant= new Applicant();
    applicant.setSemesterId(pApp.getSemesterId());
@@ -85,9 +89,30 @@ public class AdmissionService {
    applicant.setAppliedOn(Instant.now());
    applicant.setSelectedRejectedOn(Instant.now());
    applicant.setApplicationFeePaidOn(Instant.now());
-   //applicant.setDistrict();
     mApplicantRepository.save(applicant);
-    int x=0;
+    ApplicantPersonaIInfo app= new ApplicantPersonaIInfo();
+    app.setFirstName(pApp.getFatherName());
+    app.setMiddleName(pApp.getFullName());
+    app.setLastName(pApp.getFullName());
+    app.setFatherName(pApp.getFatherName());
+    app.setMotherName(pApp.getMotherName());
+    app.setApplicationSn(applicantSerialNo);
+    app.setGender(pApp.getGender());
+    app.setMaritalStatus(pApp.getMaritalStatus());
+    app.setReligion(pApp.getReligion());
+    app.setNationality(pApp.getNationality());
+    DateFormat formatter;
+    Date date;
+    formatter = new SimpleDateFormat("yyyy-MM-dd");
+    date = formatter.parse(pApp.getDateOfBirth());
+    app.setDateOfBirth(date);
+    app.setPlaceOfBirth("BD");
+    app.setMobileNumber("1003");
+    app.setEmailAddress(pApp.getEmail());
+    app.setCreatedOn(Instant.now());
+
+    mApplicantPersonalInfoRepository.save(app);
+    
     //method create
    /* mApplicantRepository.save(applicant);
 

@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -77,7 +78,7 @@ public class AdmissionController {
   }
 
   @PostMapping(value = "/apply", params = {"save"})
-  public String greetingSubmit(@ModelAttribute ApplicationForm applicant, Model model, RedirectAttributes redirectAttributes) throws IOException {
+  public String greetingSubmit(@ModelAttribute ApplicationForm applicant, Model model, RedirectAttributes redirectAttributes) throws IOException, ParseException {
     model.addAttribute("applicant", applicant);
 
     String programInfo[]=applicant.getProgramId().split("-");
@@ -105,19 +106,19 @@ public class AdmissionController {
     applicant.setPermanentThanaId(perThana[0]);
     applicant.setPermanentThana(perThana[1]);
 
-
-    log.info(" [{}]: Applicant Infos ",applicant.toString());
+     try{
+      log.info(" [{}]: Applicant Infos ",applicant.toString());
        mHelper.saveInfo(applicant);
       fileStorageService.saveFile(applicant.getPhoto(),"photo");
       fileStorageService.saveFile(applicant.getSignature(),"signature");
       applicant.setWorkExperienceDivId("");
 
       return "form-view";
-    /*}catch (Exception e){
+   }catch (Exception e){
       redirectAttributes.addFlashAttribute("errormessage","Files are not saved successfully because "+e.getMessage());
       applicant.setWorkExperienceDivId("");
-      return "form-view";
-    }*/
+      return ""+e.getMessage();
+    }
   }
 
 

@@ -1,5 +1,6 @@
 package aust.iums.pg.admission.helper;
 
+import aust.iums.pg.admission.dto.ApplicationForm;
 import aust.iums.pg.admission.enums.SemesterEnum;
 import aust.iums.pg.admission.model.*;
 import aust.iums.pg.admission.repository.*;
@@ -43,6 +44,10 @@ public class AdmissionHelper {
   public List<Thana> getAllThanas(){
     List<Thana> thanas= mAdmissionService.getThanas();
     return thanas;
+  }
+
+  public void saveInfo(ApplicationForm pApplicationForm){
+    mAdmissionService.save(pApplicationForm);
   }
 
 }

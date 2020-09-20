@@ -76,28 +76,23 @@ public class AdmissionController {
 
   @PostMapping(value = "/apply", params = {"save"})
   public String greetingSubmit(@ModelAttribute ApplicationForm applicant, Model model, RedirectAttributes redirectAttributes) {
-    /*model.addAttribute("applicant", applicant);
-    String name = applicant.getFullName();
-    String program=applicant.getProgramId();
+    model.addAttribute("applicant", applicant);
     String programInfo[]=applicant.getProgramId().split("-");
     applicant.setProgramId(programInfo[0]);
     applicant.setProgramName(programInfo[1]);
-    log.info(" [{}]: Applicant Infos ",applicant.toString());*/
-
+    log.info(" [{}]: Applicant Infos ",applicant.toString());
     try {
+       mHelper.saveInfo(applicant);
       fileStorageService.saveFile(applicant.getPhoto(),"photo");
       fileStorageService.saveFile(applicant.getSignature(),"signature");
       applicant.setWorkExperienceDivId("");
-      redirectAttributes.addFlashAttribute("successmessage","Files are saved successfully");
+
       return "form-view";
     }catch (Exception e){
       redirectAttributes.addFlashAttribute("errormessage","Files are not saved successfully because "+e.getMessage());
       applicant.setWorkExperienceDivId("");
       return "form-view";
     }
-
-    /*int id=  greeting.getId();
-    String name=greeting.getContent();*/
   }
 
 

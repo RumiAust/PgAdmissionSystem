@@ -12,6 +12,7 @@ public class ApplicationForm {
     //program info
     private String programId;
     private String programName;
+    private String semesterId;
     //personal info
     private String fullName;
     private String fatherName;
@@ -89,7 +90,15 @@ public class ApplicationForm {
         programName = pProgramName;
     }
 
-    public String getFullName() {
+  public String getSemesterId() {
+    return semesterId;
+  }
+
+  public void setSemesterId(String pSemesterId) {
+    semesterId = pSemesterId;
+  }
+
+  public String getFullName() {
         return fullName;
     }
 

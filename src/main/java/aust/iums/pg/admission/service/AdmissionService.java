@@ -70,9 +70,14 @@ public class AdmissionService {
     return thanas;
   }
 
-  public void save(ApplicationForm pApplicationForm){
-   int sn= mApplicantRepository.getApplicantSerialNo();
-   int x=0;
+  public void save(ApplicationForm pApp){
+   String applicantSerialNo= mApplicantRepository.getApplicantSerialNo().toString();
+   Applicant applicant= new Applicant();
+   applicant.setSemesterId(pApp.getSemesterId());
+   applicant.setProgramId(pApp.getProgramId());
+   applicant.setApplicationSn(applicantSerialNo);
+
+    int x=0;
     //method create
    /* mApplicantRepository.save(applicant);
 

@@ -35,6 +35,7 @@ public class AdmissionController {
   AdmissionHelper mHelper;
 
   private final Logger log = LoggerFactory.getLogger(AdmissionController.class);
+  Semester semester;
 
   @ModelAttribute("applicant")
   public ApplicationForm applicantModel(){
@@ -45,7 +46,7 @@ public class AdmissionController {
   }
   @ModelAttribute("semester")
   public Semester semesterModel(){
-    Semester semester =mHelper.getActiveSemester();
+     semester =mHelper.getActiveSemester();
     return semester;
   }
   @ModelAttribute("programList")
@@ -77,9 +78,33 @@ public class AdmissionController {
   @PostMapping(value = "/apply", params = {"save"})
   public String greetingSubmit(@ModelAttribute ApplicationForm applicant, Model model, RedirectAttributes redirectAttributes) {
     model.addAttribute("applicant", applicant);
+
     String programInfo[]=applicant.getProgramId().split("-");
     applicant.setProgramId(programInfo[0]);
     applicant.setProgramName(programInfo[1]);
+    applicant.setSemesterId(semester.getSemesterId());
+
+    String pDivision[]=applicant.getPresentDivisionId().split("-");
+    applicant.setPresentDivisionId(pDivision[0]);
+    applicant.setPresentDivision(pDivision[1]);
+    String pDistrict[]=applicant.getPresentDistrictId().split("-");
+    applicant.setPresentDistrictId(pDivision[0]);
+    applicant.setPresentDistrict(pDivision[1]);
+    String pThana[]=applicant.getPresentThanaId().split("-");
+    applicant.setPresentThanaId(pDivision[0]);
+    applicant.setPresentThana(pDivision[1]);
+
+    String perDivision[]=applicant.getPermanentDivisionId().split("-");
+    applicant.setPermanentDivisionId(pDivision[0]);
+    applicant.setPermanentDivision(pDivision[1]);
+    String perDistrict[]=applicant.getPermanentDistrictId().split("-");
+    applicant.setPermanentDistrictId(pDivision[0]);
+    applicant.setPermanentDistrict(pDivision[1]);
+    String perThana[]=applicant.getPermanentThanaId().split("-");
+    applicant.setPermanentThanaId(pDivision[0]);
+    applicant.setPermanentThana(pDivision[1]);
+
+
     log.info(" [{}]: Applicant Infos ",applicant.toString());
     try {
        mHelper.saveInfo(applicant);

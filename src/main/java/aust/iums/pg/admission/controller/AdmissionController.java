@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -76,7 +77,7 @@ public class AdmissionController {
   }
 
   @PostMapping(value = "/apply", params = {"save"})
-  public String greetingSubmit(@ModelAttribute ApplicationForm applicant, Model model, RedirectAttributes redirectAttributes) {
+  public String greetingSubmit(@ModelAttribute ApplicationForm applicant, Model model, RedirectAttributes redirectAttributes) throws IOException {
     model.addAttribute("applicant", applicant);
 
     String programInfo[]=applicant.getProgramId().split("-");
@@ -106,18 +107,17 @@ public class AdmissionController {
 
 
     log.info(" [{}]: Applicant Infos ",applicant.toString());
-    try {
        mHelper.saveInfo(applicant);
       fileStorageService.saveFile(applicant.getPhoto(),"photo");
       fileStorageService.saveFile(applicant.getSignature(),"signature");
       applicant.setWorkExperienceDivId("");
 
       return "form-view";
-    }catch (Exception e){
+    /*}catch (Exception e){
       redirectAttributes.addFlashAttribute("errormessage","Files are not saved successfully because "+e.getMessage());
       applicant.setWorkExperienceDivId("");
       return "form-view";
-    }
+    }*/
   }
 
 

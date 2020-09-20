@@ -22,7 +22,7 @@ public class JobExperience {
   @Column(name = "APPLICANTION_SN")
   private String applicationSn;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "APPLICANT_ID",referencedColumnName = "ID",updatable=false)
   Applicant mApplicant;
 

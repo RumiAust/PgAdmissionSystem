@@ -6,6 +6,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -44,7 +45,7 @@ public class Applicant {
   @Column(name = "APPLICATION_FEE_PAID_ON", nullable = false)
   private Instant applicationFeePaidOn;
 
-  @NotNull
+
   @Column(name = "SELECTED_REJECTED_ON", nullable = false)
   private Instant selectedRejectedOn;
 
@@ -57,33 +58,22 @@ public class Applicant {
   @LastModifiedDate
   private Instant updatedOn;
 
-  @ManyToOne
-  @JoinColumn(name = "DIVISION_ID", referencedColumnName = "ID",updatable=false)
-  Division mDivision;
 
-  @ManyToOne
-  @JoinColumn(name = "DISTRCIT_ID", referencedColumnName = "ID",updatable=false)
-  District mDistrict;
-
-  @ManyToOne
-  @JoinColumn(name = "THANA_ID", referencedColumnName = "ID",updatable=false)
-  Thana mThana;
-
-  @OneToOne
+  @OneToMany
   @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ID",updatable=false)
-  ApplicantAddress mApplicantAddress;
+  List<ApplicantAddress> mApplicantAddress;
 
-  @OneToOne
+  @OneToMany
   @JoinColumn(name = "EDUCATION_INFO_ID", referencedColumnName = "ID",updatable=false)
-  ApplicantEducationalInfo mApplicantEducationalInfo;
+  List<ApplicantEducationalInfo> mApplicantEducationalInfo;
 
   @OneToOne
   @JoinColumn(name = "PERSONAL_INFO_ID", referencedColumnName = "ID",updatable=false)
   ApplicantPersonaIInfo mApplicantPersonaIInfo;
 
-  @OneToOne
+  @OneToMany
   @JoinColumn(name = "JOB_EXPERIENCE_ID", referencedColumnName = "ID",updatable=false)
-  JobExperience mJobExperience;
+  List<JobExperience> mJobExperience;
 
 
 
@@ -91,45 +81,6 @@ public class Applicant {
 
   }
 
-  public Division getDivision() {
-    return mDivision;
-  }
-
-  public void setDivision(Division pDivision) {
-    mDivision = pDivision;
-  }
-
-  public District getDistrict() {
-    return mDistrict;
-  }
-
-  public void setDistrict(District pDistrict) {
-    mDistrict = pDistrict;
-  }
-
-  public Thana getThana() {
-    return mThana;
-  }
-
-  public void setThana(Thana pThana) {
-    mThana = pThana;
-  }
-
-  public ApplicantAddress getApplicantAddress() {
-    return mApplicantAddress;
-  }
-
-  public void setApplicantAddress(ApplicantAddress pApplicantAddress) {
-    mApplicantAddress = pApplicantAddress;
-  }
-
-  public ApplicantEducationalInfo getApplicantEducationalInfo() {
-    return mApplicantEducationalInfo;
-  }
-
-  public void setApplicantEducationalInfo(ApplicantEducationalInfo pApplicantEducationalInfo) {
-    mApplicantEducationalInfo = pApplicantEducationalInfo;
-  }
 
   public ApplicantPersonaIInfo getApplicantPersonaIInfo() {
     return mApplicantPersonaIInfo;
@@ -139,13 +90,6 @@ public class Applicant {
     mApplicantPersonaIInfo = pApplicantPersonaIInfo;
   }
 
-  public JobExperience getJobExperience() {
-    return mJobExperience;
-  }
-
-  public void setJobExperience(JobExperience pJobExperience) {
-    mJobExperience = pJobExperience;
-  }
 
   public Long getId() {
     return id;
@@ -227,6 +171,30 @@ public class Applicant {
     updatedOn = pUpdatedOn;
   }
 
+  public List<ApplicantAddress> getApplicantAddress() {
+    return mApplicantAddress;
+  }
+
+  public void setApplicantAddress(List<ApplicantAddress> pApplicantAddress) {
+    mApplicantAddress = pApplicantAddress;
+  }
+
+  public List<ApplicantEducationalInfo> getApplicantEducationalInfo() {
+    return mApplicantEducationalInfo;
+  }
+
+  public void setApplicantEducationalInfo(List<ApplicantEducationalInfo> pApplicantEducationalInfo) {
+    mApplicantEducationalInfo = pApplicantEducationalInfo;
+  }
+
+  public List<JobExperience> getJobExperience() {
+    return mJobExperience;
+  }
+
+  public void setJobExperience(List<JobExperience> pJobExperience) {
+    mJobExperience = pJobExperience;
+  }
+
   @Override
   public boolean equals(Object pO) {
     if (this == pO) return true;
@@ -242,9 +210,6 @@ public class Applicant {
         Objects.equals(getSelectedRejectedOn(), applicant.getSelectedRejectedOn()) &&
         Objects.equals(getCreatedOn(), applicant.getCreatedOn()) &&
         Objects.equals(getUpdatedOn(), applicant.getUpdatedOn()) &&
-        Objects.equals(getDivision(), applicant.getDivision()) &&
-        Objects.equals(getDistrict(), applicant.getDistrict()) &&
-        Objects.equals(getThana(), applicant.getThana()) &&
         Objects.equals(getApplicantAddress(), applicant.getApplicantAddress()) &&
         Objects.equals(getApplicantEducationalInfo(), applicant.getApplicantEducationalInfo()) &&
         Objects.equals(getApplicantPersonaIInfo(), applicant.getApplicantPersonaIInfo()) &&
@@ -253,7 +218,7 @@ public class Applicant {
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getSemesterId(), getProgramId(), getApplicationSn(), getStatus(), getAppliedOn(), getApplicationFeePaidOn(), getSelectedRejectedOn(), getCreatedOn(), getUpdatedOn(), getDivision(), getDistrict(), getThana(), getApplicantAddress(), getApplicantEducationalInfo(), getApplicantPersonaIInfo(), getJobExperience());
+    return Objects.hash(getId(), getSemesterId(), getProgramId(), getApplicationSn(), getStatus(), getAppliedOn(), getApplicationFeePaidOn(), getSelectedRejectedOn(), getCreatedOn(), getUpdatedOn(), getApplicantAddress(), getApplicantEducationalInfo(), getApplicantPersonaIInfo(), getJobExperience());
   }
 
   @Override
@@ -269,6 +234,10 @@ public class Applicant {
         ", selectedRejectedOn=" + selectedRejectedOn +
         ", createdOn=" + createdOn +
         ", updatedOn=" + updatedOn +
+        ", mApplicantAddress=" + mApplicantAddress +
+        ", mApplicantEducationalInfo=" + mApplicantEducationalInfo +
+        ", mApplicantPersonaIInfo=" + mApplicantPersonaIInfo +
+        ", mJobExperience=" + mJobExperience +
         '}';
   }
 }

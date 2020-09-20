@@ -49,7 +49,7 @@ public class ApplicantAddress {
   @Column(name = "LINE2")
   private String line2;
 
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "APPLICANT_ID", referencedColumnName = "ID",updatable=false)
   Applicant mApplicant;
 

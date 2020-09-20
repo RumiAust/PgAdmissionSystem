@@ -82,8 +82,11 @@ public class AdmissionService {
    applicant.setApplicationSn(applicantSerialNo);
    applicant.setStatus(AdmissionEnum.APPLIED.getLabel());
    applicant.setCreatedOn(Instant.now());
+   applicant.setAppliedOn(Instant.now());
+   applicant.setSelectedRejectedOn(Instant.now());
+   applicant.setApplicationFeePaidOn(Instant.now());
    //applicant.setDistrict();
-
+    mApplicantRepository.save(applicant);
     int x=0;
     //method create
    /* mApplicantRepository.save(applicant);

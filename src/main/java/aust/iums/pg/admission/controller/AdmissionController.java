@@ -71,20 +71,6 @@ public class AdmissionController {
 
   @GetMapping("/applicationForm")
   public String applicationForm(Model model) {
-
-    /*ApplicationForm applicationForm = new ApplicationForm();
-    applicationForm.setWorkExperienceList(new ArrayList<>());
-    model.addAttribute("applicant",applicationForm);*/
-    /*List<Program> programs=mHelper.getAllPrograms();
-    Semester semester =mHelper.getActiveSemester();
-    List<Division> divisions=mHelper.getAllDivisions();
-    List<District> districts=mHelper.getAllDistricts();
-    List<Thana> thanas=mHelper.getAllThanas();
-    model.addAttribute("semester",semester);
-    model.addAttribute("programList",programs);
-    model.addAttribute("divisionList",divisions);
-    model.addAttribute("districtList",districts);
-    model.addAttribute("thanaList",thanas);*/
     return "application-form";
   }
 
@@ -103,11 +89,11 @@ public class AdmissionController {
       fileStorageService.saveFile(applicant.getSignature(),"signature");
       applicant.setWorkExperienceDivId("");
       redirectAttributes.addFlashAttribute("successmessage","Files are saved successfully");
-      return "redirect:/applicationForm";
+      return "form-view";
     }catch (Exception e){
       redirectAttributes.addFlashAttribute("errormessage","Files are not saved successfully because "+e.getMessage());
       applicant.setWorkExperienceDivId("");
-      return "application-form";
+      return "form-view";
     }
 
     /*int id=  greeting.getId();

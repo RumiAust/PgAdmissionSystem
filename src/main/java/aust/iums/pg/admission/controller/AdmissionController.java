@@ -88,21 +88,21 @@ public class AdmissionController {
     applicant.setPresentDivisionId(pDivision[0]);
     applicant.setPresentDivision(pDivision[1]);
     String pDistrict[]=applicant.getPresentDistrictId().split("-");
-    applicant.setPresentDistrictId(pDivision[0]);
-    applicant.setPresentDistrict(pDivision[1]);
+    applicant.setPresentDistrictId(pDistrict[0]);
+    applicant.setPresentDistrict(pDistrict[1]);
     String pThana[]=applicant.getPresentThanaId().split("-");
-    applicant.setPresentThanaId(pDivision[0]);
-    applicant.setPresentThana(pDivision[1]);
+    applicant.setPresentThanaId(pThana[0]);
+    applicant.setPresentThana(pThana[1]);
 
     String perDivision[]=applicant.getPermanentDivisionId().split("-");
-    applicant.setPermanentDivisionId(pDivision[0]);
-    applicant.setPermanentDivision(pDivision[1]);
+    applicant.setPermanentDivisionId(perDivision[0]);
+    applicant.setPermanentDivision(perDivision[1]);
     String perDistrict[]=applicant.getPermanentDistrictId().split("-");
-    applicant.setPermanentDistrictId(pDivision[0]);
-    applicant.setPermanentDistrict(pDivision[1]);
+    applicant.setPermanentDistrictId(perDistrict[0]);
+    applicant.setPermanentDistrict(perDistrict[1]);
     String perThana[]=applicant.getPermanentThanaId().split("-");
-    applicant.setPermanentThanaId(pDivision[0]);
-    applicant.setPermanentThana(pDivision[1]);
+    applicant.setPermanentThanaId(perThana[0]);
+    applicant.setPermanentThana(perThana[1]);
 
 
     log.info(" [{}]: Applicant Infos ",applicant.toString());

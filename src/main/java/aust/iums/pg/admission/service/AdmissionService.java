@@ -1,11 +1,15 @@
 package aust.iums.pg.admission.service;
 
 import aust.iums.pg.admission.dto.ApplicationForm;
+import aust.iums.pg.admission.enums.AdmissionEnum;
+import aust.iums.pg.admission.enums.SemesterEnum;
 import aust.iums.pg.admission.model.*;
 import aust.iums.pg.admission.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -76,6 +80,9 @@ public class AdmissionService {
    applicant.setSemesterId(pApp.getSemesterId());
    applicant.setProgramId(pApp.getProgramId());
    applicant.setApplicationSn(applicantSerialNo);
+   applicant.setStatus(AdmissionEnum.APPLIED.getLabel());
+   applicant.setCreatedOn(Instant.now());
+   //applicant.setDistrict();
 
     int x=0;
     //method create

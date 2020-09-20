@@ -106,7 +106,7 @@ public class AdmissionController {
     applicant.setPermanentThanaId(perThana[0]);
     applicant.setPermanentThana(perThana[1]);
 
-     try{
+
       log.info(" [{}]: Applicant Infos ",applicant.toString());
        mHelper.saveInfo(applicant);
       fileStorageService.saveFile(applicant.getPhoto(),"photo");
@@ -114,11 +114,11 @@ public class AdmissionController {
       applicant.setWorkExperienceDivId("");
 
       return "form-view";
-   }catch (Exception e){
+   /*}catch (Exception e){
       redirectAttributes.addFlashAttribute("errormessage","Files are not saved successfully because "+e.getMessage());
       applicant.setWorkExperienceDivId("");
       return ""+e.getMessage();
-    }
+    }*/
   }
 
 

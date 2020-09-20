@@ -2,12 +2,15 @@ package aust.iums.pg.admission.service;
 
 import aust.iums.pg.admission.dto.ApplicationForm;
 import aust.iums.pg.admission.dto.WorkExperienceList;
+import aust.iums.pg.admission.enums.AddressTypeEnum;
 import aust.iums.pg.admission.enums.AdmissionEnum;
+import aust.iums.pg.admission.enums.ExamTypeEnum;
 import aust.iums.pg.admission.enums.SemesterEnum;
 import aust.iums.pg.admission.model.*;
 import aust.iums.pg.admission.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -151,10 +154,59 @@ public class AdmissionService {
       workExperienceLists.add(obj);
     }
 
-     mJobExperienceRepository.saveAll(workExperienceLists);
+    mJobExperienceRepository.saveAll(workExperienceLists);
     List<ApplicantEducationalInfo> educationalInfoList = new ArrayList<>();
     ApplicantEducationalInfo eduInfo = new ApplicantEducationalInfo();
-    eduInfo.setExamType("SSC");
+    eduInfo.setExamType(ExamTypeEnum.SSC_EQU.name());
+    eduInfo.setApplicationSn(applicantSerialNo);
+    eduInfo.setInstituteName(pApp.getSscInstituteName());
+    eduInfo.setBoard(pApp.getSscBoardName());
+    eduInfo.setTotalMarks(pApp.getSscMarks());
+    eduInfo.setDivisionClassGrade(pApp.getSscGrade());
+    eduInfo.setPassingYear(pApp.getSscPassingYear());
+    educationalInfoList.add(eduInfo);
+    eduInfo = new ApplicantEducationalInfo();
+    eduInfo.setExamType(ExamTypeEnum.HSC_EQU.name());
+    eduInfo.setApplicationSn(applicantSerialNo);
+    eduInfo.setInstituteName(pApp.getHscInstituteName());
+    eduInfo.setBoard(pApp.getHscBoardName());
+    eduInfo.setTotalMarks(pApp.getHscMarks());
+    eduInfo.setDivisionClassGrade(pApp.getHscGrade());
+    eduInfo.setPassingYear(pApp.getHscPassingYear());
+    educationalInfoList.add(eduInfo);
+    eduInfo = new ApplicantEducationalInfo();
+    eduInfo.setExamType(ExamTypeEnum.BBA_BCOM_BSC_BA_EQU.name());
+    eduInfo.setApplicationSn(applicantSerialNo);
+    eduInfo.setInstituteName(pApp.getBscInstituteName());
+    eduInfo.setBoard(pApp.getBscBoardName());
+    eduInfo.setTotalMarks(pApp.getBscMarks());
+    eduInfo.setDivisionClassGrade(pApp.getBscGrade());
+    eduInfo.setPassingYear(pApp.getBscPassingYear());
+    educationalInfoList.add(eduInfo);
+    eduInfo = new ApplicantEducationalInfo();
+    eduInfo.setExamType(ExamTypeEnum.MCOM_MA_MBA_MSC_EQU.name());
+    eduInfo.setApplicationSn(applicantSerialNo);
+    eduInfo.setInstituteName(pApp.getMscInstituteName());
+    eduInfo.setBoard(pApp.getMscBoardName());
+    eduInfo.setTotalMarks(pApp.getMscMarks());
+    eduInfo.setDivisionClassGrade(pApp.getMscGrade());
+    eduInfo.setPassingYear(pApp.getMscPassingYear());
+    educationalInfoList.add(eduInfo);
+    mApplicantEducationalInfoRepository.saveAll(educationalInfoList);
+
+    List<MultipartFile> eduFile=new ArrayList<>();
+    eduFile.add(pApp.getSscFile());
+    eduFile.add(pApp.getHscFile());
+    eduFile.add(pApp.getBscFile());
+    eduFile.add(pApp.getMscFile());
+
+    for(MultipartFile file:eduFile){
+      if (!file.isEmpty()){
+        fileStorageService.saveFile(file,"document");
+      }
+    }
+
+
 
 
 

@@ -36,7 +36,7 @@ public class ApplicantEducationalInfo {
 
   @NotNull
   @Column(name = "TOTAL_MARKS_GRADE")
-  private Integer totalMarks;
+  private String totalMarks;
 
   @NotNull
   @Column(name = "DIVISION_CLASS_GRADE")
@@ -102,11 +102,11 @@ public class ApplicantEducationalInfo {
     board = pBoard;
   }
 
-  public Integer getTotalMarks() {
+  public String getTotalMarks() {
     return totalMarks;
   }
 
-  public void setTotalMarks(Integer pTotalMarks) {
+  public void setTotalMarks(String pTotalMarks) {
     totalMarks = pTotalMarks;
   }
 

@@ -111,7 +111,6 @@ public class AdmissionService {
     app.setMaritalStatus(pApp.getMaritalStatus());
     app.setReligion(pApp.getReligion());
     app.setNationality(pApp.getNationality());
-    DateFormat formatter;
     app.setDateOfBirth(PgUtils.formateDate(pApp.getDateOfBirth()));
     app.setPlaceOfBirth("BD");
     app.setMobileNumber("1003");

@@ -206,17 +206,6 @@ public class AdmissionService {
       }
     }
 
-
-
-
-
-    //method create
-   /* mApplicantRepository.save(applicant);
-
-    mApplicantRepository.flush();*/
-    /*applicant = mApplicantRepository.save(applicant);
-    mApplicantRepository.flush();
-    return applicant;*/
   }
 
 }

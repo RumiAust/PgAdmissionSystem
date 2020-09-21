@@ -9,6 +9,9 @@ import java.util.List;
  * Created by Rumi on 9/16/2020.
  */
 public class ApplicationForm {
+    //application serial number
+    private String applicationSerialNumber;
+
     //program info
     private String programId;
     private String programName;
@@ -19,6 +22,8 @@ public class ApplicationForm {
     private String motherName;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String dateOfBirth;
+    private String placeOfBirth;
+    private String mobileNumber;
     private String nationality;
     private String religion;
     private String email;
@@ -74,6 +79,90 @@ public class ApplicationForm {
     private MultipartFile signature;
     private boolean declaration;
 
+    // modal Id
+    private String modalId;
+
+    @Override
+    public String toString() {
+        return "ApplicationForm{" +
+                "applicationSerialNumber='" + applicationSerialNumber + '\'' +
+                ", programId='" + programId + '\'' +
+                ", programName='" + programName + '\'' +
+                ", semesterId='" + semesterId + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", fatherName='" + fatherName + '\'' +
+                ", motherName='" + motherName + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", placeOfBirth='" + placeOfBirth + '\'' +
+                ", mobileNumber='" + mobileNumber + '\'' +
+                ", nationality='" + nationality + '\'' +
+                ", religion='" + religion + '\'' +
+                ", email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
+                ", maritalStatus='" + maritalStatus + '\'' +
+                ", sscInstituteName='" + sscInstituteName + '\'' +
+                ", sscBoardName='" + sscBoardName + '\'' +
+                ", sscMarks='" + sscMarks + '\'' +
+                ", sscGrade='" + sscGrade + '\'' +
+                ", sscPassingYear=" + sscPassingYear +
+                ", sscFile=" + sscFile +
+                ", hscInstituteName='" + hscInstituteName + '\'' +
+                ", hscBoardName='" + hscBoardName + '\'' +
+                ", hscMarks='" + hscMarks + '\'' +
+                ", hscGrade='" + hscGrade + '\'' +
+                ", hscPassingYear=" + hscPassingYear +
+                ", hscFile=" + hscFile +
+                ", bscInstituteName='" + bscInstituteName + '\'' +
+                ", bscBoardName='" + bscBoardName + '\'' +
+                ", bscMarks='" + bscMarks + '\'' +
+                ", bscGrade='" + bscGrade + '\'' +
+                ", bscPassingYear=" + bscPassingYear +
+                ", bscFile=" + bscFile +
+                ", mscInstituteName='" + mscInstituteName + '\'' +
+                ", mscBoardName='" + mscBoardName + '\'' +
+                ", mscMarks='" + mscMarks + '\'' +
+                ", mscGrade='" + mscGrade + '\'' +
+                ", mscPassingYear=" + mscPassingYear +
+                ", mscFile=" + mscFile +
+                ", workExperienceList=" + workExperienceList +
+                ", workExperienceDivId='" + workExperienceDivId + '\'' +
+                ", presentDivisionId='" + presentDivisionId + '\'' +
+                ", presentDivision='" + presentDivision + '\'' +
+                ", presentDistrictId='" + presentDistrictId + '\'' +
+                ", presentDistrict='" + presentDistrict + '\'' +
+                ", presentThanaId='" + presentThanaId + '\'' +
+                ", presentThana='" + presentThana + '\'' +
+                ", presentAddress='" + presentAddress + '\'' +
+                ", permanentDivisionId='" + permanentDivisionId + '\'' +
+                ", permanentDivision='" + permanentDivision + '\'' +
+                ", permanentDistrictId='" + permanentDistrictId + '\'' +
+                ", permanentDistrict='" + permanentDistrict + '\'' +
+                ", permanentThanaId='" + permanentThanaId + '\'' +
+                ", permanentThana='" + permanentThana + '\'' +
+                ", permanentAddress='" + permanentAddress + '\'' +
+                ", photo=" + photo +
+                ", signature=" + signature +
+                ", declaration=" + declaration +
+                ", modalId='" + modalId + '\'' +
+                '}';
+    }
+
+    public String getModalId() {
+        return modalId;
+    }
+
+    public void setModalId(String modalId) {
+        this.modalId = modalId;
+    }
+
+    public String getApplicationSerialNumber() {
+        return applicationSerialNumber;
+    }
+
+    public void setApplicationSerialNumber(String applicationSerialNumber) {
+        this.applicationSerialNumber = applicationSerialNumber;
+    }
+
     public String getProgramId() {
         return programId;
     }
@@ -90,15 +179,15 @@ public class ApplicationForm {
         programName = pProgramName;
     }
 
-  public String getSemesterId() {
-    return semesterId;
-  }
+    public String getSemesterId() {
+        return semesterId;
+    }
 
-  public void setSemesterId(String pSemesterId) {
-    semesterId = pSemesterId;
-  }
+    public void setSemesterId(String pSemesterId) {
+        semesterId = pSemesterId;
+    }
 
-  public String getFullName() {
+    public String getFullName() {
         return fullName;
     }
 
@@ -515,62 +604,20 @@ public class ApplicationForm {
         workExperienceList = pWorkExperienceList;
     }
 
-    @Override
-    public String toString() {
-        return "ApplicationForm{" +
-                "programId='" + programId + '\'' +
-                ", programName='" + programName + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", fatherName='" + fatherName + '\'' +
-                ", motherName='" + motherName + '\'' +
-                ", dateOfBirth='" + dateOfBirth + '\'' +
-                ", nationality='" + nationality + '\'' +
-                ", religion='" + religion + '\'' +
-                ", email='" + email + '\'' +
-                ", gender='" + gender + '\'' +
-                ", maritalStatus='" + maritalStatus + '\'' +
-                ", sscInstituteName='" + sscInstituteName + '\'' +
-                ", sscBoardName='" + sscBoardName + '\'' +
-                ", sscMarks='" + sscMarks + '\'' +
-                ", sscGrade='" + sscGrade + '\'' +
-                ", sscPassingYear=" + sscPassingYear +
-                ", sscFile=" + sscFile +
-                ", hscInstituteName='" + hscInstituteName + '\'' +
-                ", hscBoardName='" + hscBoardName + '\'' +
-                ", hscMarks='" + hscMarks + '\'' +
-                ", hscGrade='" + hscGrade + '\'' +
-                ", hscPassingYear=" + hscPassingYear +
-                ", hscFile=" + hscFile +
-                ", bscInstituteName='" + bscInstituteName + '\'' +
-                ", bscBoardName='" + bscBoardName + '\'' +
-                ", bscMarks='" + bscMarks + '\'' +
-                ", bscGrade='" + bscGrade + '\'' +
-                ", bscPassingYear=" + bscPassingYear +
-                ", bscFile=" + bscFile +
-                ", mscInstituteName='" + mscInstituteName + '\'' +
-                ", mscBoardName='" + mscBoardName + '\'' +
-                ", mscMarks='" + mscMarks + '\'' +
-                ", mscGrade='" + mscGrade + '\'' +
-                ", mscPassingYear=" + mscPassingYear +
-                ", mscFile=" + mscFile +
-                ", experienceListList=" + workExperienceList +
-                ", presentDivisionId='" + presentDivisionId + '\'' +
-                ", presentDivision='" + presentDivision + '\'' +
-                ", presentDistrictId='" + presentDistrictId + '\'' +
-                ", presentDistrict='" + presentDistrict + '\'' +
-                ", presentThanaId='" + presentThanaId + '\'' +
-                ", presentThana='" + presentThana + '\'' +
-                ", presentAddress='" + presentAddress + '\'' +
-                ", permanentDivisionId='" + permanentDivisionId + '\'' +
-                ", permanentDivision='" + permanentDivision + '\'' +
-                ", permanentDistrictId='" + permanentDistrictId + '\'' +
-                ", permanentDistrict='" + permanentDistrict + '\'' +
-                ", permanentThanaId='" + permanentThanaId + '\'' +
-                ", permanentThana='" + permanentThana + '\'' +
-                ", permanentAddress='" + permanentAddress + '\'' +
-                ", photo=" + photo +
-                ", signature=" + signature +
-                ", declaration=" + declaration +
-                '}';
+    public String getPlaceOfBirth() {
+        return placeOfBirth;
     }
+
+    public void setPlaceOfBirth(String placeOfBirth) {
+        this.placeOfBirth = placeOfBirth;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
 }

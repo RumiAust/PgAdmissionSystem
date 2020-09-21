@@ -30,117 +30,136 @@ import java.util.List;
 
 @Controller
 public class AdmissionController {
-  @Autowired
-  FileStorageService fileStorageService;
+    @Autowired
+    FileStorageService fileStorageService;
 
-  @Autowired
-  AdmissionHelper mHelper;
+    @Autowired
+    AdmissionHelper mHelper;
 
-  private final Logger log = LoggerFactory.getLogger(AdmissionController.class);
-  Semester semester;
+    private final Logger log = LoggerFactory.getLogger(AdmissionController.class);
+    Semester semester;
 
-  @ModelAttribute("applicant")
-  public ApplicationForm applicantModel(){
-    ApplicationForm applicationForm = new ApplicationForm();
-    applicationForm.setWorkExperienceList(new ArrayList<>());
-    applicationForm.setWorkExperienceDivId("");
-    return applicationForm;
-  }
-  @ModelAttribute("semester")
-  public Semester semesterModel(){
-     semester =mHelper.getActiveSemester();
-    return semester;
-  }
-  @ModelAttribute("programList")
-  public List<Program> programListModel(){
-    List<Program> programs=mHelper.getAllPrograms();
-    return programs;
-  }
-  @ModelAttribute("divisionList")
-  public List<Division> divisionListModel(){
-    List<Division> divisions=mHelper.getAllDivisions();
-    return divisions;
-  }
-  @ModelAttribute("districtList")
-  public List<District> districtListModel(){
-    List<District> districts=mHelper.getAllDistricts();
-    return districts;
-  }
-  @ModelAttribute("thanaList")
-  public List<Thana> thanaListModel(){
-    List<Thana> thanas=mHelper.getAllThanas();
-    return thanas;
-  }
+    @ModelAttribute("applicant")
+    public ApplicationForm applicantModel() {
+        ApplicationForm applicationForm = new ApplicationForm();
+        applicationForm.setWorkExperienceList(new ArrayList<>());
+        applicationForm.setWorkExperienceDivId("");
+        return applicationForm;
+    }
 
-  @GetMapping("/applicationForm")
-  public String applicationForm(Model model) {
-    return "application-form";
-  }
+    @ModelAttribute("semester")
+    public Semester semesterModel() {
+        semester = mHelper.getActiveSemester();
+        return semester;
+    }
 
-  @PostMapping(value = "/apply", params = {"save"})
-  public String greetingSubmit(@ModelAttribute ApplicationForm applicant, Model model, RedirectAttributes redirectAttributes) throws IOException, ParseException {
-    model.addAttribute("applicant", applicant);
+    @ModelAttribute("programList")
+    public List<Program> programListModel() {
+        List<Program> programs = mHelper.getAllPrograms();
+        return programs;
+    }
 
-    String programInfo[]=applicant.getProgramId().split("-");
-    applicant.setProgramId(programInfo[0]);
-    applicant.setProgramName(programInfo[1]);
-    applicant.setSemesterId(semester.getSemesterId());
+    @ModelAttribute("divisionList")
+    public List<Division> divisionListModel() {
+        List<Division> divisions = mHelper.getAllDivisions();
+        return divisions;
+    }
 
-    String pDivision[]=applicant.getPresentDivisionId().split("-");
-    applicant.setPresentDivisionId(pDivision[0]);
-    applicant.setPresentDivision(pDivision[1]);
-    String pDistrict[]=applicant.getPresentDistrictId().split("-");
-    applicant.setPresentDistrictId(pDistrict[0]);
-    applicant.setPresentDistrict(pDistrict[1]);
-    String pThana[]=applicant.getPresentThanaId().split("-");
-    applicant.setPresentThanaId(pThana[0]);
-    applicant.setPresentThana(pThana[1]);
+    @ModelAttribute("districtList")
+    public List<District> districtListModel() {
+        List<District> districts = mHelper.getAllDistricts();
+        return districts;
+    }
 
-    String perDivision[]=applicant.getPermanentDivisionId().split("-");
-    applicant.setPermanentDivisionId(perDivision[0]);
-    applicant.setPermanentDivision(perDivision[1]);
-    String perDistrict[]=applicant.getPermanentDistrictId().split("-");
-    applicant.setPermanentDistrictId(perDistrict[0]);
-    applicant.setPermanentDistrict(perDistrict[1]);
-    String perThana[]=applicant.getPermanentThanaId().split("-");
-    applicant.setPermanentThanaId(perThana[0]);
-    applicant.setPermanentThana(perThana[1]);
+    @ModelAttribute("thanaList")
+    public List<Thana> thanaListModel() {
+        List<Thana> thanas = mHelper.getAllThanas();
+        return thanas;
+    }
+
+    @GetMapping("/applicationForm")
+    public String applicationForm(Model model) {
+        return "application-form";
+    }
+
+    @PostMapping(value = "/apply", params = {"save"})
+    public String greetingSubmit(@ModelAttribute ApplicationForm applicant, Model model, RedirectAttributes redirectAttributes) throws IOException, ParseException {
+        model.addAttribute("applicant", applicant);
+
+        addressMap(applicant);
 
 
-      log.info(" [{}]: Applicant Infos ",applicant.toString());
-      mHelper.saveInfo(applicant);
-      applicant.setWorkExperienceDivId("");
+        log.info(" [{}]: Applicant Infos ", applicant.toString());
+        mHelper.saveInfo(applicant);
+        applicant.setWorkExperienceDivId("");
 
-      return "form-view";
+        return "form-view";
    /*}catch (Exception e){
       redirectAttributes.addFlashAttribute("errormessage","Files are not saved successfully because "+e.getMessage());
       applicant.setWorkExperienceDivId("");
       return ""+e.getMessage();
     }*/
-  }
+    }
+
+    private void addressMap(ApplicationForm applicant) {
+        String programInfo[] = applicant.getProgramId().split("-");
+        applicant.setProgramId(programInfo[0]);
+        applicant.setProgramName(programInfo[1]);
+        applicant.setSemesterId(semester.getSemesterId());
+
+        String pDivision[] = applicant.getPresentDivisionId().split("-");
+        applicant.setPresentDivisionId(pDivision[0]);
+        applicant.setPresentDivision(pDivision[1]);
+        String pDistrict[] = applicant.getPresentDistrictId().split("-");
+        applicant.setPresentDistrictId(pDistrict[0]);
+        applicant.setPresentDistrict(pDistrict[1]);
+        String pThana[] = applicant.getPresentThanaId().split("-");
+        applicant.setPresentThanaId(pThana[0]);
+        applicant.setPresentThana(pThana[1]);
+
+        String perDivision[] = applicant.getPermanentDivisionId().split("-");
+        applicant.setPermanentDivisionId(perDivision[0]);
+        applicant.setPermanentDivision(perDivision[1]);
+        String perDistrict[] = applicant.getPermanentDistrictId().split("-");
+        applicant.setPermanentDistrictId(perDistrict[0]);
+        applicant.setPermanentDistrict(perDistrict[1]);
+        String perThana[] = applicant.getPermanentThanaId().split("-");
+        applicant.setPermanentThanaId(perThana[0]);
+        applicant.setPermanentThana(perThana[1]);
+    }
 
 
-  @PostMapping(value="/apply", params={"addRow"})
-  public String addRow(@ModelAttribute("applicant") ApplicationForm applicationForm, final BindingResult bindingResult,Model model) {
-    applicationForm.getWorkExperienceList().add(new WorkExperienceList());
-    applicationForm.setWorkExperienceDivId("workExperienceDivId");
-    return "application-form";
-  }
+    @PostMapping(value = "/apply", params = {"addRow"})
+    public String addRow(@ModelAttribute("applicant") ApplicationForm applicationForm, final BindingResult bindingResult, Model model) {
+        applicationForm.getWorkExperienceList().add(new WorkExperienceList());
+        applicationForm.setWorkExperienceDivId("workExperienceDivId");
+        addressMap(applicationForm);
+        return "application-form";
+    }
 
-  @PostMapping(value="/apply", params={"removeRow"})
-  public String removeRow(
-          @ModelAttribute("applicant") ApplicationForm applicationForm, final BindingResult bindingResult,
-          final HttpServletRequest req) {
-    final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
-    applicationForm.getWorkExperienceList().remove(rowId.intValue());
-    applicationForm.setWorkExperienceDivId("workExperienceDivId");
-    return "application-form";
-  }
+    @PostMapping(value = "/apply", params = {"removeRow"})
+    public String removeRow(
+            @ModelAttribute("applicant") ApplicationForm applicationForm, final BindingResult bindingResult,
+            final HttpServletRequest req) {
+        final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
+        applicationForm.getWorkExperienceList().remove(rowId.intValue());
+        applicationForm.setWorkExperienceDivId("workExperienceDivId");
+        addressMap(applicationForm);
+        return "application-form";
+    }
+    @PostMapping(value = "/apply", params = {"modal"})
+    public String showModal(
+            @ModelAttribute("applicant") ApplicationForm applicationForm, final BindingResult bindingResult,
+            final HttpServletRequest req) {
+        applicationForm.setModalId("myModal");
+        addressMap(applicationForm);
+        return "application-form";
+    }
 
 
-  @GetMapping("/statusCheck")
-  public String statusCheck(Model model) {
-    return "status-check";
-  }
+    @GetMapping("/statusCheck")
+    public String statusCheck(Model model) {
+        return "status-check";
+    }
 
 }

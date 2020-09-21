@@ -1,5 +1,7 @@
 package aust.iums.pg.admission.service;
 
+import aust.iums.pg.admission.dto.ApplicationForm;
+import aust.iums.pg.admission.repository.ApplicantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -42,12 +44,21 @@ public class FileStorageService {
 
     @Autowired
     UploadPathService uploadPathService;
+    @Autowired
+    ApplicantRepository mApplicantRepository;
 
-    public void saveFile(MultipartFile file, String type) throws IOException {
+    public void saveFile(MultipartFile file, String type, ApplicationForm form, String docType) throws IOException {
         String fileName = file.getOriginalFilename();
+        String applicantSerialNo = mApplicantRepository.getApplicantSerialNo().toString();
+
         validate(file, type);
-        String modifiedFileName = FilenameUtils.getBaseName(fileName) + "_" + System.currentTimeMillis() + "." + FilenameUtils.getExtension(fileName);
-        Path path = uploadPathService.getFilePath(modifiedFileName, type);
+        String modifiedFileName="";
+        if(type=="photo" || type=="signature")
+             modifiedFileName =  applicantSerialNo + "." + FilenameUtils.getExtension(fileName);
+        else if(type=="document")
+             modifiedFileName =  docType + "_" + System.currentTimeMillis() + "." + FilenameUtils.getExtension(fileName);
+
+        Path path = uploadPathService.getFilePath(modifiedFileName, type, form);
         Files.write(path, file.getBytes());
         /*fileStorage.setFileName(modifiedFileName);
         fileStorage.setFileType("photo");*/
@@ -58,7 +69,7 @@ public class FileStorageService {
     private void validate(MultipartFile file, String type) throws IOException {
         if (type == "photo") {
             if (!(file.getOriginalFilename().endsWith(".jpg") || file.getOriginalFilename().endsWith(".jpeg")))
-                throw new RuntimeException("Invalid applicant  photo format type( accepted: jpeg,jpg)");
+                throw new RuntimeException("Invalid applicant  photo format type( accepted: jpeg, jpg)");
             if (!validateDimension(true, file)) {
                 throw new RuntimeException("Invalid applicant  photo dimension. Photo must have a dimensions of " + width + " px x " + photoHeight + " px (width x height)");
             }
@@ -68,7 +79,7 @@ public class FileStorageService {
 
         } else if (type == "signature") {
             if (!(file.getOriginalFilename().endsWith(".jpg") || file.getOriginalFilename().endsWith(".jpeg")))
-                throw new RuntimeException("Invalid applicant signature format type( accepted: jpeg,jpg)");
+                throw new RuntimeException("Invalid applicant signature format type( accepted: jpeg, jpg)");
             if (!validateDimension(false, file)) {
                 throw new RuntimeException("Invalid applicant signature dimension. Signature must have a dimensions of " + width + " px x " + photoHeight + " px (width x height)");
             }
@@ -77,9 +88,9 @@ public class FileStorageService {
             }
         } else if (type == "document") {
             if (!(file.getOriginalFilename().endsWith(".jpg") || file.getOriginalFilename().endsWith(".png") || file.getOriginalFilename().endsWith(".jpeg") || file.getOriginalFilename().endsWith(".pdf") || file.getOriginalFilename().endsWith(".zip")))
-                throw new RuntimeException("Invalid applicant  photo format type( accepted: jpeg,jpg)");
+                throw new RuntimeException("Invalid applicant file type( accepted: jpeg, jpg, png, pdf, zip)");
             if (file.getSize() / 1000 > maxDocumentSize) {
-                throw new RuntimeException("Invalid applicant signature size. Maximum allowed signature size is" + maxSize + "KB");
+                throw new RuntimeException("Invalid applicant file size. Maximum allowed file size is" + maxSize + "KB");
             }
         }
 

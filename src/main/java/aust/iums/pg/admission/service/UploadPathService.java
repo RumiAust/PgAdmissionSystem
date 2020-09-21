@@ -1,5 +1,9 @@
 package aust.iums.pg.admission.service;
 
+import aust.iums.pg.admission.dto.ApplicationForm;
+import aust.iums.pg.admission.helper.AdmissionHelper;
+import aust.iums.pg.admission.model.Semester;
+import aust.iums.pg.admission.repository.ApplicantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -30,12 +34,22 @@ public class UploadPathService {
     @Autowired
     ServletContext context;
 
-    public Path getFilePath(String modifiedFileName, String type) throws IOException {
+    @Autowired
+    AdmissionHelper mHelper;
 
+    @Autowired
+    ApplicantRepository mApplicantRepository;
+
+
+
+    public Path getFilePath(String modifiedFileName, String type, ApplicationForm form) throws IOException {
+        Semester semes;
         String basePath = "";
-        String semester = "spring-2020";
-        String faculty ="masters";
-        String application_sn="150204071";
+        semes = mHelper.getActiveSemester();
+
+        String semester = semes.getSemesterName();
+        String program = form.getProgramName();
+        String application_sn = form.getApplicationSerialNumber();
         if (type == "photo") {
             basePath = apPhotoBasePath;
         } else if (type == "signature") {
@@ -49,19 +63,26 @@ public class UploadPathService {
         if (!Files.exists(directory)) {
             Files.createDirectory(directory);
         }
-        directory = Paths.get(basePath+"/"+semester+"/"+faculty);
+        directory = Paths.get(basePath+"/"+semester+"/"+program);
         if (!Files.exists(directory)) {
             Files.createDirectory(directory);
         }
 
-        directory = Paths.get(basePath+"/"+semester+"/"+faculty+"/"+application_sn);
-        if (!Files.exists(directory)) {
-            Files.createDirectory(directory);
+        if(type=="document") {
+            directory = Paths.get(basePath + "/" + semester + "/" + program + "/" + application_sn);
+            if (!Files.exists(directory)) {
+                Files.createDirectory(directory);
+            }
+
+            Path path = Paths.get(basePath + "/" + semester + "/" + program + "/" + application_sn + "/" + modifiedFileName);
+
+            return path;
         }
+        else{
+            Path path = Paths.get(basePath + "/" + semester + "/" + program + "/" + modifiedFileName);
 
-        Path path = Paths.get(basePath+"/"+semester+"/"+faculty+"/"+application_sn+"/"+modifiedFileName);
-
-        return path;
+            return path;
+        }
     }
 }
 

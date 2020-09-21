@@ -196,7 +196,9 @@ public class AdmissionService {
     eduFile.add(pApp.getBscFile());
     eduFile.add(pApp.getMscFile());
 
-    mApplicantRepository.save(applicant);
+    applicant = mApplicantRepository.save(applicant);
+    //mApplicantRepository.saveAndFlush(applicant);
+    app.setApplicant(applicant);
     mApplicantPersonalInfoRepository.save(app);
     mApplicantEducationalInfoRepository.saveAll(educationalInfoList);
     mJobExperienceRepository.saveAll(workExperienceLists);

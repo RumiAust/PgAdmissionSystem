@@ -48,7 +48,7 @@
 </nav>
 
 <div class="overflow-auto">
-    <form action="#" th:action="@{/apply}" th:object="${applicant}" method="post" enctype="multipart/form-data">
+    <form action="#" th:action="@{/apply}" th:object="${applicant}" method="post" enctype="multipart/form-data" id="form-id">
         <div class="container" style="border: 1px solid black;margin-top: 40px;margin-bottom: 20px">
             <div align="center">
                 <h1>Ahsanullah University of Science and Technology</h1>
@@ -91,11 +91,12 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Name(as in SSC/GEC 'O' Level):</div>
                                         </div>
-                                        <input type="text" th:field="*{fullName}" class="form-control">
+                                        <input type="text" th:field="*{fullName}" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <!-- father name -->
                         <div class="row">
                             <!-- father_name -->
@@ -105,8 +106,7 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Father's Name:</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{fatherName}"
-                                        >
+                                        <input type="text" class="form-control" th:field="*{fatherName}" required>
                                     </div>
                                 </div>
                             </div>
@@ -562,7 +562,7 @@
                         <table>
                             <thead>
                             <tr class="col-sm-12">
-                                <td class="col-sm-4" align="right" style="padding: 10px">
+                                <td class="col-sm-4" align="right" style="padding: 10px" >
                                     <button class="btn btn-success" type="submit" name="addRow">Add New</button>
                                 </td>
                             </tr>
@@ -687,7 +687,7 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Division</div>
                                         </div>
-                                        <select th:field="*{presentDivisionId}">
+                                        <select th:field="*{presentDivisionId}" onchange="callMe()">
                                             <option class="form-control form-control-sm" th:each="p : ${divisionList}"
                                                     th:value="${p.getId()+'-'+p.getDivisionName()}"
                                                     th:text="${p.getDivisionName()}"></option>
@@ -703,10 +703,10 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">District:</div>
                                         </div>
-                                        <select th:field="*{presentDistrictId}">
-                                            <option class="form-control form-control-sm" th:each="p : ${districtList}"
+                                        <select th:field="*{presentDistrictId}" id="presentDistrictId">
+                                       <!--     <option class="form-control form-control-sm" th:each="p : ${districtList}"
                                                     th:value="${p.getId()+'-'+p.getDistrictName()}"
-                                                    th:text="${p.getDistrictName()}"></option>
+                                                    th:text="${p.getDistrictName()}"></option>-->
                                         </select>
 
                                     </div>
@@ -884,7 +884,7 @@
                 </div>
             </div>
 
-
+<!--
             <div class="modal fade bd-example-modal-lg" th:id="${applicant.modalId}" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
@@ -1196,7 +1196,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--end-->
+                            &lt;!&ndash;end&ndash;&gt;
                         </div>
 
 
@@ -1206,10 +1206,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
 
             <div>
-                <h6><input type="checkbox" th:field="*{declaration}"> I do hereby declare that the information as stated
+                <h6><input type="checkbox" th:field="*{declaration}" required> I do hereby declare that the information as stated
                     in the Admission application form is true. If any of the information is found incorrect, my
                     admission is liable to be cancelled. If any of the certificates/academic transcripts/documents
                     attached with this form is found altered/forged, my admission is also liable to be cancelled.I also
@@ -1220,7 +1220,7 @@
             </div>
             <div class="row" style="margin-bottom: 20px">
                 <div class="col-md-12" align="center">
-                    <button name="modal" class="btn btn-success">Submit</button>
+                    <button type="submit" class="btn btn-success" value="save">Submit</button>
                 </div>
             </div>
         </div>
@@ -1279,6 +1279,24 @@
     });
     document.getElementById('workExperienceDivId').scrollIntoView(true);
 
+    function callMe() {
+        var myOptions = {
+            val1 : 'Blue',
+            val2 : 'Orange'
+        };
+        var mySelect = $('#presentDistrictId');
+        $.each(myOptions, function(val, text) {
+            mySelect.append(
+                $('<option></option>').val(val).html(text)
+            );
+        });
+
+        var bootstrapValidator = $('#form-id').data('bootstrapValidator');
+        console.log(bootstrapValidator);
+
+        if (bootstrapValidator != undefined)
+            boostrapValidator.destroy();
+    }
 
 </script>
 

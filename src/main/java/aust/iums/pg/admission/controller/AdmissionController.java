@@ -82,13 +82,10 @@ public class AdmissionController {
         return "application-form";
     }
 
-    @PostMapping(value = "/apply", params = {"save"})
+    @PostMapping(value = "/apply")
     public String greetingSubmit(@ModelAttribute ApplicationForm applicant, Model model, RedirectAttributes redirectAttributes) throws IOException, ParseException {
         model.addAttribute("applicant", applicant);
-
         addressMap(applicant);
-
-
         log.info(" [{}]: Applicant Infos ", applicant.toString());
         mHelper.saveInfo(applicant);
         applicant.setWorkExperienceDivId("");

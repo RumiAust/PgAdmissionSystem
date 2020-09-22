@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -151,6 +149,24 @@ public class AdmissionController {
         applicationForm.setModalId("myModal");
         addressMap(applicationForm);
         return "application-form";
+    }
+
+    @PostMapping(value = "/getDistrict/{divId}", produces = "application/json")
+    public @ResponseBody List<District>
+    getDistrict(@PathVariable(name = "divId") String divId) {
+        String pDivision[] = divId.split("-");
+        int id = Integer.parseInt(pDivision[0]);
+        List<District> districts= mHelper.getAllDistrictsByDivId(id);
+        return districts;
+    }
+
+    @GetMapping(value = "/getThana/{disId}", produces = "application/json")
+    public @ResponseBody List<Thana>
+    getThana(@PathVariable(name = "disId") String disId) {
+        String pDis[] = disId.split("-");
+        int id = Integer.parseInt(pDis[0]);
+        List<Thana> thanas= mHelper.getAllThanasByDisId(id);
+        return thanas;
     }
 
 

@@ -88,6 +88,16 @@ public class AdmissionService {
         return thanas;
     }
 
+    public List<District> getDistrictByDivId(int divId) {
+        List<District> districts = mDistrictRepository.findByDivisionId(divId);
+        return districts;
+    }
+
+    public List<Thana> getThanaByDisId(int disId) {
+        List<Thana> thanas = mThanaRepository.findByDistrictId(disId);
+        return thanas;
+    }
+
     public void save(ApplicationForm pApp) throws ParseException, IOException {
         String applicantSerialNo = mApplicantRepository.getApplicantSerialNo().toString();
         pApp.setApplicationSerialNumber(applicantSerialNo);
@@ -223,5 +233,6 @@ public class AdmissionService {
         fileStorageService.saveFile(pApp.getSignature(), "signature", pApp, "");
 
     }
+
 
 }

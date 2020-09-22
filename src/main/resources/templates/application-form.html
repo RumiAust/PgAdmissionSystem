@@ -314,7 +314,7 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Upload</div>
                                             </div>
-                                            <input type="file" accept=".jpg, .jpeg .png .pdf .zip" class="form-control"
+                                            <input type="file" accept=".jpg, .jpeg, .png, .pdf, .zip" class="form-control"
                                                    th:field="*{sscFile}">
                                         </div>
                                     </div>
@@ -388,7 +388,7 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Upload</div>
                                             </div>
-                                            <input type="file" accept=".jpg, .jpeg .png .pdf .zip" class="form-control"
+                                            <input type="file" accept=".jpg, .jpeg, .png, .pdf, .zip" class="form-control"
                                                    th:field="*{hscFile}">
                                         </div>
                                     </div>
@@ -462,7 +462,7 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Upload</div>
                                             </div>
-                                            <input type="file" accept=".jpg, .jpeg .png .pdf .zip" class="form-control"
+                                            <input type="file" accept=".jpg, .jpeg, .png, .pdf, .zip" class="form-control"
                                                    th:field="*{bscFile}">
                                         </div>
                                     </div>
@@ -536,7 +536,7 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Upload</div>
                                             </div>
-                                            <input type="file" accept=".jpg, .jpeg .png .pdf .zip" class="form-control"
+                                            <input type="file" accept=".jpg, .jpeg, .png, .pdf, .zip" class="form-control"
                                                    th:field="*{mscFile}">
                                         </div>
                                     </div>
@@ -605,7 +605,7 @@
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">jobResponsibility</div>
                                                     </div>
-                                                    <input type="text" class="form-control"
+                                                    <input thtype="text" class="form-control"
                                                            th:field="*{workExperienceList[__${rowStat.index}__].jobResponsibility}">
                                                 </div>
                                             </div>
@@ -642,8 +642,8 @@
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">Upload</div>
                                                     </div>
-                                                    <input type="file" class="form-control"
-                                                           accept=".jpg, .jpeg .png .pdf .zip"
+                                                    <input type="file" class="form-control" th:value="${applicant.workExperienceList[__${rowStat.index}__].experienceFile}"
+                                                           accept=".jpg, .jpeg, .png, .pdf, .zip"
                                                            th:field="*{workExperienceList[__${rowStat.index}__].experienceFile}">
                                                 </div>
                                             </div>
@@ -687,7 +687,8 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Division</div>
                                         </div>
-                                        <select th:field="*{presentDivisionId}" onchange="callMe()">
+                                        <select th:field="*{presentDivisionId}" id="presentDivisionId" onchange="addDistrict()">
+                                            <option selected="selected" value="">Select Division</option>
                                             <option class="form-control form-control-sm" th:each="p : ${divisionList}"
                                                     th:value="${p.getId()+'-'+p.getDivisionName()}"
                                                     th:text="${p.getDivisionName()}"></option>
@@ -703,8 +704,8 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">District:</div>
                                         </div>
-                                        <select th:field="*{presentDistrictId}" id="presentDistrictId">
-                                       <!--     <option class="form-control form-control-sm" th:each="p : ${districtList}"
+                                        <select th:field="*{presentDistrictId}" id="presentDistrictId" onchange="addThana()">
+                                            <!--     <option class="form-control form-control-sm" th:each="p : ${districtList}"
                                                     th:value="${p.getId()+'-'+p.getDistrictName()}"
                                                     th:text="${p.getDistrictName()}"></option>-->
                                         </select>
@@ -720,10 +721,11 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Thana:</div>
                                         </div>
-                                        <select th:field="*{presentThanaId}">
-                                            <option class="form-control form-control-sm" th:each="p : ${thanaList}"
+                                        <select id="presentThanaId" th:field="*{presentThanaId}">
+
+                                           <!-- <option class="form-control form-control-sm" th:each="p : ${thanaList}"
                                                     th:value="${p.getId()+'-'+p.getThanaName()}"
-                                                    th:text="${p.getThanaName()}"></option>
+                                                    th:text="${p.getThanaName()}"></option>-->
                                         </select>
 
                                     </div>
@@ -753,7 +755,8 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Division</div>
                                         </div>
-                                        <select th:field="*{permanentDivisionId}">
+                                        <select th:field="*{permanentDivisionId}" id="permanentDivisionId" onchange="addPermanentDistrict()">
+                                            <option selected="selected" value="">Select Division</option>
                                             <option class="form-control form-control-sm" th:each="p : ${divisionList}"
                                                     th:value="${p.getId()+'-'+p.getDivisionName()}"
                                                     th:text="${p.getDivisionName()}"></option>
@@ -769,10 +772,10 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">District:</div>
                                         </div>
-                                        <select th:field="*{permanentDistrictId}">
-                                            <option class="form-control form-control-sm" th:each="p : ${districtList}"
+                                        <select th:field="*{permanentDistrictId}" id="permanentDistrictId" onchange="addPermanentThana()">
+                                            <!--<option class="form-control form-control-sm" th:each="p : ${districtList}"
                                                     th:value="${p.getId()+'-'+p.getDistrictName()}"
-                                                    th:text="${p.getDistrictName()}"></option>
+                                                    th:text="${p.getDistrictName()}"></option>-->
                                         </select>
 
                                     </div>
@@ -786,10 +789,10 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Thana:</div>
                                         </div>
-                                        <select th:field="*{permanentThanaId}">
-                                            <option class="form-control form-control-sm" th:each="p : ${thanaList}"
+                                        <select th:field="*{permanentThanaId}" id="permanentThanaId">
+                                            <!--<option class="form-control form-control-sm" th:each="p : ${thanaList}"
                                                     th:value="${p.getId()+'-'+p.getThanaName()}"
-                                                    th:text="${p.getThanaName()}"></option>
+                                                    th:text="${p.getThanaName()}"></option>-->
                                         </select>
 
                                     </div>
@@ -849,7 +852,7 @@
                                             <img id="photo" src="#" class="img-fluid rounded" width="170" height="165"
                                                  alt="Photo"/>
                                         </div>
-                                        <input class="form-control border" type="file" name="file" accept=".jpg, .jpeg"
+                                        <input class="form-control border" type="file" name="file" th:value="${applicant.photo}" accept=".jpg, .jpeg"
                                                id="file_photo" th:field="*{photo}"/>
                                     </div>
                                     <input type="hidden" class="form-control" name="photo" id="field_photo"
@@ -1275,28 +1278,134 @@
         $("#file_signature").change(function () {
             readSignatureURL(this);
         });
+
+        //show modal
         $('#myModal').modal('toggle');
     });
+
+    //scroll into work experience
     document.getElementById('workExperienceDivId').scrollIntoView(true);
 
-    function callMe() {
-        var myOptions = {
-            val1 : 'Blue',
-            val2 : 'Orange'
-        };
+    function addDistrict() {
         var mySelect = $('#presentDistrictId');
-        $.each(myOptions, function(val, text) {
+        var mySelect2 = $('#presentThanaId');
+        var divisionId = $('#presentDivisionId').val();
+        if (divisionId !== "") {
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "getDistrict/" + divisionId,
+                data: JSON.stringify({'divId': divisionId}),
+                dataType: 'json',
+                success: function (data) {
+                    mySelect.find('option').remove();
+                    mySelect.append('<option selected="selected" value="">Select District</option>');
+                    $.each(data, function () {
+                        console.log(this);
+                        mySelect.append(
+                            $('<option></option>').val(this.id + "-" + this.districtName).html(this.districtName));
+                    });
+                }
+            });
+        } else {
+            mySelect.find('option').remove();
+            mySelect2.find('option').remove();
+        }
+    }
+
+    function addThana() {
+        var mySelect = $('#presentThanaId');
+        var districtId = $('#presentDistrictId').val();
+        if (districtId !== "") {
+            $.ajax({
+                type: "GET",
+                contentType: "application/json",
+                url: "getThana/" + districtId,
+                success: function (data) {
+                    mySelect.find('option').remove();
+                    mySelect.append('<option selected="selected" value="">Select Thana</option>');
+                    $.each(data, function () {
+                        console.log(this);
+                        mySelect.append(
+                            $('<option></option>').val(this.id + "-" + this.thanaName).html(this.thanaName));
+                    });
+                }
+            });
+        }else {
+            mySelect.find('option').remove();
+        }
+    }
+
+    function addPermanentDistrict() {
+        var mySelect = $('#permanentDistrictId');
+        var mySelect2 = $('#permanentThanaId');
+        var divisionId = $('#permanentDivisionId').val();
+        if (divisionId !== "") {
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "getDistrict/" + divisionId,
+                data: JSON.stringify({'divId': divisionId}),
+                dataType: 'json',
+                success: function (data) {
+                    mySelect.find('option').remove();
+                    mySelect.append('<option selected="selected" value="">Select District</option>');
+                    $.each(data, function () {
+                        console.log(this);
+                        mySelect.append(
+                            $('<option></option>').val(this.id + "-" + this.districtName).html(this.districtName));
+                    });
+                }
+            });
+        } else {
+            mySelect.find('option').remove();
+            mySelect2.find('option').remove();
+        }
+    }
+
+    function addPermanentThana() {
+        var mySelect = $('#permanentThanaId');
+        var districtId = $('#permanentDistrictId').val();
+        if (districtId !== "") {
+            $.ajax({
+                type: "GET",
+                contentType: "application/json",
+                url: "getThana/" + districtId,
+                success: function (data) {
+                    mySelect.find('option').remove();
+                    mySelect.append('<option selected="selected" value="">Select Thana</option>');
+                    $.each(data, function () {
+                        console.log(this);
+                        mySelect.append(
+                            $('<option></option>').val(this.id + "-" + this.thanaName).html(this.thanaName));
+                    });
+                }
+            });
+        }else {
+            mySelect.find('option').remove();
+        }
+    }
+
+
+
+
+
+
+
+
+
+        /*$.each(myOptions, function(val, text) {
             mySelect.append(
                 $('<option></option>').val(val).html(text)
             );
-        });
+        });*/
 
-        var bootstrapValidator = $('#form-id').data('bootstrapValidator');
+        /*var bootstrapValidator = $('#form-id').data('bootstrapValidator');
         console.log(bootstrapValidator);
 
         if (bootstrapValidator != undefined)
-            boostrapValidator.destroy();
-    }
+            boostrapValidator.destroy();*/
+
 
 </script>
 

@@ -43,8 +43,18 @@ public class AdmissionHelper {
     List<District> districts= mAdmissionService.getDistricts();
     return districts;
   }
+  public List<District> getAllDistrictsByDivId(int divId){
+    List<District> districts= mAdmissionService.getDistrictByDivId(divId);
+    return districts;
+  }
+
   public List<Thana> getAllThanas(){
     List<Thana> thanas= mAdmissionService.getThanas();
+    return thanas;
+  }
+
+  public List<Thana> getAllThanasByDisId(int disId){
+    List<Thana> thanas= mAdmissionService.getThanaByDisId(disId);
     return thanas;
   }
 

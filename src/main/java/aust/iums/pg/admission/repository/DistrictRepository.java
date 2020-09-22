@@ -3,8 +3,11 @@ package aust.iums.pg.admission.repository;
 import aust.iums.pg.admission.model.District;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 /**
  * Created by Monjur-E-Morshed on 9/13/2020.
  */
 public interface DistrictRepository extends CrudRepository<District,Long> {
+    List<District> findByDivisionId(int divisionId);
 }

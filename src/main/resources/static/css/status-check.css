@@ -1,0 +1,15 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+.form-group.required .input-group-prepend:before {
+    content:"*";
+    color:red;
+}
+td
+{
+    padding:0 15px;
+    height: 50px;
+    border: 1px dotted black;
+}

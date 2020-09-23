@@ -85,11 +85,33 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-12 col-md-4">
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">Name(as in SSC/GEC 'O' Level):</div>
+                                            <div class="input-group-text">First Name</div>
+                                        </div>
+                                        <input type="text" th:field="*{fullName}" class="form-control" name="fullName" >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Middle Name</div>
+                                        </div>
+                                        <input type="text" th:field="*{fullName}" class="form-control" name="fullName" >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group required">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Last Name</div>
                                         </div>
                                         <input type="text" th:field="*{fullName}" class="form-control" name="fullName" >
                                     </div>
@@ -104,7 +126,7 @@
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">Father's Name:</div>
+                                            <div class="input-group-text">Father's Name</div>
                                         </div>
                                         <input type="text" class="form-control" th:field="*{fatherName}" >
                                     </div>
@@ -116,7 +138,7 @@
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">Mother's Name:</div>
+                                            <div class="input-group-text">Mother's Name</div>
                                         </div>
                                         <input type="text" class="form-control" th:field="*{motherName}">
                                     </div>
@@ -131,7 +153,7 @@
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">Date of Birth:</div>
+                                            <div class="input-group-text">Date of Birth</div>
                                         </div>
                                         <input type="date" class="form-control" th:value="${applicant.dateOfBirth}"
                                                th:field="${applicant.dateOfBirth}">
@@ -144,7 +166,7 @@
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">Place of Birth:</div>
+                                            <div class="input-group-text">Place of Birth</div>
                                         </div>
                                         <input type="text" class="form-control"
                                                th:field="*{placeOfBirth}">
@@ -156,7 +178,7 @@
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">Nationality:</div>
+                                            <div class="input-group-text">Nationality</div>
                                         </div>
                                         <input type="text" class="form-control" th:field="*{nationality}"
                                         >
@@ -170,7 +192,7 @@
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">Contact Number:</div>
+                                            <div class="input-group-text">Contact Number</div>
                                         </div>
                                         <input type="text" class="form-control" th:field="*{mobileNumber}">
                                     </div>
@@ -181,7 +203,7 @@
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">Email:</div>
+                                            <div class="input-group-text">Email</div>
                                         </div>
                                         <input type="email" class="form-control" th:field="*{email}"
                                         >
@@ -196,7 +218,7 @@
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">Religion:</div>
+                                            <div class="input-group-text">Religion</div>
                                         </div>
                                         <input type="text" class="form-control" th:field="*{religion}"
                                         >
@@ -207,7 +229,7 @@
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">Gender:</div>
+                                            <div class="input-group-text">Gender</div>
                                         </div>
                                         &nbsp;&nbsp;&nbsp;
                                         <div style="margin-top: 5px">
@@ -223,7 +245,7 @@
                                 <div class="form-group required">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text">Marital Status:</div>
+                                            <div class="input-group-text">Marital Status</div>
                                         </div>
                                         &nbsp; &nbsp; &nbsp;
                                         <div style="margin-top: 5px">

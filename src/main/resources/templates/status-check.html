@@ -28,6 +28,11 @@
             content:"*";
             color:red;
         }
+        td
+        {
+            padding:0 15px;
+            height: 30px;
+        }
 
     </style>
 </head>
@@ -51,17 +56,46 @@
             <div align="center">
                 <h1>Ahsanullah University of Science and Technology</h1>
                 <h2 style="color: dimgray">Master's Application Portal</h2>
-                <h3 th:text="'Semester: '+${semester.getSemesterName()}"></h3>
             </div>
-            <h6><strong>All field's with <em style="color: red">*</em> sign must be filled up to perform search.</strong></h6>
+            <h6 th:if="${hideText !='yes'}"><strong>All field's with <em style="color: red">*</em> sign must be filled up to perform search.</strong></h6>
         <div class="container border" style="margin-top: 10px;margin-bottom: 20px">
             <div class="card border-secondary mb-3" style="margin-top: 10px">
                 <div class="card-body">
-                    <div align="center">
-                        <div th:if="${valid ==1}">
-                            <h4>My name is Muktadir</h4>
+                    <div th:if="${valid ==1}">
+                        <h4 align="center"> <mark>Applicant Information</mark></h4>
+                        <div style="margin-top: 10px">
+                            <div>
+                                <table style="width:50%">
+                                    <tr>
+                                        <td >Applicant Serial No</td>
+                                        <td ><strong>1001</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 10px">Applicant Name</td>
+                                        <td style="width:20px"><strong>Md Golam Muktadir</strong></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <!--<div class="row">
+                                <div class="col-sm-12 col-md-3">
+                                    <span class="badge badge-light">Applicant Serial No:</span>
+                                </div>
+                                <div class="col-sm-12 col-md-9">
+                                    <p><strong>100102</strong></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3">
+                                    <span class="badge badge-light">Applicant Name:</span>
+                                </div>
+                                <div class="col-sm-12 col-md-9">
+                                    <p><strong>Md Golam Muktadir</strong></p>
+                                </div>
+                            </div>-->
                         </div>
-                        <div th:if="${valid !=1}">
+                    </div>
+
+                    <div align="center" th:if="${valid !=1}">
                         <div class="row">
                             <div class="col-sm-12 col-md-4">
                             </div>
@@ -96,8 +130,8 @@
                             </div>
 
                         </div>
-                        </div>
                     </div>
+
                 </div>
             </div>
         </div>

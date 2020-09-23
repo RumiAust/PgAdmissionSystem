@@ -179,7 +179,8 @@ public class AdmissionController {
     @PostMapping("/result")
     public String getResult(@ModelAttribute ApplicationForm applicant, Model model){
     model.addAttribute("search","demo");
-    model.addAttribute("valid",1);
+    model.addAttribute("hideText","yes");
+      model.addAttribute("valid",1);
       return "status-check";
   }
 }

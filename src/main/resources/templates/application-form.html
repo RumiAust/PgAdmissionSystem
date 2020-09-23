@@ -21,10 +21,6 @@
             min-height: 100%;
         }
 
-        h3 {
-            color: chocolate;
-        }
-
         .form-group.required .input-group-prepend:before {
             content: "*";
             color: red;
@@ -51,9 +47,9 @@
     <form action="#" th:action="@{/apply}" th:object="${applicant}" method="post" enctype="multipart/form-data" >
         <div class="container" style="border: 1px solid black;margin-top: 40px;margin-bottom: 20px">
             <div align="center">
-                <h1>Ahsanullah University of Science and Technology</h1>
-                <h2 style="color: dimgray">Master's Program Application Form</h2>
-                <h3 th:text="'Semester: '+${semester.getSemesterName()}"></h3>
+                <h1><img src="logo-aust.png" width="40" height="40" alt="">&nbsp;&nbsp;Ahsanullah University of Science and Technology</h1>
+                <h4><strong>Master's Program Application Form</strong></h4>
+                <span class="badge badge-pill badge-light"><h5 th:text="'Semester: '+${semester.getSemesterName()}"></h5></span>
             </div>
             </br>
             <h6><strong>All field's with <em style="color: red">*</em> sign must be filled up by the applicant</strong>

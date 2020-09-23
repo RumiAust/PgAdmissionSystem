@@ -1,6 +1,8 @@
 package aust.iums.pg.admission.dto;
 
+import com.sun.istack.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.NonNull;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -17,7 +19,9 @@ public class ApplicationForm {
     private String programName;
     private String semesterId;
     //personal info
+    @NotNull
     private String fullName;
+    @NotNull
     private String fatherName;
     private String motherName;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

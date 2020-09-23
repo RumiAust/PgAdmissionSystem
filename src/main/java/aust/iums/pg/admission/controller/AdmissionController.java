@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -80,8 +81,8 @@ public class AdmissionController {
         return "application-form";
     }
 
-    @PostMapping(value = "/apply")
-    public String greetingSubmit(@ModelAttribute ApplicationForm applicant, Model model, RedirectAttributes redirectAttributes) throws IOException, ParseException {
+    @PostMapping(value = "/apply", params = {"save"})
+    public String greetingSubmit(@Valid ApplicationForm applicant,final BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) throws IOException, ParseException {
         model.addAttribute("applicant", applicant);
         addressMap(applicant);
         log.info(" [{}]: Applicant Infos ", applicant.toString());

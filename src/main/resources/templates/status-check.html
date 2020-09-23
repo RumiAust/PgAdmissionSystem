@@ -41,7 +41,7 @@
 
 <nav class="navbar navbar-dark bg-dark">
     <a class="navbar-brand" href="#" style="font-size: 25px;font-family: 'Times New Roman'">
-        <img src="logo-aust.png" width="40" height="40" alt=""> AUST Master's Admission
+        <img src="logo-aust.png" width="40" height="40" alt="">&nbsp; Aust Master's Admission
     </a>
     <form class="form-inline my-2 my-lg-0">
         <a class="navbar-brand" href="/applicationForm"><i class="fa fa-fw fa-home" style="color: chartreuse"></i>Home</a>
@@ -63,7 +63,7 @@
             <div class="card border-secondary mb-3" style="margin-top: 10px">
                 <div class="card-body">
                     <div th:if="${valid ==1}">
-                        <h4 align="center"> <mark>Applicant Information</mark></h4>
+                        <h4 align="center" class="bg-info">Applicant Information</h4>
                         <div style="margin-top: 15px">
                             <div align="center">
                                 <table style="width:60%">
@@ -89,7 +89,7 @@
                                     </tr>
                                     <tr>
                                         <td >Deposit Slip :</td>
-                                        <td ><button type="button" class="btn btn-outline-dark btn-xs">Click here</button></td>
+                                        <td><a href="/#"><img src="pdf.png" width="30" height="30" alt="download pdf"></a></td>
                                     </tr>
                                 </table>
                             </div>

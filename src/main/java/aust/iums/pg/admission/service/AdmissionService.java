@@ -110,8 +110,10 @@ public class AdmissionService {
         applicant.setAppliedOn(Instant.now());
         applicant.setSelectedRejectedOn(Instant.now());
         applicant.setApplicationFeePaidOn(Instant.now());
+        applicant =  mApplicantRepository.saveAndFlush(applicant);
 
         ApplicantPersonaIInfo app = new ApplicantPersonaIInfo();
+        app.setApplicant(applicant);
         app.setFirstName(pApp.getFatherName());
         app.setMiddleName(pApp.getFullName());
         app.setLastName(pApp.getFullName());
@@ -131,6 +133,7 @@ public class AdmissionService {
 
         List<ApplicantAddress> addressList = new ArrayList<>();
         ApplicantAddress address = new ApplicantAddress();
+        address.setApplicant(applicant);
         address.setAddressType(AddressTypeEnum.PRESENT.getLabel());
         address.setApplicationSn(applicantSerialNo);
         address.setDivisionId(Integer.parseInt(pApp.getPresentDivisionId()));
@@ -139,6 +142,7 @@ public class AdmissionService {
         address.setLine1(pApp.getPresentAddress());
         addressList.add(address);
         address = new ApplicantAddress();
+        address.setApplicant(applicant);
         address.setAddressType(AddressTypeEnum.PERMANENT.getLabel());
         address.setApplicationSn(applicantSerialNo);
         address.setDivisionId(Integer.parseInt(pApp.getPermanentDivisionId()));
@@ -158,12 +162,14 @@ public class AdmissionService {
             obj.setJobResponsibilities(data.getJobResponsibility());
             obj.setFromDate(PgUtils.formateDate(data.getFromDate()));
             obj.setToDate(PgUtils.formateDate(data.getToDate()));
+            obj.setApplicant(applicant);
             workExperienceLists.add(obj);
         }
 
 
         List<ApplicantEducationalInfo> educationalInfoList = new ArrayList<>();
         ApplicantEducationalInfo eduInfo = new ApplicantEducationalInfo();
+        eduInfo.setApplicant(applicant);
         eduInfo.setExamType(ExamTypeEnum.SSC_EQU.name());
         eduInfo.setApplicationSn(applicantSerialNo);
         eduInfo.setInstituteName(pApp.getSscInstituteName());
@@ -173,6 +179,7 @@ public class AdmissionService {
         eduInfo.setPassingYear(pApp.getSscPassingYear());
         educationalInfoList.add(eduInfo);
         eduInfo = new ApplicantEducationalInfo();
+        eduInfo.setApplicant(applicant);
         eduInfo.setExamType(ExamTypeEnum.HSC_EQU.name());
         eduInfo.setApplicationSn(applicantSerialNo);
         eduInfo.setInstituteName(pApp.getHscInstituteName());
@@ -182,6 +189,7 @@ public class AdmissionService {
         eduInfo.setPassingYear(pApp.getHscPassingYear());
         educationalInfoList.add(eduInfo);
         eduInfo = new ApplicantEducationalInfo();
+        eduInfo.setApplicant(applicant);
         eduInfo.setExamType(ExamTypeEnum.BBA_BCOM_BSC_BA_EQU.name());
         eduInfo.setApplicationSn(applicantSerialNo);
         eduInfo.setInstituteName(pApp.getBscInstituteName());
@@ -191,6 +199,7 @@ public class AdmissionService {
         eduInfo.setPassingYear(pApp.getBscPassingYear());
         educationalInfoList.add(eduInfo);
         eduInfo = new ApplicantEducationalInfo();
+        eduInfo.setApplicant(applicant);
         eduInfo.setExamType(ExamTypeEnum.MCOM_MA_MBA_MSC_EQU.name());
         eduInfo.setApplicationSn(applicantSerialNo);
         eduInfo.setInstituteName(pApp.getMscInstituteName());
@@ -205,8 +214,6 @@ public class AdmissionService {
         //eduFile.add(pApp.getSscFile());
 
 
-
-        mApplicantRepository.save(applicant);
         mApplicantPersonalInfoRepository.save(app);
         mApplicantEducationalInfoRepository.saveAll(educationalInfoList);
         mApplicantAddressRepository.saveAll(addressList);

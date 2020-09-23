@@ -18,9 +18,13 @@ public class ApplicationForm {
     private String programId;
     private String programName;
     private String semesterId;
+    private String semesterName;
     //personal info
     @NotNull
     private String fullName;
+    private String firstName;
+    private String middleName;
+    private String lastName;
     @NotNull
     private String fatherName;
     private String motherName;
@@ -86,72 +90,108 @@ public class ApplicationForm {
     // modal Id
     private String modalId;
 
-    @Override
-    public String toString() {
-        return "ApplicationForm{" +
-                "applicationSerialNumber='" + applicationSerialNumber + '\'' +
-                ", programId='" + programId + '\'' +
-                ", programName='" + programName + '\'' +
-                ", semesterId='" + semesterId + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", fatherName='" + fatherName + '\'' +
-                ", motherName='" + motherName + '\'' +
-                ", dateOfBirth='" + dateOfBirth + '\'' +
-                ", placeOfBirth='" + placeOfBirth + '\'' +
-                ", mobileNumber='" + mobileNumber + '\'' +
-                ", nationality='" + nationality + '\'' +
-                ", religion='" + religion + '\'' +
-                ", email='" + email + '\'' +
-                ", gender='" + gender + '\'' +
-                ", maritalStatus='" + maritalStatus + '\'' +
-                ", sscInstituteName='" + sscInstituteName + '\'' +
-                ", sscBoardName='" + sscBoardName + '\'' +
-                ", sscMarks='" + sscMarks + '\'' +
-                ", sscGrade='" + sscGrade + '\'' +
-                ", sscPassingYear=" + sscPassingYear +
-                ", sscFile=" + sscFile +
-                ", hscInstituteName='" + hscInstituteName + '\'' +
-                ", hscBoardName='" + hscBoardName + '\'' +
-                ", hscMarks='" + hscMarks + '\'' +
-                ", hscGrade='" + hscGrade + '\'' +
-                ", hscPassingYear=" + hscPassingYear +
-                ", hscFile=" + hscFile +
-                ", bscInstituteName='" + bscInstituteName + '\'' +
-                ", bscBoardName='" + bscBoardName + '\'' +
-                ", bscMarks='" + bscMarks + '\'' +
-                ", bscGrade='" + bscGrade + '\'' +
-                ", bscPassingYear=" + bscPassingYear +
-                ", bscFile=" + bscFile +
-                ", mscInstituteName='" + mscInstituteName + '\'' +
-                ", mscBoardName='" + mscBoardName + '\'' +
-                ", mscMarks='" + mscMarks + '\'' +
-                ", mscGrade='" + mscGrade + '\'' +
-                ", mscPassingYear=" + mscPassingYear +
-                ", mscFile=" + mscFile +
-                ", workExperienceList=" + workExperienceList +
-                ", workExperienceDivId='" + workExperienceDivId + '\'' +
-                ", presentDivisionId='" + presentDivisionId + '\'' +
-                ", presentDivision='" + presentDivision + '\'' +
-                ", presentDistrictId='" + presentDistrictId + '\'' +
-                ", presentDistrict='" + presentDistrict + '\'' +
-                ", presentThanaId='" + presentThanaId + '\'' +
-                ", presentThana='" + presentThana + '\'' +
-                ", presentAddress='" + presentAddress + '\'' +
-                ", permanentDivisionId='" + permanentDivisionId + '\'' +
-                ", permanentDivision='" + permanentDivision + '\'' +
-                ", permanentDistrictId='" + permanentDistrictId + '\'' +
-                ", permanentDistrict='" + permanentDistrict + '\'' +
-                ", permanentThanaId='" + permanentThanaId + '\'' +
-                ", permanentThana='" + permanentThana + '\'' +
-                ", permanentAddress='" + permanentAddress + '\'' +
-                ", photo=" + photo +
-                ", signature=" + signature +
-                ", declaration=" + declaration +
-                ", modalId='" + modalId + '\'' +
-                '}';
-    }
+  @Override
+  public String toString() {
+    return "ApplicationForm{" +
+        "applicationSerialNumber='" + applicationSerialNumber + '\'' +
+        ", programId='" + programId + '\'' +
+        ", programName='" + programName + '\'' +
+        ", semesterId='" + semesterId + '\'' +
+        ", semesterName='" + semesterName + '\'' +
+        ", fullName='" + fullName + '\'' +
+        ", firstName='" + firstName + '\'' +
+        ", middleName='" + middleName + '\'' +
+        ", lastName='" + lastName + '\'' +
+        ", fatherName='" + fatherName + '\'' +
+        ", motherName='" + motherName + '\'' +
+        ", dateOfBirth='" + dateOfBirth + '\'' +
+        ", placeOfBirth='" + placeOfBirth + '\'' +
+        ", mobileNumber='" + mobileNumber + '\'' +
+        ", nationality='" + nationality + '\'' +
+        ", religion='" + religion + '\'' +
+        ", email='" + email + '\'' +
+        ", gender='" + gender + '\'' +
+        ", maritalStatus='" + maritalStatus + '\'' +
+        ", sscInstituteName='" + sscInstituteName + '\'' +
+        ", sscBoardName='" + sscBoardName + '\'' +
+        ", sscMarks='" + sscMarks + '\'' +
+        ", sscGrade='" + sscGrade + '\'' +
+        ", sscPassingYear=" + sscPassingYear +
+        ", sscFile=" + sscFile +
+        ", hscInstituteName='" + hscInstituteName + '\'' +
+        ", hscBoardName='" + hscBoardName + '\'' +
+        ", hscMarks='" + hscMarks + '\'' +
+        ", hscGrade='" + hscGrade + '\'' +
+        ", hscPassingYear=" + hscPassingYear +
+        ", hscFile=" + hscFile +
+        ", bscInstituteName='" + bscInstituteName + '\'' +
+        ", bscBoardName='" + bscBoardName + '\'' +
+        ", bscMarks='" + bscMarks + '\'' +
+        ", bscGrade='" + bscGrade + '\'' +
+        ", bscPassingYear=" + bscPassingYear +
+        ", bscFile=" + bscFile +
+        ", mscInstituteName='" + mscInstituteName + '\'' +
+        ", mscBoardName='" + mscBoardName + '\'' +
+        ", mscMarks='" + mscMarks + '\'' +
+        ", mscGrade='" + mscGrade + '\'' +
+        ", mscPassingYear=" + mscPassingYear +
+        ", mscFile=" + mscFile +
+        ", workExperienceList=" + workExperienceList +
+        ", workExperienceDivId='" + workExperienceDivId + '\'' +
+        ", presentDivisionId='" + presentDivisionId + '\'' +
+        ", presentDivision='" + presentDivision + '\'' +
+        ", presentDistrictId='" + presentDistrictId + '\'' +
+        ", presentDistrict='" + presentDistrict + '\'' +
+        ", presentThanaId='" + presentThanaId + '\'' +
+        ", presentThana='" + presentThana + '\'' +
+        ", presentAddress='" + presentAddress + '\'' +
+        ", permanentDivisionId='" + permanentDivisionId + '\'' +
+        ", permanentDivision='" + permanentDivision + '\'' +
+        ", permanentDistrictId='" + permanentDistrictId + '\'' +
+        ", permanentDistrict='" + permanentDistrict + '\'' +
+        ", permanentThanaId='" + permanentThanaId + '\'' +
+        ", permanentThana='" + permanentThana + '\'' +
+        ", permanentAddress='" + permanentAddress + '\'' +
+        ", photo=" + photo +
+        ", signature=" + signature +
+        ", declaration=" + declaration +
+        ", modalId='" + modalId + '\'' +
+        '}';
+  }
 
-    public String getModalId() {
+  public String getSemesterName() {
+    return semesterName;
+  }
+
+  public void setSemesterName(String pSemesterName) {
+    semesterName = pSemesterName;
+  }
+
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public void setFirstName(String pFirstName) {
+    firstName = pFirstName;
+  }
+
+  public String getMiddleName() {
+    return middleName;
+  }
+
+  public void setMiddleName(String pMiddleName) {
+    middleName = pMiddleName;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public void setLastName(String pLastName) {
+    lastName = pLastName;
+  }
+
+  public String getModalId() {
         return modalId;
     }
 

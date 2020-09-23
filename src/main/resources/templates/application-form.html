@@ -48,7 +48,7 @@
 </nav>
 
 <div class="overflow-auto">
-    <form action="#" th:action="@{/apply}" th:object="${applicant}" method="post" enctype="multipart/form-data" id="form-id">
+    <form action="#" th:action="@{/apply}" th:object="${applicant}" method="post" enctype="multipart/form-data" id="enableForm">
         <div class="container" style="border: 1px solid black;margin-top: 40px;margin-bottom: 20px">
             <div align="center">
                 <h1>Ahsanullah University of Science and Technology</h1>
@@ -91,7 +91,7 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Name(as in SSC/GEC 'O' Level):</div>
                                         </div>
-                                        <input type="text" th:field="*{fullName}" class="form-control" required>
+                                        <input type="text" th:field="*{fullName}" class="form-control" name="fullName" >
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Father's Name:</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{fatherName}" required>
+                                        <input type="text" class="form-control" th:field="*{fatherName}" >
                                     </div>
                                 </div>
                             </div>
@@ -118,8 +118,7 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Mother's Name:</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{motherName}"
-                                        >
+                                        <input type="text" class="form-control" th:field="*{motherName}">
                                     </div>
                                 </div>
                             </div>
@@ -887,332 +886,8 @@
                 </div>
             </div>
 
-<!--
-            <div class="modal fade bd-example-modal-lg" th:id="${applicant.modalId}" tabindex="-1" role="dialog">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" style="text-align: center">Confirmation</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div style="padding: 10px" align="center">
-                                <p style="font-size: 20px"><strong>Program Name:</strong> <span
-                                                th:text="${applicant.programName}">.</span>
-                                </p>
-                            </div>
-                            <div style="background: aliceblue;margin-bottom: 10px; padding: 10px">
-                                <strong style="color: #f99827; font-size: 20px">Personal Information</strong>
-                                <div class="row" style="padding-left: 10px; margin-bottom: -15px">
-                                    <div class="col-sm-12">
-                                        <p><strong>Name(as in SSC/GEC 'O' Level):</strong> <span
-                                                th:text="${applicant.fullName}">.</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row" style="padding-left: 10px; margin-bottom: -15px">
-                                    <div class="col-sm-12 col-md-6">
-                                        <p><strong>Father's Name:</strong> <span
-                                                th:text="${applicant.fatherName}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6">
-                                        <p><strong>Mother's Name:</strong> <span
-                                                th:text="${applicant.motherName}">.</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row" style="padding-left: 10px; margin-bottom: -15px">
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Date of Birth:</strong> <span
-                                                th:text="${applicant.dateOfBirth}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Place of Birth:</strong> <span
-                                                th:text="${applicant.placeOfBirth}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Nationality:</strong> <span
-                                                th:text="${applicant.nationality}">.</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row" style="padding-left: 10px; margin-bottom: -15px">
-                                    <div class="col-sm-12 col-md-6">
-                                        <p><strong>Contact Number:</strong> <span
-                                                th:text="${applicant.mobileNumber}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6">
-                                        <p><strong>Email:</strong> <span
-                                                th:text="${applicant.email}">.</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row" style="padding-left: 10px; margin-bottom: -15px">
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Religion:</strong> <span
-                                                th:text="${applicant.religion}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Gender:</strong> <span
-                                                th:text="${applicant.gender}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Marital Status:</strong> <span
-                                                th:text="${applicant.maritalStatus}">.</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="background: #E9ECEF;margin-bottom: 10px; padding: 10px">
-                                <strong style="color: #f99827; font-size: 20px">Education Information</strong>
-                                <div class="row" style="padding-left: 20px; margin-bottom: -5px">
-                                    <strong style="color: blue; font-size: 15px">SSC or Equivalent</strong>
-                                </div>
-                                <div class="row" style="padding-left: 10px; margin-bottom: -15px">
-                                    <div class="col-sm-12 col-md-8">
-                                        <p><strong>School/Institution:</strong> <span
-                                                th:text="${applicant.sscInstituteName}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Board:</strong> <span
-                                                th:text="${applicant.sscBoardName}">.</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row" style="padding-left: 10px; margin-bottom: -15px">
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Total Marks/Grade:</strong> <span
-                                                th:text="${applicant.sscMarks}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Division/Class/Grade:</strong> <span
-                                                th:text="${applicant.sscGrade}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Year of Passing:</strong> <span
-                                                th:text="${applicant.sscPassingYear}">.</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row" style="padding-left: 20px; margin-bottom: -5px">
-                                    <strong style="color: blue; font-size: 15px">HSC or Equivalent</strong>
-                                </div>
-                                <div class="row" style="padding-left: 10px; margin-bottom: -15px">
-                                    <div class="col-sm-12 col-md-8">
-                                        <p><strong>College/Institution:</strong> <span
-                                                th:text="${applicant.hscInstituteName}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Board:</strong> <span
-                                                th:text="${applicant.hscBoardName}">.</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row" style="padding-left: 10px; margin-bottom: -15px">
-
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Total Marks/Grade:</strong> <span
-                                                th:text="${applicant.hscMarks}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Division/Class/Grade:</strong> <span
-                                                th:text="${applicant.hscGrade}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Year of Passing:</strong> <span
-                                                th:text="${applicant.hscPassingYear}">.</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row" style="padding-left: 20px; margin-bottom: -5px">
-                                    <strong style="color: blue; font-size: 15px">BBA/B.Com/B.Sc./B.A./Equivalent</strong>
-                                </div>
-                                <div class="row" style="padding-left: 10px; margin-bottom: -15px">
-                                    <div class="col-sm-12 col-md-8">
-                                        <p><strong>College/Institution:</strong> <span
-                                                th:text="${applicant.bscInstituteName}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Board:</strong> <span
-                                                th:text="${applicant.bscBoardName}">.</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row" style="padding-left: 10px; margin-bottom: -15px">
-
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Total Marks/Grade:</strong> <span
-                                                th:text="${applicant.bscMarks}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Division/Class/Grade:</strong> <span
-                                                th:text="${applicant.bscGrade}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Year of Passing:</strong> <span
-                                                th:text="${applicant.bscPassingYear}">.</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row" style="padding-left: 20px; margin-bottom: -5px">
-                                    <strong style="color: blue; font-size: 15px">M.Com/M.A./MBA/M.Sc.</strong>
-                                </div>
-                                <div class="row" style="padding-left: 10px; margin-bottom: -15px">
-                                    <div class="col-sm-12 col-md-8">
-                                        <p><strong>College/Institution:</strong> <span
-                                                th:text="${applicant.mscInstituteName}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Board:</strong> <span
-                                                th:text="${applicant.mscBoardName}">.</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row" style="padding-left: 10px; margin-bottom: -15px">
-
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Total Marks/Grade:</strong> <span
-                                                th:text="${applicant.mscMarks}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Division/Class/Grade:</strong> <span
-                                                th:text="${applicant.mscGrade}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Year of Passing:</strong> <span
-                                                th:text="${applicant.mscPassingYear}">.</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="background: aliceblue;margin-bottom: 10px; padding: 10px">
-                                <strong style="color: #f99827; font-size: 20px">Work Experience</strong>
-                                <div class="border" style="padding-left: 10px;"
-                                     th:each="row,rowStat : *{workExperienceList}">
-                                    <div class="row" style="margin-bottom: -15px">
-                                        <div class="col-sm-12 col-md-6">
-                                            <p><strong>Organization Name:</strong> <span
-                                                    th:text="${applicant.workExperienceList[__${rowStat.index}__].organizationName}">.</span>
-                                            </p>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6">
-                                            <p><strong>Designation:</strong> <span
-                                                    th:text="${applicant.workExperienceList[__${rowStat.index}__].designation}">.</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="row" style="margin-bottom: -15px">
-                                        <div class="col-sm-12">
-                                            <p><strong>Job Responsibility:</strong> <span
-                                                    th:text="${applicant.workExperienceList[__${rowStat.index}__].jobResponsibility}">.</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="row" style="margin-bottom: -15px">
-                                        <div class="col-sm-12 col-md-6">
-                                            <p><strong>From Date:</strong> <span
-                                                    th:text="${applicant.workExperienceList[__${rowStat.index}__].fromDate}">.</span>
-                                            </p>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6">
-                                            <p><strong>To Date:</strong> <span
-                                                    th:text="${applicant.workExperienceList[__${rowStat.index}__].toDate}">.</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="background: #E9ECEF;margin-bottom: 10px; padding: 10px">
-                                <strong style="color: #f99827; font-size: 20px">Contact Information</strong>
-                                <div class="row" style="padding-left: 20px; margin-bottom: -5px">
-                                    <strong style="color: blue; font-size: 15px">Present Address</strong>
-                                </div>
-                                <div class="row" style="padding-left: 10px; margin-bottom: -15px">
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Division:</strong> <span
-                                                th:text="${applicant.presentDivision}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>District:</strong> <span
-                                                th:text="${applicant.presentDistrict}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Thana:</strong> <span
-                                                th:text="${applicant.presentThana}">.</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row" style="padding-left: 10px; margin-bottom: -15px">
-                                    <div class="col-sm-12">
-                                        <p><strong>Address:</strong> <span
-                                                th:text="${applicant.presentAddress}">.</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row" style="padding-left: 20px; margin-bottom: -5px">
-                                    <strong style="color: blue; font-size: 15px">Permanent Address</strong>
-                                </div>
-                                <div class="row" style="padding-left: 10px; margin-bottom: -15px">
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Division:</strong> <span
-                                                th:text="${applicant.permanentDivision}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>District:</strong> <span
-                                                th:text="${applicant.permanentDistrict}">.</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4">
-                                        <p><strong>Thana:</strong> <span
-                                                th:text="${applicant.permanentThana}">.</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row" style="padding-left: 10px; margin-bottom: -15px">
-                                    <div class="col-sm-12">
-                                        <p><strong>Address:</strong> <span
-                                                th:text="${applicant.permanentAddress}">.</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            &lt;!&ndash;end&ndash;&gt;
-                        </div>
-
-
-                        <div class="modal-footer">
-                            <input type="submit" name="save" class="btn btn-success" value="Proceed"/>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Keep Editing</button>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
-
             <div>
-                <h6><input type="checkbox" th:field="*{declaration}" required> I do hereby declare that the information as stated
+                <h6><input type="checkbox" th:field="*{declaration}"> I do hereby declare that the information as stated
                     in the Admission application form is true. If any of the information is found incorrect, my
                     admission is liable to be cancelled. If any of the certificates/academic transcripts/documents
                     attached with this form is found altered/forged, my admission is also liable to be cancelled.I also
@@ -1388,7 +1063,25 @@
 
 
 
-
+    $(document).ready(function() {
+        $('#enableForm')
+            .bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    fullName: {
+                        validators: {
+                            notEmpty: {
+                                message: 'The full name is required and cannot be empty'
+                            }
+                        }
+                    }
+                }
+            })
+    })
 
 
 
@@ -1399,12 +1092,6 @@
                 $('<option></option>').val(val).html(text)
             );
         });*/
-
-        /*var bootstrapValidator = $('#form-id').data('bootstrapValidator');
-        console.log(bootstrapValidator);
-
-        if (bootstrapValidator != undefined)
-            boostrapValidator.destroy();*/
 
 
 </script>

@@ -48,7 +48,7 @@
 </nav>
 
 <div class="overflow-auto">
-    <form action="#" th:action="@{/apply}" th:object="${applicant}" method="post" enctype="multipart/form-data" id="enableForm">
+    <form action="#" th:action="@{/apply}" th:object="${applicant}" method="post" enctype="multipart/form-data" >
         <div class="container" style="border: 1px solid black;margin-top: 40px;margin-bottom: 20px">
             <div align="center">
                 <h1>Ahsanullah University of Science and Technology</h1>
@@ -920,7 +920,7 @@
             </div>
             <div class="row" style="margin-bottom: 20px">
                 <div class="col-md-12" align="center">
-                    <button type="submit" class="btn btn-success" value="save">Submit</button>
+                    <button type="submit" class="btn btn-success" name="save" value="save">Submit</button>
                 </div>
             </div>
         </div>
@@ -1082,38 +1082,6 @@
             mySelect.find('option').remove();
         }
     }
-
-
-
-    $(document).ready(function() {
-        $('#enableForm')
-            .bootstrapValidator({
-                feedbackIcons: {
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
-                },
-                fields: {
-                    fullName: {
-                        validators: {
-                            notEmpty: {
-                                message: 'The full name is required and cannot be empty'
-                            }
-                        }
-                    }
-                }
-            })
-    })
-
-
-
-
-
-        /*$.each(myOptions, function(val, text) {
-            mySelect.append(
-                $('<option></option>').val(val).html(text)
-            );
-        });*/
 
 
 </script>

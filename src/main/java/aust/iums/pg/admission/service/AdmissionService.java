@@ -114,9 +114,9 @@ public class AdmissionService {
 
         ApplicantPersonaIInfo app = new ApplicantPersonaIInfo();
         app.setApplicant(applicant);
-        app.setFirstName(pApp.getFatherName());
-        app.setMiddleName(pApp.getFullName());
-        app.setLastName(pApp.getFullName());
+        app.setFirstName(pApp.getFirstName());
+        app.setMiddleName(pApp.getMiddleName());
+        app.setLastName(pApp.getLastName());
         app.setFatherName(pApp.getFatherName());
         app.setMotherName(pApp.getMotherName());
         app.setApplicationSn(applicantSerialNo);

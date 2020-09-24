@@ -153,7 +153,8 @@ public class AdmissionService {
 
 
         List<JobExperience> workExperienceLists = new ArrayList<>();
-        for (WorkExperienceList data : pApp.getWorkExperienceList()) {
+        if(pApp.getWorkExperienceList() !=null) {
+          for (WorkExperienceList data : pApp.getWorkExperienceList()) {
             JobExperience obj = new JobExperience();
             //fileStorageService.saveFile(data.getExperienceFile(), "document", pApp, "exp");
             obj.setApplicationSn(applicantSerialNo);
@@ -164,6 +165,7 @@ public class AdmissionService {
             obj.setToDate(PgUtils.formateDate(data.getToDate()));
             obj.setApplicant(applicant);
             workExperienceLists.add(obj);
+          }
         }
 
 
@@ -216,8 +218,10 @@ public class AdmissionService {
 
         mApplicantPersonalInfoRepository.save(app);
         mApplicantEducationalInfoRepository.saveAll(educationalInfoList);
+        if(workExperienceLists.size()>0) {
+          mJobExperienceRepository.saveAll(workExperienceLists);
+        }
         mApplicantAddressRepository.saveAll(addressList);
-        mJobExperienceRepository.saveAll(workExperienceLists);
 
 
     /*for(MultipartFile file:eduFile){
@@ -227,17 +231,31 @@ public class AdmissionService {
     }*/
 
         /*Save all Files*/
+      if(pApp.getWorkExperienceList() !=null) {
         for (WorkExperienceList data : pApp.getWorkExperienceList()) {
-            fileStorageService.saveFile(data.getExperienceFile(), "document", pApp, "exp");
+          fileStorageService.saveFile(data.getExperienceFile(), "document", pApp, "exp");
+        }
+      }
+
+        if(pApp.getSscFile() !=null) {
+          fileStorageService.saveFile(pApp.getSscFile(), "document", pApp, "ssc");
+        }
+        if(pApp.getHscFile() !=null) {
+          fileStorageService.saveFile(pApp.getHscFile(), "document", pApp, "hsc");
+        }
+        if(pApp.getBscFile() !=null) {
+          fileStorageService.saveFile(pApp.getBscFile(), "document", pApp, "bsc");
+        }
+        if(pApp.getMscFile() !=null) {
+          fileStorageService.saveFile(pApp.getMscFile(), "document", pApp, "msc");
         }
 
-        fileStorageService.saveFile(pApp.getSscFile(), "document", pApp, "ssc");
-        fileStorageService.saveFile(pApp.getHscFile(), "document", pApp, "hsc");
-        fileStorageService.saveFile(pApp.getBscFile(), "document", pApp, "bsc");
-        fileStorageService.saveFile(pApp.getMscFile(), "document", pApp, "msc");
-
-        fileStorageService.saveFile(pApp.getPhoto(), "photo", pApp, "");
-        fileStorageService.saveFile(pApp.getSignature(), "signature", pApp, "");
+        if(pApp.getPhoto() !=null) {
+          fileStorageService.saveFile(pApp.getPhoto(), "photo", pApp, "");
+        }
+        if(pApp.getSignature() !=null) {
+          fileStorageService.saveFile(pApp.getSignature(), "signature", pApp, "");
+        }
 
     }
 

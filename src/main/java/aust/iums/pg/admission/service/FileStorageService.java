@@ -49,7 +49,7 @@ public class FileStorageService {
 
     public void saveFile(MultipartFile file, String type, ApplicationForm form, String docType) throws IOException {
         String fileName = file.getOriginalFilename();
-        String applicantSerialNo = mApplicantRepository.getApplicantSerialNo().toString();
+        String applicantSerialNo = form.getApplicationSerialNumber();
 
         validate(file, type);
         String modifiedFileName="";

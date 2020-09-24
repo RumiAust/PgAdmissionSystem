@@ -18,4 +18,6 @@ public interface ApplicantRepository extends JpaRepository<Applicant,Long> {
 
   Optional<Applicant> findByApplicationSn(String serialNo);
 
+  // Optional<Applicant> findByApplicationSn
+
 }

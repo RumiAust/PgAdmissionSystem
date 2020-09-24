@@ -119,7 +119,7 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Application ID </div>
                                         </div>
-                                        <input type="text"  class="form-control" th:field="*{applicationSerialNo}">
+                                        <input type="text"  class="form-control" th:field="*{applicationSerialNo}" required>
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +134,7 @@
                                             <div class="input-group-text">Date of Birth &nbsp;</div>
                                         </div>
                                         <input type="date" class="form-control" th:value="${applicantInfo.dateOfBirth}"
-                                               th:field="${applicantInfo.dateOfBirth}">
+                                               th:field="${applicantInfo.dateOfBirth}" required>
                                     </div>
                                 </div>
                             </div>

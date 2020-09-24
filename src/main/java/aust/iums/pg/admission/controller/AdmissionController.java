@@ -158,11 +158,7 @@ public class AdmissionController {
     }
 
 
-    @GetMapping("/statusCheck")
-    public String statusCheck(Model model) {
 
-        return "status-check";
-    }
 
     @PostMapping("/result")
     public String getResult(@ModelAttribute ApplicationForm applicant, Model model) {
@@ -288,6 +284,14 @@ public class AdmissionController {
     }
 
 
+  @GetMapping("/statusCheck")
+  public String statusCheck(Model model) {
+    StatusCheckDto app= new StatusCheckDto();
+    model.addAttribute("applicantInfo",app);
+    return "status-check";
+  }
+  
+
     @PostMapping("/result")
     public String getResult(@ModelAttribute StatusCheckDto pStatusCheckDto, Model model) throws ParseException {
         try {
@@ -299,11 +303,7 @@ public class AdmissionController {
           }
           model.addAttribute("hideText","yes");
           model.addAttribute("valid",1);
-          =======
-      StatusCheckDto app= new StatusCheckDto();
-      model.addAttribute("applicantInfo",app);
       return "status-check";
-          return "status-check";
       }catch (Exception e){
         log.error("Error :: "+e.getMessage());
           return "Not Found";

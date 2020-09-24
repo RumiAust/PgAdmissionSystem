@@ -1,6 +1,7 @@
 package aust.iums.pg.admission.service;
 
 import aust.iums.pg.admission.dto.ApplicationForm;
+import aust.iums.pg.admission.enums.FileTypeEnum;
 import aust.iums.pg.admission.repository.ApplicantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,7 +52,6 @@ public class FileStorageService {
         String fileName = file.getOriginalFilename();
         String applicantSerialNo = form.getApplicationSerialNumber();
 
-        validate(file, type);
         String modifiedFileName="";
         if(type=="photo" || type=="signature")
              modifiedFileName =  applicantSerialNo + "." + FilenameUtils.getExtension(fileName);
@@ -66,8 +66,8 @@ public class FileStorageService {
 
     }
 
-    private void validate(MultipartFile file, String type) throws IOException {
-        if (type == "photo") {
+    public void validate(MultipartFile file, FileTypeEnum type) throws IOException {
+        if (type == FileTypeEnum.PHOTO) {
             if (!(file.getOriginalFilename().endsWith(".jpg") || file.getOriginalFilename().endsWith(".jpeg")))
                 throw new RuntimeException("Invalid applicant  photo format type( accepted: jpeg, jpg)");
             if (!validateDimension(true, file)) {
@@ -77,7 +77,7 @@ public class FileStorageService {
                 throw new RuntimeException("Invalid applicant photo size. Maximum allowed photo size is" + maxSize + "KB");
             }
 
-        } else if (type == "signature") {
+        } else if (type == FileTypeEnum.SIGNATURE) {
             if (!(file.getOriginalFilename().endsWith(".jpg") || file.getOriginalFilename().endsWith(".jpeg")))
                 throw new RuntimeException("Invalid applicant signature format type( accepted: jpeg, jpg)");
             if (!validateDimension(false, file)) {
@@ -86,7 +86,7 @@ public class FileStorageService {
             if (file.getSize() / 1000 > maxSize) {
                 throw new RuntimeException("Invalid applicant signature size. Maximum allowed signature size is" + maxSize + "KB");
             }
-        } else if (type == "document") {
+        } else if (type == FileTypeEnum.BSC || type==FileTypeEnum.HSC || type==FileTypeEnum.SSC ||type== FileTypeEnum.BSC || type==FileTypeEnum.MSC || type==FileTypeEnum.EXPERIENCE) {
             if (!(file.getOriginalFilename().endsWith(".jpg") || file.getOriginalFilename().endsWith(".png") || file.getOriginalFilename().endsWith(".jpeg") || file.getOriginalFilename().endsWith(".pdf") || file.getOriginalFilename().endsWith(".zip")))
                 throw new RuntimeException("Invalid applicant file type( accepted: jpeg, jpg, png, pdf, zip)");
             if (file.getSize() / 1000 > maxDocumentSize) {

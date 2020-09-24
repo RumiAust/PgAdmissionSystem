@@ -7,8 +7,10 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 public class StatusCheckDto {
   private String applicationSerialNo;
+
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private String dateOfBirth;
+
   private String fullName;
   private String programName;
   private String semesterName;

@@ -10,7 +10,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Rumi on 9/17/2020.
@@ -61,5 +63,7 @@ public class AdmissionHelper {
   public void saveInfo(ApplicationForm pApplicationForm) throws ParseException, IOException {
     mAdmissionService.save(pApplicationForm);
   }
-
+  public Optional<Applicant> getApplicantBy(String pSerialNo, Date pDateOfBirth){
+   return mAdmissionService.getDetailsBy(pSerialNo, pDateOfBirth);
+  }
 }

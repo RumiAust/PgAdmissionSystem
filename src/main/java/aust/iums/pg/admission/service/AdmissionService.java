@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Monjur-E-Morshed on 9/17/2020.
@@ -96,6 +97,10 @@ public class AdmissionService {
     public List<Thana> getThanaByDisId(int disId) {
         List<Thana> thanas = mThanaRepository.findByDistrictId(disId);
         return thanas;
+    }
+    public Optional<Applicant> getDetailsBy(String pSerialNo, Date pDateOfBirth){
+     Optional<Applicant> info= mApplicantRepository.findByApplicationSn(pSerialNo);
+     return info;
     }
 
     public void save(ApplicationForm pApp) throws ParseException, IOException {

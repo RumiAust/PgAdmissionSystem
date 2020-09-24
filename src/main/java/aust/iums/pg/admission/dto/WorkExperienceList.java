@@ -3,6 +3,8 @@ package aust.iums.pg.admission.dto;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by Rumi on 9/16/2020.
  */
@@ -14,6 +16,17 @@ public class WorkExperienceList {
   private String fromDate;
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private String toDate;
+  private MultipartFile experienceFile;
+
+  private String experienceFileError;
+
+  public String getExperienceFileError() {
+    return experienceFileError;
+  }
+
+  public void setExperienceFileError(String experienceFileError) {
+    this.experienceFileError = experienceFileError;
+  }
 
   public MultipartFile getExperienceFile() {
     return experienceFile;
@@ -23,7 +36,6 @@ public class WorkExperienceList {
     this.experienceFile = experienceFile;
   }
 
-  private MultipartFile experienceFile;
 
   public WorkExperienceList(String pOrganizationName, String pDesignation, String pJobResponsibility, String pFromDate, String pToDate) {
     organizationName = pOrganizationName;

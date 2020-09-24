@@ -7,8 +7,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link th:href="@{/css/main.css}" rel="stylesheet">
-    <script type="text/javascript" th:src="@{/js/main.js}"> </script>
+    <!--<link th:href="@{/css/main.css}" rel="stylesheet">-->
+    <!--<script type="text/javascript" th:src="@{/js/main.js}"></script>-->
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -35,12 +35,14 @@
 </nav>
 
 <div class="overflow-auto">
-    <form action="#" th:action="@{/apply}" th:object="${applicant}" method="post" enctype="multipart/form-data" >
+    <form action="#" th:action="@{/apply}" th:object="${applicant}" method="post" enctype="multipart/form-data">
         <div class="container" style="border: 1px solid black;margin-top: 40px;margin-bottom: 20px">
             <div align="center">
-                <h1><img src="logo-aust.png" width="40" height="40" alt="">&nbsp;&nbsp;Ahsanullah University of Science and Technology</h1>
+                <h1><img src="logo-aust.png" width="40" height="40" alt="">&nbsp;&nbsp;Ahsanullah University of Science
+                    and Technology</h1>
                 <h4><strong>Master's Program Application Form</strong></h4>
-                <span class="badge badge-pill badge-light"><h5 th:text="'Semester: '+${semester.getSemesterName()}"></h5></span>
+                <span class="badge badge-pill badge-light"><h5
+                        th:text="'Semester: '+${semester.getSemesterName()}"></h5></span>
             </div>
             </br>
             <h6><strong>All field's with <em style="color: red">*</em> sign must be filled up by the applicant</strong>
@@ -51,7 +53,8 @@
                     <div class="card-body">
                         <div align="center">
                             <h4><label>Select Program:</label>&nbsp;&nbsp;
-                                <select th:field="*{programId}">
+                                <select th:field="*{programId}" th:errorclass="alert-danger">
+                                    <option selected="selected" value="">Select Program</option>
                                     <option class="form-control form-control-sm" th:each="p : ${programList}"
                                             th:value="${p.getProgramId()+'-'+p.getProgramShortName()}"
                                             th:text="${p.getProgramShortName()}"></option>
@@ -78,9 +81,12 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">First Name</div>
                                         </div>
-                                        <input type="text" th:field="*{firstName}" class="form-control" name="firstName" th:errorclass="alert-danger">
-                                        <span class="error" style="color: red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+                                        <input type="text" th:field="*{firstName}" class="form-control" name="firstName"
+                                               th:errorclass="alert-danger">
                                     </div>
+                                    <span class="error" style="padding-left:10px; color: red"
+                                          th:if="${#fields.hasErrors('firstName')}"
+                                          th:errors="*{firstName}"></span>
                                 </div>
                             </div>
 
@@ -90,8 +96,12 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Middle Name</div>
                                         </div>
-                                        <input type="text" th:field="*{middleName}" class="form-control" name="fullName" >
+                                        <input type="text" th:field="*{middleName}" class="form-control"
+                                               name="middleName" th:errorclass="alert-danger">
                                     </div>
+                                    <span class="error" style="padding-left:10px; color: red"
+                                          th:if="${#fields.hasErrors('middleName')}"
+                                          th:errors="*{middleName}"></span>
                                 </div>
                             </div>
 
@@ -101,8 +111,12 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Last Name</div>
                                         </div>
-                                        <input type="text" th:field="*{lastName}" class="form-control" name="fullName" >
+                                        <input type="text" th:field="*{lastName}" class="form-control" name="lastName"
+                                               th:errorclass="alert-danger">
                                     </div>
+                                    <span class="error" style="padding-left:10px; color: red"
+                                          th:if="${#fields.hasErrors('lastName')}"
+                                          th:errors="*{lastName}"></span>
                                 </div>
                             </div>
                         </div>
@@ -116,8 +130,12 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Father's Name</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{fatherName}" >
+                                        <input type="text" class="form-control" th:field="*{fatherName}"
+                                               th:errorclass="alert-danger">
                                     </div>
+                                    <span class="error" style="padding-left:10px; color: red"
+                                          th:if="${#fields.hasErrors('fatherName')}"
+                                          th:errors="*{fatherName}"></span>
                                 </div>
                             </div>
 
@@ -128,8 +146,12 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Mother's Name</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{motherName}">
+                                        <input type="text" class="form-control" th:field="*{motherName}"
+                                               th:errorclass="alert-danger">
                                     </div>
+                                    <span class="error" style="padding-left:10px; color: red"
+                                          th:if="${#fields.hasErrors('motherName')}"
+                                          th:errors="*{motherName}"></span>
                                 </div>
                             </div>
                         </div>
@@ -144,8 +166,12 @@
                                             <div class="input-group-text">Date of Birth</div>
                                         </div>
                                         <input type="date" class="form-control" th:value="${applicant.dateOfBirth}"
+                                               th:errorclass="alert-danger"
                                                th:field="${applicant.dateOfBirth}">
                                     </div>
+                                    <span class="error" style="padding-left:10px; color: red"
+                                          th:if="${#fields.hasErrors('dateOfBirth')}"
+                                          th:errors="*{dateOfBirth}"></span>
                                 </div>
                             </div>
 
@@ -157,8 +183,11 @@
                                             <div class="input-group-text">Place of Birth</div>
                                         </div>
                                         <input type="text" class="form-control"
-                                               th:field="*{placeOfBirth}">
+                                               th:field="*{placeOfBirth}" th:errorclass="alert-danger">
                                     </div>
+                                    <span class="error" style="padding-left:10px; color: red"
+                                          th:if="${#fields.hasErrors('placeOfBirth')}"
+                                          th:errors="*{placeOfBirth}"></span>
                                 </div>
                             </div>
                             <!-- nationality -->
@@ -169,8 +198,11 @@
                                             <div class="input-group-text">Nationality</div>
                                         </div>
                                         <input type="text" class="form-control" th:field="*{nationality}"
-                                        >
+                                               th:errorclass="alert-danger">
                                     </div>
+                                    <span class="error" style="padding-left:10px; color: red"
+                                          th:if="${#fields.hasErrors('nationality')}"
+                                          th:errors="*{nationality}"></span>
                                 </div>
                             </div>
                         </div>
@@ -182,8 +214,13 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Contact Number</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{mobileNumber}">
+                                        <input type="text" class="form-control" pattern="[0]{1}[1]{1}[0-9]{9}"
+                                               th:field="*{mobileNumber}" th:errorclass="alert-danger">
                                     </div>
+                                    <span class="help-block" style="margin-left:10px; color: #f99827">Format: 01#########.</span>
+                                    <span class="error" style="padding-left:10px; color: red"
+                                          th:if="${#fields.hasErrors('mobileNumber')}"
+                                          th:errors="*{mobileNumber}"></span>
                                 </div>
                             </div>
                             <!-- email -->
@@ -193,9 +230,13 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Email</div>
                                         </div>
-                                        <input type="email" class="form-control" th:field="*{email}" th:errorclass="alert-danger">
-                                        <span class="error" style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                                        <input type="email" class="form-control" th:field="*{email}"
+                                               th:errorclass="alert-danger">
+
                                     </div>
+                                    <span class="error" style=" padding-left: 10px; color: red"
+                                          th:if="${#fields.hasErrors('email')}"
+                                          th:errors="*{email}"></span>
                                 </div>
                             </div>
                         </div>
@@ -209,8 +250,11 @@
                                             <div class="input-group-text">Religion</div>
                                         </div>
                                         <input type="text" class="form-control" th:field="*{religion}"
-                                        >
+                                               th:errorclass="alert-danger">
                                     </div>
+                                    <span class="error" style="padding-left:10px; color: red"
+                                          th:if="${#fields.hasErrors('religion')}"
+                                          th:errors="*{religion}"></span>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -221,11 +265,15 @@
                                         </div>
                                         &nbsp;&nbsp;&nbsp;
                                         <div style="margin-top: 5px">
-                                            <input type="radio" th:field="*{gender}" value="Male"> Male
-                                            <input type="radio" th:field="*{gender}" value="Female"> Female
+                                            <input type="radio" th:field="*{gender}" value="Male"
+                                                   th:errorclass="alert-danger"> Male
+                                            <input type="radio" th:field="*{gender}" value="Female"
+                                                   th:errorclass="alert-danger"> Female
                                         </div>
-
                                     </div>
+                                    <span class="error" style="padding-left:10px; color: red"
+                                          th:if="${#fields.hasErrors('gender')}"
+                                          th:errors="*{gender}"></span>
                                 </div>
                             </div>
 
@@ -237,11 +285,16 @@
                                         </div>
                                         &nbsp; &nbsp; &nbsp;
                                         <div style="margin-top: 5px">
-                                            <input type="radio" th:field="*{maritalStatus}" value="Married"> Married
-                                            <input type="radio" th:field="*{maritalStatus}" value="Unmarried"> Unmarried
+                                            <input type="radio" th:field="*{maritalStatus}" value="Married"
+                                                   th:errorclass="alert-danger"> Married
+                                            <input type="radio" th:field="*{maritalStatus}" value="Unmarried"
+                                                   th:errorclass="alert-danger"> Unmarried
                                         </div>
 
                                     </div>
+                                    <span class="error" style="padding-left:10px; color: red"
+                                          th:if="${#fields.hasErrors('maritalStatus')}"
+                                          th:errors="*{maritalStatus}"></span>
                                 </div>
                             </div>
                         </div>
@@ -258,6 +311,18 @@
                         </strong>
                     </div>
                     <div class="card-body">
+                        <div class="col-md-12">
+                            <div class="alert alert-warning">
+                                <ul style="max-height:150px;">
+                                    <li>Upload all certificates and transcript at upload fields. Maximum
+                                        allowed File size is 10MB.
+                                    </li>
+                                    <li>Only "<b>jpg</b>", "<b>jpeg</b>", "<b>png</b>", "<b>pdf</b>" and "<b>zip</b>"
+                                        extensions are allowed.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                         <div style="background: lightgrey;margin-bottom: 10px">
                             <strong>SSC or Equivalent</strong>
                             <div class="row">
@@ -267,8 +332,12 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">School/College/Institution:</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{sscInstituteName}">
+                                            <input type="text" class="form-control" th:field="*{sscInstituteName}"
+                                                   th:errorclass="alert-danger">
                                         </div>
+                                        <span class="error" style="padding-left:10px; color: red"
+                                              th:if="${#fields.hasErrors('sscInstituteName')}"
+                                              th:errors="*{sscInstituteName}"></span>
                                     </div>
                                 </div>
                             </div>
@@ -280,8 +349,12 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Board</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{sscBoardName}">
+                                            <input type="text" class="form-control" th:field="*{sscBoardName}"
+                                                   th:errorclass="alert-danger">
                                         </div>
+                                        <span class="error" style="padding-left:10px; color: red"
+                                              th:if="${#fields.hasErrors('sscBoardName')}"
+                                              th:errors="*{sscBoardName}"></span>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-4">
@@ -290,8 +363,12 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Total Marks/Grade</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{sscMarks}">
+                                            <input type="text" class="form-control" th:field="*{sscMarks}"
+                                                   th:errorclass="alert-danger">
                                         </div>
+                                        <span class="error" style="padding-left:10px; color: red"
+                                              th:if="${#fields.hasErrors('sscMarks')}"
+                                              th:errors="*{sscMarks}"></span>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-4">
@@ -300,8 +377,12 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Division/Class/Grade</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{sscGrade}">
+                                            <input type="text" class="form-control" th:field="*{sscGrade}"
+                                                   th:errorclass="alert-danger">
                                         </div>
+                                        <span class="error" style="padding-left:10px; color: red"
+                                              th:if="${#fields.hasErrors('sscGrade')}"
+                                              th:errors="*{sscGrade}"></span>
                                     </div>
                                 </div>
 
@@ -313,8 +394,12 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Year of Passing</div>
                                             </div>
-                                            <input type="number" class="form-control" th:field="*{sscPassingYear}">
+                                            <input type="number" class="form-control" th:field="*{sscPassingYear}"
+                                                   th:errorclass="alert-danger">
                                         </div>
+                                        <span class="error" style="padding-left:10px; color: red"
+                                              th:if="${#fields.hasErrors('sscPassingYear')}"
+                                              th:errors="*{sscPassingYear}"></span>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-8">
@@ -323,9 +408,15 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Upload</div>
                                             </div>
-                                            <input type="file" accept=".jpg, .jpeg, .png, .pdf, .zip" class="form-control"
-                                                   th:field="*{sscFile}">
+                                            <input type="file" accept=".jpg, .jpeg, .png, .pdf, .zip"
+                                                   class="form-control"
+                                                   th:field="*{sscFile}" th:errorclass="alert-danger">
                                         </div>
+                                        <div class="error" style="padding-left:10px; color: red"
+                                             th:if="${applicant.sscFileError!=''}">
+                                            <span th:text="${applicant.sscFileError}"></span>
+                                        </div>
+
                                     </div>
                                 </div>
 
@@ -341,8 +432,12 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">School/College/Institution:</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{hscInstituteName}">
+                                            <input type="text" class="form-control" th:field="*{hscInstituteName}"
+                                                   th:errorclass="alert-danger">
                                         </div>
+                                        <span class="error" style="padding-left:10px; color: red"
+                                              th:if="${#fields.hasErrors('hscInstituteName')}"
+                                              th:errors="*{hscInstituteName}"></span>
                                     </div>
                                 </div>
                             </div>
@@ -354,7 +449,8 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Board</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{hscBoardName}">
+                                            <input type="text" class="form-control" th:field="*{hscBoardName}"
+                                                   th:errorclass="alert-danger">
                                         </div>
                                     </div>
                                 </div>
@@ -364,8 +460,12 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Total Marks/Grade</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{hscMarks}">
+                                            <input type="text" class="form-control" th:field="*{hscMarks}"
+                                                   th:errorclass="alert-danger">
                                         </div>
+                                        <span class="error" style="padding-left:10px; color: red"
+                                              th:if="${#fields.hasErrors('hscMarks')}"
+                                              th:errors="*{hscMarks}"></span>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-4">
@@ -374,8 +474,12 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Division/Class/Grade</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{hscGrade}">
+                                            <input type="text" class="form-control" th:field="*{hscGrade}"
+                                                   th:errorclass="alert-danger">
                                         </div>
+                                        <span class="error" style="padding-left:10px; color: red"
+                                              th:if="${#fields.hasErrors('hscGrade')}"
+                                              th:errors="*{hscGrade}"></span>
                                     </div>
                                 </div>
 
@@ -387,8 +491,12 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Year of Passing</div>
                                             </div>
-                                            <input type="number" class="form-control" th:field="*{hscPassingYear}">
+                                            <input type="number" class="form-control" th:field="*{hscPassingYear}"
+                                                   th:errorclass="alert-danger">
                                         </div>
+                                        <span class="error" style="padding-left:10px; color: red"
+                                              th:if="${#fields.hasErrors('hscPassingYear')}"
+                                              th:errors="*{hscPassingYear}"></span>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-8">
@@ -397,9 +505,15 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Upload</div>
                                             </div>
-                                            <input type="file" accept=".jpg, .jpeg, .png, .pdf, .zip" class="form-control"
-                                                   th:field="*{hscFile}">
+                                            <input type="file" accept=".jpg, .jpeg, .png, .pdf, .zip"
+                                                   class="form-control"
+                                                   th:field="*{hscFile}" th:errorclass="alert-danger">
                                         </div>
+                                        <div class="error" style="padding-left:10px; color: red"
+                                             th:if="${applicant.hscFileError!=''}">
+                                            <span th:text="${applicant.hscFileError}"></span>
+                                        </div>
+
                                     </div>
                                 </div>
 
@@ -415,8 +529,12 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">School/College/Institution:</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{bscInstituteName}">
+                                            <input type="text" class="form-control" th:field="*{bscInstituteName}"
+                                                   th:errorclass="alert-danger">
                                         </div>
+                                        <span class="error" style="padding-left:10px; color: red"
+                                              th:if="${#fields.hasErrors('bscInstituteName')}"
+                                              th:errors="*{bscInstituteName}"></span>
                                     </div>
                                 </div>
                             </div>
@@ -428,8 +546,12 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Board</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{bscBoardName}">
+                                            <input type="text" class="form-control" th:field="*{bscBoardName}"
+                                                   th:errorclass="alert-danger">
                                         </div>
+                                        <span class="error" style="padding-left:10px; color: red"
+                                              th:if="${#fields.hasErrors('bscBoardName')}"
+                                              th:errors="*{bscBoardName}"></span>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-4">
@@ -438,8 +560,12 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Total Marks/Grade</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{bscMarks}">
+                                            <input type="text" class="form-control" th:field="*{bscMarks}"
+                                                   th:errorclass="alert-danger">
                                         </div>
+                                        <span class="error" style="padding-left:10px; color: red"
+                                              th:if="${#fields.hasErrors('bscMarks')}"
+                                              th:errors="*{bscMarks}"></span>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-4">
@@ -448,8 +574,12 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Division/Class/Grade</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{bscGrade}">
+                                            <input type="text" class="form-control" th:field="*{bscGrade}"
+                                                   th:errorclass="alert-danger">
                                         </div>
+                                        <span class="error" style="padding-left:10px; color: red"
+                                              th:if="${#fields.hasErrors('bscGrade')}"
+                                              th:errors="*{bscGrade}"></span>
                                     </div>
                                 </div>
 
@@ -461,8 +591,12 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Year of Passing</div>
                                             </div>
-                                            <input type="number" class="form-control" th:field="*{bscPassingYear}">
+                                            <input type="number" class="form-control" th:field="*{bscPassingYear}"
+                                                   th:errorclass="alert-danger">
                                         </div>
+                                        <span class="error" style="padding-left:10px; color: red"
+                                              th:if="${#fields.hasErrors('bscPassingYear')}"
+                                              th:errors="*{bscPassingYear}"></span>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-8">
@@ -471,9 +605,15 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Upload</div>
                                             </div>
-                                            <input type="file" accept=".jpg, .jpeg, .png, .pdf, .zip" class="form-control"
-                                                   th:field="*{bscFile}">
+                                            <input type="file" accept=".jpg, .jpeg, .png, .pdf, .zip"
+                                                   class="form-control"
+                                                   th:field="*{bscFile}" th:errorclass="alert-danger">
                                         </div>
+                                        <div class="error" style="padding-left:10px; color: red"
+                                             th:if="${applicant.bscFileError!=''}">
+                                            <span th:text="${applicant.bscFileError}"></span>
+                                        </div>
+
                                     </div>
                                 </div>
 
@@ -545,7 +685,8 @@
                                             <div class="input-group-prepend-na">
                                                 <div class="input-group-text">Upload</div>
                                             </div>
-                                            <input type="file" accept=".jpg, .jpeg, .png, .pdf, .zip" class="form-control"
+                                            <input type="file" accept=".jpg, .jpeg, .png, .pdf, .zip"
+                                                   class="form-control"
                                                    th:field="*{mscFile}">
                                         </div>
                                     </div>
@@ -571,18 +712,28 @@
                         <table>
                             <thead>
                             <tr class="col-sm-12">
-                                <td class="col-sm-4" align="right" style="padding: 10px" >
+                                <td class="col-sm-4" align="right" style="padding: 10px">
                                     <button class="btn btn-success" type="submit" name="addRow">Add New</button>
                                 </td>
                             </tr>
                             </thead>
                             <tbody>
+                            <div class="col-md-12" th:unless="${#lists.isEmpty(applicant.workExperienceList)}">
+                                <div class="alert alert-warning">
+                                    <ul style="max-height:150px;">
+                                        <li>Upload all certificates at upload fields. Maximum allowed File size is 10MB.
+                                        </li>
+                                        <li>Only "<b>jpg</b>", "<b>jpeg</b>", "<b>png</b>", "<b>pdf</b>" and "<b>zip</b>"
+                                            extensions are allowed.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                             <tr class="border" style="margin: 20px;" th:each="row,rowStat : *{workExperienceList}">
                                 <td class="col-sm-12" style="padding: 20px;">
-
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <div class="form-group required">
+                                            <div class="form-group">
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">Organization Name:</div>
@@ -597,7 +748,7 @@
                                     <div class="row">
                                         <!-- Date of Birth -->
                                         <div class="col-sm-12 col-md-6">
-                                            <div class="form-group required">
+                                            <div class="form-group">
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">Designation:</div>
@@ -609,7 +760,7 @@
                                         </div>
 
                                         <div class="col-sm-12 col-md-6">
-                                            <div class="form-group required">
+                                            <div class="form-group">
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">jobResponsibility</div>
@@ -624,7 +775,7 @@
 
                                     <div class="row">
                                         <div class="col-sm-12 col-md-4">
-                                            <div class="form-group required">
+                                            <div class="form-group">
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">From Date</div>
@@ -635,7 +786,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-4">
-                                            <div class="form-group required">
+                                            <div class="form-group">
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">To Date:</div>
@@ -646,12 +797,13 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-4">
-                                            <div class="form-group required">
+                                            <div class="form-group">
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">Upload</div>
                                                     </div>
-                                                    <input type="file" class="form-control" th:value="${applicant.workExperienceList[__${rowStat.index}__].experienceFile}"
+                                                    <input type="file" class="form-control"
+                                                           th:value="${applicant.workExperienceList[__${rowStat.index}__].experienceFile}"
                                                            accept=".jpg, .jpeg, .png, .pdf, .zip"
                                                            th:field="*{workExperienceList[__${rowStat.index}__].experienceFile}">
                                                 </div>
@@ -696,13 +848,17 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Division</div>
                                         </div>
-                                        <select th:field="*{presentDivisionId}" id="presentDivisionId" onchange="addDistrict()">
+                                        <select th:field="*{presentDivisionId}" id="presentDivisionId"
+                                                onchange="addDistrict()" th:errorclass="alert-danger">
                                             <option selected="selected" value="">Select Division</option>
                                             <option class="form-control form-control-sm" th:each="p : ${divisionList}"
                                                     th:value="${p.getId()+'-'+p.getDivisionName()}"
                                                     th:text="${p.getDivisionName()}"></option>
                                         </select>
                                     </div>
+                                    <span class="error" style="padding-left:10px; color: red"
+                                          th:if="${#fields.hasErrors('presentDivisionId')}"
+                                          th:errors="*{presentDivisionId}"></span>
                                 </div>
                             </div>
 
@@ -713,13 +869,17 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">District:</div>
                                         </div>
-                                        <select th:field="*{presentDistrictId}" id="presentDistrictId" onchange="addThana()">
+                                        <select th:field="*{presentDistrictId}" id="presentDistrictId"
+                                                th:errorclass="alert-danger"
+                                                onchange="addThana()">
                                             <!--     <option class="form-control form-control-sm" th:each="p : ${districtList}"
                                                     th:value="${p.getId()+'-'+p.getDistrictName()}"
                                                     th:text="${p.getDistrictName()}"></option>-->
                                         </select>
-
                                     </div>
+                                    <span class="error" style="padding-left:10px; color: red"
+                                          th:if="${#fields.hasErrors('presentDistrictId')}"
+                                          th:errors="*{presentDistrictId}"></span>
                                 </div>
                             </div>
 
@@ -730,14 +890,17 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Thana:</div>
                                         </div>
-                                        <select id="presentThanaId" th:field="*{presentThanaId}">
+                                        <select id="presentThanaId" th:field="*{presentThanaId}"
+                                                th:errorclass="alert-danger">
 
-                                           <!-- <option class="form-control form-control-sm" th:each="p : ${thanaList}"
-                                                    th:value="${p.getId()+'-'+p.getThanaName()}"
-                                                    th:text="${p.getThanaName()}"></option>-->
+                                            <!-- <option class="form-control form-control-sm" th:each="p : ${thanaList}"
+                                                     th:value="${p.getId()+'-'+p.getThanaName()}"
+                                                     th:text="${p.getThanaName()}"></option>-->
                                         </select>
-
                                     </div>
+                                    <span class="error" style="padding-left:10px; color: red"
+                                          th:if="${#fields.hasErrors('presentThanaId')}"
+                                          th:errors="*{presentThanaId}"></span>
                                 </div>
                             </div>
                         </div>
@@ -749,8 +912,12 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Address</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{presentAddress}">
+                                        <input type="text" class="form-control" th:field="*{presentAddress}"
+                                               th:errorclass="alert-danger">
                                     </div>
+                                    <span class="error" style="padding-left:10px; color: red"
+                                          th:if="${#fields.hasErrors('presentAddress')}"
+                                          th:errors="*{presentAddress}"></span>
                                 </div>
                             </div>
                         </div>
@@ -764,13 +931,18 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Division</div>
                                         </div>
-                                        <select th:field="*{permanentDivisionId}" id="permanentDivisionId" onchange="addPermanentDistrict()">
+                                        <select th:field="*{permanentDivisionId}" id="permanentDivisionId"
+                                                th:errorclass="alert-danger"
+                                                onchange="addPermanentDistrict()">
                                             <option selected="selected" value="">Select Division</option>
                                             <option class="form-control form-control-sm" th:each="p : ${divisionList}"
                                                     th:value="${p.getId()+'-'+p.getDivisionName()}"
                                                     th:text="${p.getDivisionName()}"></option>
                                         </select>
                                     </div>
+                                    <span class="error" style="padding-left:10px; color: red"
+                                          th:if="${#fields.hasErrors('permanentDivisionId')}"
+                                          th:errors="*{permanentDivisionId}"></span>
                                 </div>
                             </div>
 
@@ -781,13 +953,17 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">District:</div>
                                         </div>
-                                        <select th:field="*{permanentDistrictId}" id="permanentDistrictId" onchange="addPermanentThana()">
+                                        <select th:field="*{permanentDistrictId}" id="permanentDistrictId"
+                                                th:errorclass="alert-danger"
+                                                onchange="addPermanentThana()">
                                             <!--<option class="form-control form-control-sm" th:each="p : ${districtList}"
                                                     th:value="${p.getId()+'-'+p.getDistrictName()}"
                                                     th:text="${p.getDistrictName()}"></option>-->
                                         </select>
-
                                     </div>
+                                    <span class="error" style="padding-left:10px; color: red"
+                                          th:if="${#fields.hasErrors('permanentDistrictId')}"
+                                          th:errors="*{permanentDistrictId}"></span>
                                 </div>
                             </div>
 
@@ -798,12 +974,15 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Thana:</div>
                                         </div>
-                                        <select th:field="*{permanentThanaId}" id="permanentThanaId">
+                                        <select th:field="*{permanentThanaId}" id="permanentThanaId"
+                                                th:errorclass="alert-danger">
                                             <!--<option class="form-control form-control-sm" th:each="p : ${thanaList}"
                                                     th:value="${p.getId()+'-'+p.getThanaName()}"
                                                     th:text="${p.getThanaName()}"></option>-->
                                         </select>
-
+                                        <span class="error" style="padding-left:10px; color: red"
+                                              th:if="${#fields.hasErrors('permanentThanaId')}"
+                                              th:errors="*{permanentThanaId}"></span>
                                     </div>
                                 </div>
                             </div>
@@ -816,8 +995,12 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Address</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{permanentAddress}">
+                                        <input type="text" class="form-control" th:field="*{permanentAddress}"
+                                               th:errorclass="alert-danger">
                                     </div>
+                                    <span class="error" style="padding-left:10px; color: red"
+                                          th:if="${#fields.hasErrors('permanentAddress')}"
+                                          th:errors="*{permanentAddress}"></span>
                                 </div>
                             </div>
                         </div>
@@ -861,11 +1044,17 @@
                                             <img id="photo" src="#" class="img-fluid rounded" width="170" height="165"
                                                  alt="Photo"/>
                                         </div>
-                                        <input class="form-control border" type="file" name="file" th:value="${applicant.photo}" accept=".jpg, .jpeg"
-                                               id="file_photo" th:field="*{photo}"/>
+                                        <input class="form-control border" type="file" name="file"
+                                               th:value="${applicant.photo}" accept=".jpg, .jpeg"
+                                               id="file_photo" th:field="*{photo}" th:errorclass="alert-danger"/>
                                     </div>
                                     <input type="hidden" class="form-control" name="photo" id="field_photo"
                                            formControlName="photo"/>
+                                    <div style="padding-left:10px; color: red" th:if="${applicant.photoError!=''}">
+                                        <span class="error"
+                                              th:text="${applicant.photoError}"></span>
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-md-6 justify-content-end"
@@ -880,10 +1069,15 @@
                                                  alt="Photo"/>
                                         </div>
                                         <input class="form-control border" type="file" name="file" accept=".jpg, .jpeg"
-                                               id="file_signature" th:field="*{signature}"/>
+                                               id="file_signature" th:field="*{signature}"
+                                               th:errorclass="alert-danger"/>
                                     </div>
                                     <input type="hidden" class="form-control" name="photo" id="field_signature"
                                            formControlName="signature"/>
+                                    <div class="error" style="padding-left:10px; color: red"
+                                         th:if="${applicant.signatureError!=''}">
+                                        <span th:text="${applicant.signatureError}"></span>
+                                    </div>
                                 </div>
                             </div>
                             <!--
@@ -897,7 +1091,8 @@
             </div>
 
             <div>
-                <h6><input type="checkbox" th:field="*{declaration}"> I do hereby declare that the information as stated
+                <h6><input onclick="enableSubmit(this)" id="declaration" type="checkbox" th:field="*{declaration}"> I do hereby declare
+                    that the information as stated
                     in the Admission application form is true. If any of the information is found incorrect, my
                     admission is liable to be cancelled. If any of the certificates/academic transcripts/documents
                     attached with this form is found altered/forged, my admission is also liable to be cancelled.I also
@@ -906,13 +1101,38 @@
                     liable to be cancelled.</h6>
 
             </div>
-            <div class="row" style="margin-bottom: 20px">
-                <div class="col-md-12" align="center">
-                    <button type="submit" class="btn btn-success" name="save" value="save">Submit</button>
+            <div class="modal" id="exampleModalCenter" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Confirmation</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Do you want to proceed? After clicking <span style="color: red"><b>Yes</b></span> you can not
+                                change data.<br>
+                                Press <span style="color: red"><b>No</b></span> to keep editing.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            <button type="submit" class="btn btn-success" name="save" value="save">Yes</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </form>
+</div>
+
+<div class="row" style="margin-bottom: 20px">
+    <div class="col-md-4"></div>
+    <div class="col-sm-12 col-md-4" align="center">
+        <button id="submitBtn" disabled type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
+            Submit
+        </button>
+    </div>
 </div>
 
 
@@ -933,6 +1153,9 @@
 </html>
 <script>
     $(document).ready(function () {
+
+
+
         function readPhotoURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -967,7 +1190,7 @@
         });
 
         //show modal
-        $('#myModal').modal('toggle');
+        //$('#myModal').modal('toggle');
     });
 
     //scroll into work experience
@@ -1018,7 +1241,7 @@
                     });
                 }
             });
-        }else {
+        } else {
             mySelect.find('option').remove();
         }
     }
@@ -1068,8 +1291,18 @@
                     });
                 }
             });
-        }else {
+        } else {
             mySelect.find('option').remove();
         }
     }
+
+function enableSubmit(th){
+    if($(th).is(":checked")){
+        $('#submitBtn').attr("disabled", false);
+        }
+        else if($('#declaration').prop("checked") == false){
+            $('#submitBtn').attr("disabled", true);
+        }
+}
+
 </script>

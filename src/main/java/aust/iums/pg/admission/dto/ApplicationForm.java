@@ -2,8 +2,10 @@ package aust.iums.pg.admission.dto;
 
 import org.hibernate.validator.constraints.Email;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -16,6 +18,8 @@ public class ApplicationForm {
     private String applicationSerialNumber;
 
     //program info
+    @NotNull
+    @Size(min = 1, message = "Please select program.")
     private String programId;
     private String programName;
     private String semesterId;
@@ -26,42 +30,92 @@ public class ApplicationForm {
     @NotNull
     @Size(min = 1, message = "Please enter first name.")
     private String firstName;
+    @NotNull
+    @Size(min = 1, message = "Please enter middele name.")
     private String middleName;
+    @NotNull
+    @Size(min = 1, message = "Please enter last name.")
     private String lastName;
     @NotNull
+    @Size(min = 1, message = "Please enter father name.")
     private String fatherName;
+    @NotNull
+    @Size(min = 1, message = "Please enter mother name.")
     private String motherName;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull
+    @Size(min = 1, message = "Please select date of birth.")
     private String dateOfBirth;
+    @NotNull
+    @Size(min = 1, message = "Please enter place of birth.")
     private String placeOfBirth;
+    @NotNull
+    @Size(min = 1, message = "Please enter mobile number.")
     private String mobileNumber;
+    @NotNull
+    @Size(min = 1, message = "Please enter nationality.")
     private String nationality;
+    @NotNull
+    @Size(min = 1, message = "Please enter religion.")
     private String religion;
-
     @Size(min = 1,message = "Please enter email.")
     @Email
     private String email;
-
+    @NotNull
+    @Size(min = 1, message = "Please select gender.")
     private String gender;
+    @NotNull
+    @Size(min = 1, message = "Please select marital status.")
     private String maritalStatus;
+
     //educational info
+    @NotNull
+    @Size(min = 1, message = "Please enter Institution name.")
     private String sscInstituteName;
+    @NotNull
+    @Size(min = 1, message = "Please enter board name.")
     private String sscBoardName;
+    @NotNull
+    @Size(min = 1, message = "Please enter total marks/grade.")
     private String sscMarks;
+    @NotNull
+    @Size(min = 1, message = "Please enter division/class/grade.")
     private String sscGrade;
+    @NotNull
     private Integer sscPassingYear;
+    @NotNull(message = "Please select file.")
     private MultipartFile sscFile;
+    @NotNull
+    @Size(min = 1, message = "Please enter Institution name.")
     private String hscInstituteName;
+    @NotNull
+    @Size(min = 1, message = "Please enter board name.")
     private String hscBoardName;
+    @NotNull
+    @Size(min = 1, message = "Please enter total marks/grade.")
     private String hscMarks;
+    @NotNull
+    @Size(min = 1, message = "Please enter division/class/grade.")
     private String hscGrade;
+    @NotNull
     private Integer hscPassingYear;
+    @NotNull(message = "Please select file.")
     private MultipartFile hscFile;
+    @NotNull
+    @Size(min = 1, message = "Please enter Institution name.")
     private String bscInstituteName;
+    @NotNull
+    @Size(min = 1, message = "Please enter board name.")
     private String bscBoardName;
+    @NotNull
+    @Size(min = 1, message = "Please enter total marks/grade.")
     private String bscMarks;
+    @NotNull
+    @Size(min = 1, message = "Please enter division/class/grade.")
     private String bscGrade;
+    @NotNull
     private Integer bscPassingYear;
+    @NotNull(message = "Please select file.")
     private MultipartFile bscFile;
     private String mscInstituteName;
     private String mscBoardName;
@@ -75,27 +129,179 @@ public class ApplicationForm {
     private String workExperienceDivId;
 
     //contact info
+    @NotNull
+    @Size(min = 1, message = "Please select division.")
     private String presentDivisionId;
     private String presentDivision;
+    @NotNull
+    @Size(min = 1, message = "Please select district.")
     private String presentDistrictId;
     private String presentDistrict;
+    @NotNull
+    @Size(min = 1, message = "Please select thana.")
     private String presentThanaId;
     private String presentThana;
+    @NotNull
+    @Size(min = 1, message = "Please enter present address.")
     private String presentAddress;
+    @NotNull
+    @Size(min = 1, message = "Please select division.")
     private String permanentDivisionId;
     private String permanentDivision;
+    @NotNull
+    @Size(min = 1, message = "Please select district.")
     private String permanentDistrictId;
     private String permanentDistrict;
+    @NotNull
+    @Size(min = 1, message = "Please select thana.")
     private String permanentThanaId;
     private String permanentThana;
+    @NotNull
+    @Size(min = 1, message = "Please enter permanent address.")
     private String permanentAddress;
     // photo and signature
+    @NotNull(message = "Please select photo.")
     private MultipartFile photo;
+    @NotNull(message = "Please select signature.")
     private MultipartFile signature;
+    @NotNull
     private boolean declaration;
+
+    //error-check-and-show-message
+    private String photoError;
+    private String signatureError;
+    private String sscFileError;
+    private String hscFileError;
+    private String bscFileError;
+    private String mscFileError;
 
     // modal Id
     private String modalId;
+
+
+    @Override
+    public String toString() {
+        return "ApplicationForm{" +
+                "applicationSerialNumber='" + applicationSerialNumber + '\'' +
+                ", programId='" + programId + '\'' +
+                ", programName='" + programName + '\'' +
+                ", semesterId='" + semesterId + '\'' +
+                ", semesterName='" + semesterName + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", fatherName='" + fatherName + '\'' +
+                ", motherName='" + motherName + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", placeOfBirth='" + placeOfBirth + '\'' +
+                ", mobileNumber='" + mobileNumber + '\'' +
+                ", nationality='" + nationality + '\'' +
+                ", religion='" + religion + '\'' +
+                ", email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
+                ", maritalStatus='" + maritalStatus + '\'' +
+                ", sscInstituteName='" + sscInstituteName + '\'' +
+                ", sscBoardName='" + sscBoardName + '\'' +
+                ", sscMarks='" + sscMarks + '\'' +
+                ", sscGrade='" + sscGrade + '\'' +
+                ", sscPassingYear=" + sscPassingYear +
+                ", sscFile=" + sscFile +
+                ", hscInstituteName='" + hscInstituteName + '\'' +
+                ", hscBoardName='" + hscBoardName + '\'' +
+                ", hscMarks='" + hscMarks + '\'' +
+                ", hscGrade='" + hscGrade + '\'' +
+                ", hscPassingYear=" + hscPassingYear +
+                ", hscFile=" + hscFile +
+                ", bscInstituteName='" + bscInstituteName + '\'' +
+                ", bscBoardName='" + bscBoardName + '\'' +
+                ", bscMarks='" + bscMarks + '\'' +
+                ", bscGrade='" + bscGrade + '\'' +
+                ", bscPassingYear=" + bscPassingYear +
+                ", bscFile=" + bscFile +
+                ", mscInstituteName='" + mscInstituteName + '\'' +
+                ", mscBoardName='" + mscBoardName + '\'' +
+                ", mscMarks='" + mscMarks + '\'' +
+                ", mscGrade='" + mscGrade + '\'' +
+                ", mscPassingYear=" + mscPassingYear +
+                ", mscFile=" + mscFile +
+                ", workExperienceList=" + workExperienceList +
+                ", workExperienceDivId='" + workExperienceDivId + '\'' +
+                ", presentDivisionId='" + presentDivisionId + '\'' +
+                ", presentDivision='" + presentDivision + '\'' +
+                ", presentDistrictId='" + presentDistrictId + '\'' +
+                ", presentDistrict='" + presentDistrict + '\'' +
+                ", presentThanaId='" + presentThanaId + '\'' +
+                ", presentThana='" + presentThana + '\'' +
+                ", presentAddress='" + presentAddress + '\'' +
+                ", permanentDivisionId='" + permanentDivisionId + '\'' +
+                ", permanentDivision='" + permanentDivision + '\'' +
+                ", permanentDistrictId='" + permanentDistrictId + '\'' +
+                ", permanentDistrict='" + permanentDistrict + '\'' +
+                ", permanentThanaId='" + permanentThanaId + '\'' +
+                ", permanentThana='" + permanentThana + '\'' +
+                ", permanentAddress='" + permanentAddress + '\'' +
+                ", photo=" + photo +
+                ", signature=" + signature +
+                ", declaration=" + declaration +
+                ", photoError='" + photoError + '\'' +
+                ", signatureError='" + signatureError + '\'' +
+                ", sscFileError='" + sscFileError + '\'' +
+                ", hscFileError='" + hscFileError + '\'' +
+                ", bscFileError='" + bscFileError + '\'' +
+                ", mscFileError='" + mscFileError + '\'' +
+                ", modalId='" + modalId + '\'' +
+                '}';
+    }
+
+    public String getMscFileError() {
+        return mscFileError;
+    }
+
+    public void setMscFileError(String mscFileError) {
+        this.mscFileError = mscFileError;
+    }
+
+    public String getPhotoError() {
+        return photoError;
+    }
+
+    public void setPhotoError(String photoError) {
+        this.photoError = photoError;
+    }
+
+    public String getSignatureError() {
+        return signatureError;
+    }
+
+    public void setSignatureError(String signatureError) {
+        this.signatureError = signatureError;
+    }
+
+    public String getSscFileError() {
+        return sscFileError;
+    }
+
+    public void setSscFileError(String sscFileError) {
+        this.sscFileError = sscFileError;
+    }
+
+    public String getHscFileError() {
+        return hscFileError;
+    }
+
+    public void setHscFileError(String hscFileError) {
+        this.hscFileError = hscFileError;
+    }
+
+    public String getBscFileError() {
+        return bscFileError;
+    }
+
+    public void setBscFileError(String bscFileError) {
+        this.bscFileError = bscFileError;
+    }
+
 
     public String getSemesterName() {
         return semesterName;
@@ -603,72 +809,4 @@ public class ApplicationForm {
         this.mobileNumber = mobileNumber;
     }
 
-    @Override
-    public String toString() {
-        return "ApplicationForm{" +
-                "applicationSerialNumber='" + applicationSerialNumber + '\'' +
-                ", programId='" + programId + '\'' +
-                ", programName='" + programName + '\'' +
-                ", semesterId='" + semesterId + '\'' +
-                ", semesterName='" + semesterName + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", fatherName='" + fatherName + '\'' +
-                ", motherName='" + motherName + '\'' +
-                ", dateOfBirth='" + dateOfBirth + '\'' +
-                ", placeOfBirth='" + placeOfBirth + '\'' +
-                ", mobileNumber='" + mobileNumber + '\'' +
-                ", nationality='" + nationality + '\'' +
-                ", religion='" + religion + '\'' +
-                ", email='" + email + '\'' +
-                ", gender='" + gender + '\'' +
-                ", maritalStatus='" + maritalStatus + '\'' +
-                ", sscInstituteName='" + sscInstituteName + '\'' +
-                ", sscBoardName='" + sscBoardName + '\'' +
-                ", sscMarks='" + sscMarks + '\'' +
-                ", sscGrade='" + sscGrade + '\'' +
-                ", sscPassingYear=" + sscPassingYear +
-                ", sscFile=" + sscFile +
-                ", hscInstituteName='" + hscInstituteName + '\'' +
-                ", hscBoardName='" + hscBoardName + '\'' +
-                ", hscMarks='" + hscMarks + '\'' +
-                ", hscGrade='" + hscGrade + '\'' +
-                ", hscPassingYear=" + hscPassingYear +
-                ", hscFile=" + hscFile +
-                ", bscInstituteName='" + bscInstituteName + '\'' +
-                ", bscBoardName='" + bscBoardName + '\'' +
-                ", bscMarks='" + bscMarks + '\'' +
-                ", bscGrade='" + bscGrade + '\'' +
-                ", bscPassingYear=" + bscPassingYear +
-                ", bscFile=" + bscFile +
-                ", mscInstituteName='" + mscInstituteName + '\'' +
-                ", mscBoardName='" + mscBoardName + '\'' +
-                ", mscMarks='" + mscMarks + '\'' +
-                ", mscGrade='" + mscGrade + '\'' +
-                ", mscPassingYear=" + mscPassingYear +
-                ", mscFile=" + mscFile +
-                ", workExperienceList=" + workExperienceList +
-                ", workExperienceDivId='" + workExperienceDivId + '\'' +
-                ", presentDivisionId='" + presentDivisionId + '\'' +
-                ", presentDivision='" + presentDivision + '\'' +
-                ", presentDistrictId='" + presentDistrictId + '\'' +
-                ", presentDistrict='" + presentDistrict + '\'' +
-                ", presentThanaId='" + presentThanaId + '\'' +
-                ", presentThana='" + presentThana + '\'' +
-                ", presentAddress='" + presentAddress + '\'' +
-                ", permanentDivisionId='" + permanentDivisionId + '\'' +
-                ", permanentDivision='" + permanentDivision + '\'' +
-                ", permanentDistrictId='" + permanentDistrictId + '\'' +
-                ", permanentDistrict='" + permanentDistrict + '\'' +
-                ", permanentThanaId='" + permanentThanaId + '\'' +
-                ", permanentThana='" + permanentThana + '\'' +
-                ", permanentAddress='" + permanentAddress + '\'' +
-                ", photo=" + photo +
-                ", signature=" + signature +
-                ", declaration=" + declaration +
-                ", modalId='" + modalId + '\'' +
-                '}';
-    }
 }

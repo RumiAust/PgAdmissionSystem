@@ -3,6 +3,7 @@ package aust.iums.pg.admission.controller;
 import aust.iums.pg.admission.dto.ApplicationForm;
 import aust.iums.pg.admission.dto.StatusCheckDto;
 import aust.iums.pg.admission.dto.WorkExperienceList;
+import aust.iums.pg.admission.enums.FileTypeEnum;
 import aust.iums.pg.admission.helper.AdmissionHelper;
 import aust.iums.pg.admission.model.*;
 import aust.iums.pg.admission.service.FileStorageService;
@@ -84,8 +85,12 @@ public class AdmissionController {
     @PostMapping(value = "/apply", params = {"save"})
     public String greetingSubmit(@Valid @ModelAttribute("applicant") ApplicationForm applicant, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) throws IOException, ParseException {
 
-        if(bindingResult.hasErrors()){
-            log.info("errors: "+ bindingResult.toString());
+
+        boolean otherErrors = isOtherErrors(applicant);
+
+
+        if (bindingResult.hasErrors() || otherErrors) {
+            log.error("errors: " + bindingResult.toString());
             return "application-form";
         }
 
@@ -102,6 +107,157 @@ public class AdmissionController {
       applicant.setWorkExperienceDivId("");
       return ""+e.getMessage();
     }*/
+    }
+
+    @PostMapping(value = "/apply", params = {"addRow"})
+    public String addRow(@ModelAttribute("applicant") ApplicationForm applicationForm, final BindingResult bindingResult, Model model) {
+        applicationForm.getWorkExperienceList().add(new WorkExperienceList());
+        applicationForm.setWorkExperienceDivId("workExperienceDivId");
+        //addressMap(applicationForm);
+        return "application-form";
+    }
+
+    @PostMapping(value = "/apply", params = {"removeRow"})
+    public String removeRow(
+            @ModelAttribute("applicant") ApplicationForm applicationForm, final BindingResult bindingResult,
+            final HttpServletRequest req) {
+        final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
+        applicationForm.getWorkExperienceList().remove(rowId.intValue());
+        applicationForm.setWorkExperienceDivId("workExperienceDivId");
+        //  addressMap(applicationForm);
+        return "application-form";
+    }
+
+    @PostMapping(value = "/apply", params = {"modal"})
+    public String showModal(
+            @ModelAttribute("applicant") ApplicationForm applicationForm, final BindingResult bindingResult,
+            final HttpServletRequest req) {
+        applicationForm.setModalId("myModal");
+        addressMap(applicationForm);
+        return "application-form";
+    }
+
+    @PostMapping(value = "/getDistrict/{divId}", produces = "application/json")
+    public @ResponseBody
+    List<District>
+    getDistrict(@PathVariable(name = "divId") String divId) {
+        String pDivision[] = divId.split("-");
+        int id = Integer.parseInt(pDivision[0]);
+        List<District> districts = mHelper.getAllDistrictsByDivId(id);
+        return districts;
+    }
+
+    @GetMapping(value = "/getThana/{disId}", produces = "application/json")
+    public @ResponseBody
+    List<Thana>
+    getThana(@PathVariable(name = "disId") String disId) {
+        String pDis[] = disId.split("-");
+        int id = Integer.parseInt(pDis[0]);
+        List<Thana> thanas = mHelper.getAllThanasByDisId(id);
+        return thanas;
+    }
+
+
+    @GetMapping("/statusCheck")
+    public String statusCheck(Model model) {
+
+        return "status-check";
+    }
+
+    @PostMapping("/result")
+    public String getResult(@ModelAttribute ApplicationForm applicant, Model model) {
+        model.addAttribute("search", "demo");
+        model.addAttribute("hideText", "yes");
+        model.addAttribute("valid", 1);
+        return "status-check";
+    }
+
+
+
+    private boolean isOtherErrors(ApplicationForm applicant) {
+        boolean otherErrors = false;
+        if (applicant.getPhoto().isEmpty()) {
+            otherErrors = true;
+            applicant.setPhotoError("Please select photo.");
+        } else {
+            try {
+                fileStorageService.validate(applicant.getPhoto(), FileTypeEnum.PHOTO);
+            } catch (Exception e) {
+                log.error(e.getMessage());
+                applicant.setPhotoError(e.getMessage());
+            }
+
+        }
+        if (applicant.getSignature().isEmpty()) {
+            otherErrors = true;
+            applicant.setSignatureError("Please select signature.");
+        } else {
+            try {
+                fileStorageService.validate(applicant.getSignature(), FileTypeEnum.SIGNATURE);
+            } catch (Exception e) {
+                log.error(e.getMessage());
+                applicant.setSignatureError(e.getMessage());
+            }
+
+        }
+        if (applicant.getSscFile().isEmpty()) {
+            otherErrors = true;
+            applicant.setSscFileError("Please select file.");
+        } else {
+            try {
+                fileStorageService.validate(applicant.getSscFile(), FileTypeEnum.SSC);
+            } catch (Exception e) {
+                log.error(e.getMessage());
+                applicant.setSscFileError(e.getMessage());
+            }
+
+        }
+        if (applicant.getHscFile().isEmpty()) {
+            otherErrors = true;
+            applicant.setHscFileError("Please select file.");
+        } else {
+            try {
+                fileStorageService.validate(applicant.getHscFile(), FileTypeEnum.HSC);
+            } catch (Exception e) {
+                log.error(e.getMessage());
+                applicant.setHscFileError(e.getMessage());
+            }
+
+        }
+        if (applicant.getBscFile().isEmpty()) {
+            otherErrors = true;
+            applicant.setBscFileError("Please select file.");
+        } else {
+            try {
+                fileStorageService.validate(applicant.getBscFile(), FileTypeEnum.BSC);
+            } catch (Exception e) {
+                log.error(e.getMessage());
+                applicant.setBscFileError(e.getMessage());
+            }
+
+        }
+        if (!applicant.getMscFile().isEmpty()) {
+            try {
+                fileStorageService.validate(applicant.getMscFile(), FileTypeEnum.MSC);
+            } catch (Exception e) {
+                log.error(e.getMessage());
+                applicant.setMscFileError(e.getMessage());
+            }
+        }
+
+        if (applicant.getWorkExperienceList() != null) {
+            for (WorkExperienceList data : applicant.getWorkExperienceList()) {
+                if (!data.getExperienceFile().isEmpty()) {
+                    try {
+                        fileStorageService.validate(data.getExperienceFile(), FileTypeEnum.EXPERIENCE);
+                    } catch (Exception e) {
+                        log.error(e.getMessage());
+                        data.setExperienceFileError(e.getMessage());
+                    }
+                }
+            }
+        }
+        return otherErrors;
     }
 
     private void addressMap(ApplicationForm applicant) {
@@ -132,59 +288,6 @@ public class AdmissionController {
     }
 
 
-    @PostMapping(value = "/apply", params = {"addRow"})
-    public String addRow(@ModelAttribute("applicant") ApplicationForm applicationForm, final BindingResult bindingResult, Model model) {
-        applicationForm.getWorkExperienceList().add(new WorkExperienceList());
-        applicationForm.setWorkExperienceDivId("workExperienceDivId");
-        //addressMap(applicationForm);
-        return "application-form";
-    }
-
-    @PostMapping(value = "/apply", params = {"removeRow"})
-    public String removeRow(
-            @ModelAttribute("applicant") ApplicationForm applicationForm, final BindingResult bindingResult,
-            final HttpServletRequest req) {
-        final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
-        applicationForm.getWorkExperienceList().remove(rowId.intValue());
-        applicationForm.setWorkExperienceDivId("workExperienceDivId");
-        addressMap(applicationForm);
-        return "application-form";
-    }
-    @PostMapping(value = "/apply", params = {"modal"})
-    public String showModal(
-            @ModelAttribute("applicant") ApplicationForm applicationForm, final BindingResult bindingResult,
-            final HttpServletRequest req) {
-        applicationForm.setModalId("myModal");
-        addressMap(applicationForm);
-        return "application-form";
-    }
-
-    @PostMapping(value = "/getDistrict/{divId}", produces = "application/json")
-    public @ResponseBody List<District>
-    getDistrict(@PathVariable(name = "divId") String divId) {
-        String pDivision[] = divId.split("-");
-        int id = Integer.parseInt(pDivision[0]);
-        List<District> districts= mHelper.getAllDistrictsByDivId(id);
-        return districts;
-    }
-
-    @GetMapping(value = "/getThana/{disId}", produces = "application/json")
-    public @ResponseBody List<Thana>
-    getThana(@PathVariable(name = "disId") String disId) {
-        String pDis[] = disId.split("-");
-        int id = Integer.parseInt(pDis[0]);
-        List<Thana> thanas= mHelper.getAllThanasByDisId(id);
-        return thanas;
-    }
-
-
-    @GetMapping("/statusCheck")
-    public String statusCheck(Model model) {
-      StatusCheckDto app= new StatusCheckDto();
-      model.addAttribute("applicantInfo",app);
-      return "status-check";
-    }
-
     @PostMapping("/result")
     public String getResult(@ModelAttribute StatusCheckDto pStatusCheckDto, Model model) throws ParseException {
         try {
@@ -196,6 +299,10 @@ public class AdmissionController {
           }
           model.addAttribute("hideText","yes");
           model.addAttribute("valid",1);
+          =======
+      StatusCheckDto app= new StatusCheckDto();
+      model.addAttribute("applicantInfo",app);
+      return "status-check";
           return "status-check";
       }catch (Exception e){
         log.error("Error :: "+e.getMessage());
@@ -203,4 +310,5 @@ public class AdmissionController {
       }
 
   }
+
 }

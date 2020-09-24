@@ -24,12 +24,14 @@ public class Payment extends AbstractAuditingEntity {
     @ManyToOne
     private Applicant applicant;
 
+    @Enumerated(EnumType.ORDINAL)
     private PaymentCategory paymentCategory;
 
     private BigDecimal amount;
 
     private BigDecimal waivePercentage;
 
+    @Enumerated(EnumType.ORDINAL)
     private PaymentStatus status;
 
     private Instant paidOn;

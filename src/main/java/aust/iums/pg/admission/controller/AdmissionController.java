@@ -82,7 +82,14 @@ public class AdmissionController {
     }
 
     @PostMapping(value = "/apply", params = {"save"})
-    public String greetingSubmit(@Valid ApplicationForm applicant,final BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) throws IOException, ParseException {
+    public String greetingSubmit(@Valid @ModelAttribute("applicant") ApplicationForm applicant, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) throws IOException, ParseException {
+
+        if(bindingResult.hasErrors()){
+            log.info("errors: "+ bindingResult.toString());
+            return "application-form";
+        }
+
+
         model.addAttribute("applicant", applicant);
         addressMap(applicant);
         log.info(" [{}]: Applicant Infos ", applicant.toString());
@@ -129,7 +136,7 @@ public class AdmissionController {
     public String addRow(@ModelAttribute("applicant") ApplicationForm applicationForm, final BindingResult bindingResult, Model model) {
         applicationForm.getWorkExperienceList().add(new WorkExperienceList());
         applicationForm.setWorkExperienceDivId("workExperienceDivId");
-        addressMap(applicationForm);
+        //addressMap(applicationForm);
         return "application-form";
     }
 

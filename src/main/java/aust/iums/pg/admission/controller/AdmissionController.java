@@ -1,12 +1,13 @@
 package aust.iums.pg.admission.controller;
 
 import aust.iums.pg.admission.dto.ApplicationForm;
+import aust.iums.pg.admission.dto.StatusCheckDto;
 import aust.iums.pg.admission.dto.WorkExperienceList;
 import aust.iums.pg.admission.enums.FileTypeEnum;
 import aust.iums.pg.admission.helper.AdmissionHelper;
 import aust.iums.pg.admission.model.*;
-import aust.iums.pg.admission.repository.SemesterRepository;
 import aust.iums.pg.admission.service.FileStorageService;
+import aust.iums.pg.admission.utils.PgUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,6 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -160,6 +160,7 @@ public class AdmissionController {
 
     @GetMapping("/statusCheck")
     public String statusCheck(Model model) {
+
         return "status-check";
     }
 
@@ -287,5 +288,27 @@ public class AdmissionController {
     }
 
 
+    @PostMapping("/result")
+    public String getResult(@ModelAttribute StatusCheckDto pStatusCheckDto, Model model) throws ParseException {
+        try {
+          model.addAttribute("search","demo");
+          if(pStatusCheckDto.getApplicationSerialNo() !=null && pStatusCheckDto.getDateOfBirth() !=null) {
+            mHelper.getApplicantBy(pStatusCheckDto.getApplicationSerialNo(), PgUtils.formateDate(pStatusCheckDto.getDateOfBirth()));
+          }else {
+            model.addAttribute("invalid","invalid");
+          }
+          model.addAttribute("hideText","yes");
+          model.addAttribute("valid",1);
+          =======
+      StatusCheckDto app= new StatusCheckDto();
+      model.addAttribute("applicantInfo",app);
+      return "status-check";
+          return "status-check";
+      }catch (Exception e){
+        log.error("Error :: "+e.getMessage());
+          return "Not Found";
+      }
+
+  }
 
 }

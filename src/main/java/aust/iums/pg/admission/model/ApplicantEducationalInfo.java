@@ -48,18 +48,18 @@ public class ApplicantEducationalInfo {
 
   @ManyToOne
   @JoinColumn(name = "APPLICANT_ID", referencedColumnName = "ID",updatable=false)
-  Applicant mApplicant;
+  Applicant applicant;
 
   public ApplicantEducationalInfo() {
 
   }
 
   public Applicant getApplicant() {
-    return mApplicant;
+    return applicant;
   }
 
   public void setApplicant(Applicant pApplicant) {
-    mApplicant = pApplicant;
+    applicant = pApplicant;
   }
 
   public Long getId() {

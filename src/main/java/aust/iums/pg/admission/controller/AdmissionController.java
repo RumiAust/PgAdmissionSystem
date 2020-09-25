@@ -22,6 +22,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -160,15 +161,6 @@ public class AdmissionController {
 
 
 
-    @PostMapping("/result")
-    public String getResult(@ModelAttribute ApplicationForm applicant, Model model) {
-        model.addAttribute("search", "demo");
-        model.addAttribute("hideText", "yes");
-        model.addAttribute("valid", 1);
-        return "status-check";
-    }
-
-
 
     private boolean isOtherErrors(ApplicationForm applicant) {
         boolean otherErrors = false;
@@ -290,14 +282,15 @@ public class AdmissionController {
     model.addAttribute("applicantInfo",app);
     return "status-check";
   }
-  
+
 
     @PostMapping("/result")
     public String getResult(@ModelAttribute StatusCheckDto pStatusCheckDto, Model model) throws ParseException {
         try {
           model.addAttribute("search","demo");
           if(pStatusCheckDto.getApplicationSerialNo() !=null && pStatusCheckDto.getDateOfBirth() !=null) {
-            mHelper.getApplicantBy(pStatusCheckDto.getApplicationSerialNo(), PgUtils.formateDate(pStatusCheckDto.getDateOfBirth()));
+            Date d=PgUtils.formateDate(pStatusCheckDto.getDateOfBirth());
+            mHelper.getApplicantBy(pStatusCheckDto.getApplicationSerialNo(), d);
           }else {
             model.addAttribute("invalid","invalid");
           }

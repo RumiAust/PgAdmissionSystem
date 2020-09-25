@@ -88,18 +88,18 @@ public class ApplicantPersonaIInfo {
 
   @OneToOne
   @JoinColumn(name = "APPLICANT_ID", referencedColumnName = "ID",updatable=false)
-  Applicant mApplicant;
+  Applicant applicant;
 
   public ApplicantPersonaIInfo() {
 
   }
 
   public Applicant getApplicant() {
-    return mApplicant;
+    return applicant;
   }
 
   public void setApplicant(Applicant pApplicant) {
-    mApplicant = pApplicant;
+    applicant = pApplicant;
   }
 
   public Long getId() {

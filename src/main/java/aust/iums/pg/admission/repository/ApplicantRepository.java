@@ -18,6 +18,7 @@ public interface ApplicantRepository extends JpaRepository<Applicant,Long> {
 
   Optional<Applicant> findByApplicationSn(String serialNo);
 
-  // Optional<Applicant> findByApplicationSn
+  Optional<Applicant> findByApplicationSnAndApplicantPersonaIInfo_DateOfBirth(String pSerialNo, Date pDateOfBirth);
+  Optional<Applicant> findByApplicationSnAndApplicantPersonaIInfo_ApplicationSn(String pSerialNo, String e);
 
 }

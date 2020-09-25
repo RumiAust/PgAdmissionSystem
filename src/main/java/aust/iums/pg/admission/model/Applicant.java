@@ -61,19 +61,19 @@ public class Applicant {
 
   @OneToMany
   @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ID",updatable=false)
-  List<ApplicantAddress> mApplicantAddress;
+  List<ApplicantAddress> applicantAddress;
 
   @OneToMany
   @JoinColumn(name = "EDUCATION_INFO_ID", referencedColumnName = "ID",updatable=false)
-  List<ApplicantEducationalInfo> mApplicantEducationalInfo;
+  List<ApplicantEducationalInfo> applicantEducationalInfo;
 
   @OneToOne
   @JoinColumn(name = "PERSONAL_INFO_ID", referencedColumnName = "ID",updatable=false)
-  ApplicantPersonaIInfo mApplicantPersonaIInfo;
+  ApplicantPersonaIInfo applicantPersonaIInfo;
 
   @OneToMany
   @JoinColumn(name = "JOB_EXPERIENCE_ID", referencedColumnName = "ID",updatable=false)
-  List<JobExperience> mJobExperience;
+  List<JobExperience> jobExperience;
 
 
 
@@ -83,11 +83,11 @@ public class Applicant {
 
 
   public ApplicantPersonaIInfo getApplicantPersonaIInfo() {
-    return mApplicantPersonaIInfo;
+    return applicantPersonaIInfo;
   }
 
   public void setApplicantPersonaIInfo(ApplicantPersonaIInfo pApplicantPersonaIInfo) {
-    mApplicantPersonaIInfo = pApplicantPersonaIInfo;
+    applicantPersonaIInfo = pApplicantPersonaIInfo;
   }
 
 
@@ -172,27 +172,27 @@ public class Applicant {
   }
 
   public List<ApplicantAddress> getApplicantAddress() {
-    return mApplicantAddress;
+    return applicantAddress;
   }
 
   public void setApplicantAddress(List<ApplicantAddress> pApplicantAddress) {
-    mApplicantAddress = pApplicantAddress;
+    applicantAddress = pApplicantAddress;
   }
 
   public List<ApplicantEducationalInfo> getApplicantEducationalInfo() {
-    return mApplicantEducationalInfo;
+    return applicantEducationalInfo;
   }
 
   public void setApplicantEducationalInfo(List<ApplicantEducationalInfo> pApplicantEducationalInfo) {
-    mApplicantEducationalInfo = pApplicantEducationalInfo;
+    applicantEducationalInfo = pApplicantEducationalInfo;
   }
 
   public List<JobExperience> getJobExperience() {
-    return mJobExperience;
+    return jobExperience;
   }
 
   public void setJobExperience(List<JobExperience> pJobExperience) {
-    mJobExperience = pJobExperience;
+    jobExperience = pJobExperience;
   }
 
   @Override
@@ -234,10 +234,10 @@ public class Applicant {
         ", selectedRejectedOn=" + selectedRejectedOn +
         ", createdOn=" + createdOn +
         ", updatedOn=" + updatedOn +
-        ", mApplicantAddress=" + mApplicantAddress +
-        ", mApplicantEducationalInfo=" + mApplicantEducationalInfo +
-        ", mApplicantPersonaIInfo=" + mApplicantPersonaIInfo +
-        ", mJobExperience=" + mJobExperience +
+        ", mApplicantAddress=" + applicantAddress +
+        ", mApplicantEducationalInfo=" + applicantEducationalInfo +
+        ", mApplicantPersonaIInfo=" + applicantPersonaIInfo +
+        ", mJobExperience=" + jobExperience +
         '}';
   }
 }

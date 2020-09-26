@@ -67,8 +67,7 @@ public class Applicant {
   @JoinColumn(name = "EDUCATION_INFO_ID", referencedColumnName = "ID",updatable=false)
   List<ApplicantEducationalInfo> applicantEducationalInfo;
 
-  @OneToOne
-  @JoinColumn(name = "PERSONAL_INFO_ID", referencedColumnName = "ID",updatable=false)
+  @OneToOne(mappedBy = "applicant")
   ApplicantPersonaIInfo applicantPersonaIInfo;
 
   @OneToMany

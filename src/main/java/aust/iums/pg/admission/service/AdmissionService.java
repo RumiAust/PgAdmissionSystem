@@ -9,7 +9,6 @@ import aust.iums.pg.admission.enums.SemesterEnum;
 import aust.iums.pg.admission.model.*;
 import aust.iums.pg.admission.repository.*;
 import aust.iums.pg.admission.utils.PgUtils;
-import javafx.application.Application;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -100,9 +99,10 @@ public class AdmissionService {
         return thanas;
     }
     public Optional<Applicant> getDetailsBy(String pSerialNo, Date pDateOfBirth){
-    // Optional<Applicant> info= mApplicantRepository.findByApplicationSn(pSerialNo);
-      //Optional<Applicant> info=mApplicantRepository.findByApplicationSnAndApplicantPersonaIInfo_DateOfBirth(pSerialNo, pDateOfBirth);
-      Optional<Applicant> info=mApplicantRepository.findByApplicationSnAndApplicantPersonaIInfo_ApplicationSn(pSerialNo,pSerialNo);
+//     Optional<Applicant> info= mApplicantRepository.findByApplicationSn(pSerialNo);
+      Optional<Applicant> info=mApplicantRepository.findByApplicationSnAndApplicantPersonaIInfo_DateOfBirth(pSerialNo, pDateOfBirth);
+//      Optional<Applicant> info=mApplicantRepository.findByApplicationSnAndApplicantPersonaIInfo_ApplicationSn(pSerialNo,pSerialNo);
+     ApplicantPersonaIInfo personaIInfo = info.get().getApplicantPersonaIInfo();
      return info;
     }
 

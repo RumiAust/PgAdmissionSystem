@@ -87,8 +87,8 @@ public class ApplicantPersonaIInfo {
   private Instant updatedOn;
 
   @OneToOne
-  @JoinColumn(name = "APPLICANT_ID", referencedColumnName = "ID",updatable=false)
-  Applicant applicant;
+  @JoinColumn(unique = true)
+  private Applicant applicant;
 
   public ApplicantPersonaIInfo() {
 

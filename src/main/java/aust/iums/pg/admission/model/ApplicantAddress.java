@@ -49,9 +49,11 @@ public class ApplicantAddress {
   @Column(name = "LINE2")
   private String line2;
 
-  @ManyToOne
+ /* @ManyToOne
   @JoinColumn(name = "APPLICANT_ID", referencedColumnName = "ID",updatable=false)
-  Applicant applicant;
+  Applicant applicant;*/
+ @ManyToOne
+ private Applicant applicant;
 
   public ApplicantAddress() {
 

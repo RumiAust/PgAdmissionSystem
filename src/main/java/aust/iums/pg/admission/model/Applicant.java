@@ -6,6 +6,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -59,9 +60,12 @@ public class Applicant {
   private Instant updatedOn;
 
 
-  @OneToMany
+  /*@OneToMany
   @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ID",updatable=false)
-  List<ApplicantAddress> applicantAddress;
+  List<ApplicantAddress> applicantAddress;*/
+
+  @OneToMany(mappedBy = "applicant")
+  private List<ApplicantAddress> applicantAddresses = new ArrayList<>();
 
   @OneToMany
   @JoinColumn(name = "EDUCATION_INFO_ID", referencedColumnName = "ID",updatable=false)
@@ -170,14 +174,6 @@ public class Applicant {
     updatedOn = pUpdatedOn;
   }
 
-  public List<ApplicantAddress> getApplicantAddress() {
-    return applicantAddress;
-  }
-
-  public void setApplicantAddress(List<ApplicantAddress> pApplicantAddress) {
-    applicantAddress = pApplicantAddress;
-  }
-
   public List<ApplicantEducationalInfo> getApplicantEducationalInfo() {
     return applicantEducationalInfo;
   }
@@ -192,6 +188,15 @@ public class Applicant {
 
   public void setJobExperience(List<JobExperience> pJobExperience) {
     jobExperience = pJobExperience;
+  }
+
+
+  public List<ApplicantAddress> getApplicantAddresses() {
+    return applicantAddresses;
+  }
+
+  public void setApplicantAddresses(List<ApplicantAddress> pApplicantAddresses) {
+    applicantAddresses = pApplicantAddresses;
   }
 
   @Override
@@ -209,7 +214,7 @@ public class Applicant {
         Objects.equals(getSelectedRejectedOn(), applicant.getSelectedRejectedOn()) &&
         Objects.equals(getCreatedOn(), applicant.getCreatedOn()) &&
         Objects.equals(getUpdatedOn(), applicant.getUpdatedOn()) &&
-        Objects.equals(getApplicantAddress(), applicant.getApplicantAddress()) &&
+        Objects.equals(getApplicantAddresses(), applicant.getApplicantAddresses()) &&
         Objects.equals(getApplicantEducationalInfo(), applicant.getApplicantEducationalInfo()) &&
         Objects.equals(getApplicantPersonaIInfo(), applicant.getApplicantPersonaIInfo()) &&
         Objects.equals(getJobExperience(), applicant.getJobExperience());
@@ -217,7 +222,7 @@ public class Applicant {
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getSemesterId(), getProgramId(), getApplicationSn(), getStatus(), getAppliedOn(), getApplicationFeePaidOn(), getSelectedRejectedOn(), getCreatedOn(), getUpdatedOn(), getApplicantAddress(), getApplicantEducationalInfo(), getApplicantPersonaIInfo(), getJobExperience());
+    return Objects.hash(getId(), getSemesterId(), getProgramId(), getApplicationSn(), getStatus(), getAppliedOn(), getApplicationFeePaidOn(), getSelectedRejectedOn(), getCreatedOn(), getUpdatedOn(), getApplicantAddresses(), getApplicantEducationalInfo(), getApplicantPersonaIInfo(), getJobExperience());
   }
 
   @Override
@@ -233,10 +238,10 @@ public class Applicant {
         ", selectedRejectedOn=" + selectedRejectedOn +
         ", createdOn=" + createdOn +
         ", updatedOn=" + updatedOn +
-        ", mApplicantAddress=" + applicantAddress +
-        ", mApplicantEducationalInfo=" + applicantEducationalInfo +
-        ", mApplicantPersonaIInfo=" + applicantPersonaIInfo +
-        ", mJobExperience=" + jobExperience +
+        ", applicantAddresses=" + applicantAddresses +
+        ", applicantEducationalInfo=" + applicantEducationalInfo +
+        ", applicantPersonaIInfo=" + applicantPersonaIInfo +
+        ", jobExperience=" + jobExperience +
         '}';
   }
 }

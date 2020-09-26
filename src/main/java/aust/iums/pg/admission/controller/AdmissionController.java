@@ -24,6 +24,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Monjur-E-Morshed on 9/16/2020.
@@ -289,14 +290,15 @@ public class AdmissionController {
         try {
           model.addAttribute("search","demo");
           if(pStatusCheckDto.getApplicationSerialNo() !=null && pStatusCheckDto.getDateOfBirth() !=null) {
-            Date d=PgUtils.formateDate(pStatusCheckDto.getDateOfBirth());
-            mHelper.getApplicantBy(pStatusCheckDto.getApplicationSerialNo(), d);
+            Date dateOfBirth=PgUtils.formateDate(pStatusCheckDto.getDateOfBirth());
+            Optional<Applicant> applicant =mHelper.getApplicantBy(pStatusCheckDto.getApplicationSerialNo(), dateOfBirth);
+            ApplicantPersonaIInfo app=applicant.get().getApplicantPersonaIInfo();
           }else {
             model.addAttribute("invalid","invalid");
           }
           model.addAttribute("hideText","yes");
           model.addAttribute("valid",1);
-      return "status-check";
+          return "status-check";
       }catch (Exception e){
         log.error("Error :: "+e.getMessage());
           return "Not Found";

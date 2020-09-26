@@ -75,9 +75,7 @@ public class Applicant {
 
   @OneToMany(mappedBy = "applicant")
   List<JobExperience> jobExperience = new ArrayList<>();
-
-
-
+  
   public Applicant() {
 
   }

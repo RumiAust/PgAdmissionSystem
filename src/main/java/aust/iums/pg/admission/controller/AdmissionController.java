@@ -292,16 +292,26 @@ public class AdmissionController {
           if(pStatusCheckDto.getApplicationSerialNo() !=null && pStatusCheckDto.getDateOfBirth() !=null) {
             Date dateOfBirth=PgUtils.formateDate(pStatusCheckDto.getDateOfBirth());
             Optional<Applicant> applicant =mHelper.getApplicantBy(pStatusCheckDto.getApplicationSerialNo(), dateOfBirth);
-            ApplicantPersonaIInfo app=applicant.get().getApplicantPersonaIInfo();
+            if (applicant.isPresent()){
+              ApplicantPersonaIInfo applicantPersonaIInfo=applicant.get().getApplicantPersonaIInfo();
+             List<JobExperience> jobExperience= applicant.get().getJobExperience();
+             List<ApplicantEducationalInfo> educationalInfoList=applicant.get().getApplicantEducationalInfo();
+             List<ApplicantAddress> addressList=applicant.get().getApplicantAddresses();
+             model.addAttribute("applicantDetails",applicant);
+            }else{
+              model.addAttribute("notFound","No records found with Serial No: "+pStatusCheckDto.getApplicationSerialNo()+" and " +
+                  "Date of Birth : "+pStatusCheckDto.getDateOfBirth());
+            }
+            model.addAttribute("hideText","yes");
+            model.addAttribute("valid",1);
           }else {
-            model.addAttribute("invalid","invalid");
+            model.addAttribute("invalid","You must enter Application Serial No and Date of Birth");
           }
-          model.addAttribute("hideText","yes");
-          model.addAttribute("valid",1);
+
           return "status-check";
       }catch (Exception e){
         log.error("Error :: "+e.getMessage());
-          return "Not Found";
+          return "error";
       }
 
   }

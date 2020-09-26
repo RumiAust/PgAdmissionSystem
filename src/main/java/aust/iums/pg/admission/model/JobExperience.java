@@ -22,8 +22,7 @@ public class JobExperience {
   @Column(name = "APPLICANTION_SN")
   private String applicationSn;
 
-  @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "APPLICANT_ID",referencedColumnName = "ID",updatable=false)
+  @ManyToOne
   Applicant applicant;
 
   @NotNull

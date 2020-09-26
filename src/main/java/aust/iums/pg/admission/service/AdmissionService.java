@@ -103,7 +103,7 @@ public class AdmissionService {
      /* Optional<Applicant> infos=mApplicantRepository.findByApplicationSnAndApplicantPersonaIInfo_DateOfBirthAAndApplicantAddress(pSerialNo, pDateOfBirth,"1064");*/
       Optional<Applicant> info=mApplicantRepository.findByApplicationSnAndApplicantPersonaIInfo_DateOfBirth(pSerialNo, pDateOfBirth);
 //      Optional<Applicant> info=mApplicantRepository.findByApplicationSnAndApplicantPersonaIInfo_ApplicationSn(pSerialNo,pSerialNo);
-     ApplicantPersonaIInfo personaIInfo = info.get().getApplicantPersonaIInfo();
+   //  ApplicantPersonaIInfo personaIInfo = info.get().getApplicantPersonaIInfo();
      return info;
     }
 

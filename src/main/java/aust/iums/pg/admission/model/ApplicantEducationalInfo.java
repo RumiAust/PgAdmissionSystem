@@ -47,7 +47,6 @@ public class ApplicantEducationalInfo {
   private Integer passingYear;
 
   @ManyToOne
-  @JoinColumn(name = "APPLICANT_ID", referencedColumnName = "ID",updatable=false)
   Applicant applicant;
 
   public ApplicantEducationalInfo() {

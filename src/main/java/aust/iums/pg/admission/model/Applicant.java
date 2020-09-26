@@ -67,16 +67,14 @@ public class Applicant {
   @OneToMany(mappedBy = "applicant")
   private List<ApplicantAddress> applicantAddresses = new ArrayList<>();
 
-  @OneToMany
-  @JoinColumn(name = "EDUCATION_INFO_ID", referencedColumnName = "ID",updatable=false)
-  List<ApplicantEducationalInfo> applicantEducationalInfo;
+  @OneToMany(mappedBy = "applicant")
+  List<ApplicantEducationalInfo> applicantEducationalInfo = new ArrayList<>();
 
   @OneToOne(mappedBy = "applicant")
   ApplicantPersonaIInfo applicantPersonaIInfo;
 
-  @OneToMany
-  @JoinColumn(name = "JOB_EXPERIENCE_ID", referencedColumnName = "ID",updatable=false)
-  List<JobExperience> jobExperience;
+  @OneToMany(mappedBy = "applicant")
+  List<JobExperience> jobExperience = new ArrayList<>();
 
 
 

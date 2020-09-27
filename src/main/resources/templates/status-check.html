@@ -66,46 +66,46 @@
                                 <table style="width:60%">
                                     <tr>
                                         <td >Applicant Serial No :</td>
-                                        <td ><strong>1064</strong></td>
+                                        <td ><strong th:text="${applicantDetails.get().getApplicationSn()}"></strong></td>
                                     </tr>
                                     <tr>
                                         <td style="width: 10px">Applicant Name :</td>
-                                        <td style="width:20px"><strong>Md Golam Muktadir</strong></td>
+                                        <td style="width:20px"><strong
+                                                th:text="${applicantDetails.get().getApplicantPersonaIInfo().getFirstName()}+' '+${applicantDetails.get().getApplicantPersonaIInfo().getMiddleName()}+' '+${applicantDetails.get().getApplicantPersonaIInfo().getLastName()}"></strong></td>
                                     </tr>
                                     <tr>
                                         <td style="width: 10px">Semester Name :</td>
-                                        <td style="width:20px"><strong>Spring 20</strong></td>
+                                        <td style="width:20px"><strong th:text="${applicantDetails.get().getSemester().getSemesterName()}"></strong></td>
                                     </tr>
                                     <tr>
                                         <td >Applied Program :</td>
-                                        <td ><strong>M.Sc. in Math</strong></td>
+                                        <td ><strong th:text="${applicantDetails.get().getProgram().getProgramLongName()}"></strong></td>
                                     </tr>
                                     <tr>
                                         <td style="width: 10px">Application Status :</td>
-                                        <td style="width:20px;color: deeppink"><h6><strong>APPLIED</strong></h6></td>
+                                        <td style="width:20px;color: deeppink"><h6><strong th:text="${applicantDetails.get().getStatus()}"></strong></h6></td>
+                                    </tr>
+                                    <tr th:if="${applicantDetails.get().getStatus() =='APPLIED'}">
+                                        <td >Deposit Slip :</td>
+                                        <td><a href=""><img src="pdf.png" width="30" height="30" alt="download pdf"></a></td>
                                     </tr>
                                     <tr>
-                                        <td >Deposit Slip :</td>
-                                        <td><a href="/#"><img src="pdf.png" width="30" height="30" alt="download pdf"></a></td>
+                                        <td >Application Form :</td>
+                                        <td>
+                                            <input type="button"  class="btn btn-outline-success" value="Click here"/>
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
-                            <!--<div class="row">
-                                <div class="col-sm-12 col-md-3">
-                                    <span class="badge badge-light">Applicant Serial No:</span>
+
+                           <!-- <div class="row" style="margin-top: 10px">
+                                <div class="col-sm-12 col-md-4">
                                 </div>
-                                <div class="col-sm-12 col-md-9">
-                                    <p><strong>100102</strong></p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-3">
-                                    <span class="badge badge-light">Applicant Name:</span>
-                                </div>
-                                <div class="col-sm-12 col-md-9">
-                                    <p><strong>Md Golam Muktadir</strong></p>
+                                <div class="col-sm-12 col-md-4">
+
                                 </div>
                             </div>-->
+
                         </div>
                     </div>
 

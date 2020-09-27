@@ -1,6 +1,7 @@
 package aust.iums.pg.admission.service;
 
 import aust.iums.pg.admission.dto.ApplicationForm;
+import aust.iums.pg.admission.enums.FileTypeEnum;
 import aust.iums.pg.admission.helper.AdmissionHelper;
 import aust.iums.pg.admission.model.Semester;
 import aust.iums.pg.admission.repository.ApplicantRepository;
@@ -42,7 +43,7 @@ public class UploadPathService {
 
 
 
-    public Path getFilePath(String modifiedFileName, String type, ApplicationForm form) throws IOException {
+    public Path getFilePath(String modifiedFileName, FileTypeEnum type, ApplicationForm form) throws IOException {
         Semester semes;
         String basePath = "";
         semes = mHelper.getActiveSemester();
@@ -50,11 +51,11 @@ public class UploadPathService {
         String semester = semes.getSemesterName();
         String program = form.getProgramName();
         String application_sn = form.getApplicationSerialNumber();
-        if (type == "photo") {
+        if (type == FileTypeEnum.PHOTO) {
             basePath = apPhotoBasePath;
-        } else if (type == "signature") {
+        } else if (type == FileTypeEnum.SIGNATURE) {
             basePath = apSignatureBasePath;
-        } else if (type == "document") {
+        } else if (type == FileTypeEnum.DOCUMENT) {
             basePath = apFileBasePath;
         }
 
@@ -68,7 +69,7 @@ public class UploadPathService {
             Files.createDirectory(directory);
         }
 
-        if(type=="document") {
+        if(type==FileTypeEnum.DOCUMENT) {
             directory = Paths.get(basePath + "/" + semester + "/" + program + "/" + application_sn);
             if (!Files.exists(directory)) {
                 Files.createDirectory(directory);

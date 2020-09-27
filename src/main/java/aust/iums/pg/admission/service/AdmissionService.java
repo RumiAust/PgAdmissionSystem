@@ -2,10 +2,7 @@ package aust.iums.pg.admission.service;
 
 import aust.iums.pg.admission.dto.ApplicationForm;
 import aust.iums.pg.admission.dto.WorkExperienceList;
-import aust.iums.pg.admission.enums.AddressTypeEnum;
-import aust.iums.pg.admission.enums.AdmissionEnum;
-import aust.iums.pg.admission.enums.ExamTypeEnum;
-import aust.iums.pg.admission.enums.SemesterEnum;
+import aust.iums.pg.admission.enums.*;
 import aust.iums.pg.admission.model.*;
 import aust.iums.pg.admission.repository.*;
 import aust.iums.pg.admission.utils.PgUtils;
@@ -98,13 +95,14 @@ public class AdmissionService {
         List<Thana> thanas = mThanaRepository.findByDistrictId(disId);
         return thanas;
     }
-    public Optional<Applicant> getDetailsBy(String pSerialNo, Date pDateOfBirth){
-     Optional<Applicant> info1= mApplicantRepository.findByApplicationSn(pSerialNo);
-     /* Optional<Applicant> infos=mApplicantRepository.findByApplicationSnAndApplicantPersonaIInfo_DateOfBirthAAndApplicantAddress(pSerialNo, pDateOfBirth,"1064");*/
-      Optional<Applicant> info=mApplicantRepository.findByApplicationSnAndApplicantPersonaIInfo_DateOfBirth(pSerialNo, pDateOfBirth);
+
+    public Optional<Applicant> getDetailsBy(String pSerialNo, Date pDateOfBirth) {
+        Optional<Applicant> info1 = mApplicantRepository.findByApplicationSn(pSerialNo);
+        /* Optional<Applicant> infos=mApplicantRepository.findByApplicationSnAndApplicantPersonaIInfo_DateOfBirthAAndApplicantAddress(pSerialNo, pDateOfBirth,"1064");*/
+        Optional<Applicant> info = mApplicantRepository.findByApplicationSnAndApplicantPersonaIInfo_DateOfBirth(pSerialNo, pDateOfBirth);
 //      Optional<Applicant> info=mApplicantRepository.findByApplicationSnAndApplicantPersonaIInfo_ApplicationSn(pSerialNo,pSerialNo);
-   //  ApplicantPersonaIInfo personaIInfo = info.get().getApplicantPersonaIInfo();
-     return info;
+        //  ApplicantPersonaIInfo personaIInfo = info.get().getApplicantPersonaIInfo();
+        return info;
     }
 
     public String save(ApplicationForm pApp) throws ParseException, IOException {
@@ -119,7 +117,7 @@ public class AdmissionService {
         applicant.setAppliedOn(Instant.now());
         applicant.setSelectedRejectedOn(Instant.now());
         applicant.setApplicationFeePaidOn(Instant.now());
-        applicant =  mApplicantRepository.saveAndFlush(applicant);
+        applicant = mApplicantRepository.saveAndFlush(applicant);
 
         ApplicantPersonaIInfo app = new ApplicantPersonaIInfo();
         app.setApplicant(applicant);
@@ -162,19 +160,19 @@ public class AdmissionService {
 
 
         List<JobExperience> workExperienceLists = new ArrayList<>();
-        if(pApp.getWorkExperienceList() !=null) {
-          for (WorkExperienceList data : pApp.getWorkExperienceList()) {
-            JobExperience obj = new JobExperience();
-            //fileStorageService.saveFile(data.getExperienceFile(), "document", pApp, "exp");
-            obj.setApplicationSn(applicantSerialNo);
-            obj.setOrganizationName(data.getOrganizationName());
-            obj.setDesignation(data.getDesignation());
-            obj.setJobResponsibilities(data.getJobResponsibility());
-            obj.setFromDate(PgUtils.formateDate(data.getFromDate()));
-            obj.setToDate(PgUtils.formateDate(data.getToDate()));
-            obj.setApplicant(applicant);
-            workExperienceLists.add(obj);
-          }
+        if (pApp.getWorkExperienceList() != null) {
+            for (WorkExperienceList data : pApp.getWorkExperienceList()) {
+                JobExperience obj = new JobExperience();
+                //fileStorageService.saveFile(data.getExperienceFile(), "document", pApp, "exp");
+                obj.setApplicationSn(applicantSerialNo);
+                obj.setOrganizationName(data.getOrganizationName());
+                obj.setDesignation(data.getDesignation());
+                obj.setJobResponsibilities(data.getJobResponsibility());
+                obj.setFromDate(PgUtils.formateDate(data.getFromDate()));
+                obj.setToDate(PgUtils.formateDate(data.getToDate()));
+                obj.setApplicant(applicant);
+                workExperienceLists.add(obj);
+            }
         }
 
 
@@ -227,8 +225,8 @@ public class AdmissionService {
 
         mApplicantPersonalInfoRepository.save(app);
         mApplicantEducationalInfoRepository.saveAll(educationalInfoList);
-        if(workExperienceLists.size()>0) {
-          mJobExperienceRepository.saveAll(workExperienceLists);
+        if (workExperienceLists.size() > 0) {
+            mJobExperienceRepository.saveAll(workExperienceLists);
         }
         mApplicantAddressRepository.saveAll(addressList);
 
@@ -240,32 +238,33 @@ public class AdmissionService {
     }*/
 
         /*Save all Files*/
-      if(pApp.getWorkExperienceList() !=null) {
-        for (WorkExperienceList data : pApp.getWorkExperienceList()) {
-          fileStorageService.saveFile(data.getExperienceFile(), "document", pApp, "exp");
-        }
-      }
-
-        if(pApp.getSscFile() !=null) {
-          fileStorageService.saveFile(pApp.getSscFile(), "document", pApp, "ssc");
-        }
-        if(pApp.getHscFile() !=null) {
-          fileStorageService.saveFile(pApp.getHscFile(), "document", pApp, "hsc");
-        }
-        if(pApp.getBscFile() !=null) {
-          fileStorageService.saveFile(pApp.getBscFile(), "document", pApp, "bsc");
-        }
-        if(pApp.getMscFile() !=null) {
-          fileStorageService.saveFile(pApp.getMscFile(), "document", pApp, "msc");
+        if (pApp.getWorkExperienceList() != null) {
+            for (WorkExperienceList data : pApp.getWorkExperienceList()) {
+                if (!data.getExperienceFile().isEmpty())
+                    fileStorageService.saveFile(data.getExperienceFile(),  FileTypeEnum.DOCUMENT, pApp,  FileTypeEnum.EXPERIENCE);
+            }
         }
 
-        if(pApp.getPhoto() !=null) {
-          fileStorageService.saveFile(pApp.getPhoto(), "photo", pApp, "");
+        if (!pApp.getSscFile().isEmpty()) {
+            fileStorageService.saveFile(pApp.getSscFile(), FileTypeEnum.DOCUMENT, pApp, FileTypeEnum.SSC);
         }
-        if(pApp.getSignature() !=null) {
-          fileStorageService.saveFile(pApp.getSignature(), "signature", pApp, "");
+        if (!pApp.getHscFile().isEmpty()) {
+            fileStorageService.saveFile(pApp.getHscFile(),  FileTypeEnum.DOCUMENT, pApp,  FileTypeEnum.HSC);
         }
-     return applicantSerialNo;
+        if (!pApp.getBscFile().isEmpty()) {
+            fileStorageService.saveFile(pApp.getBscFile(),  FileTypeEnum.DOCUMENT, pApp,  FileTypeEnum.BSC);
+        }
+        if (!pApp.getMscFile().isEmpty()) {
+            fileStorageService.saveFile(pApp.getMscFile(),  FileTypeEnum.DOCUMENT, pApp,  FileTypeEnum.MSC);
+        }
+
+        if (!pApp.getPhoto().isEmpty()) {
+            fileStorageService.saveFile(pApp.getPhoto(),  FileTypeEnum.PHOTO, pApp,  FileTypeEnum.PHOTO);
+        }
+        if (!pApp.getSignature().isEmpty()) {
+            fileStorageService.saveFile(pApp.getSignature(),  FileTypeEnum.SIGNATURE, pApp,  FileTypeEnum.SIGNATURE);
+        }
+        return applicantSerialNo;
     }
 
 

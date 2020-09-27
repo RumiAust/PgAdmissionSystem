@@ -48,14 +48,14 @@ public class FileStorageService {
     @Autowired
     ApplicantRepository mApplicantRepository;
 
-    public void saveFile(MultipartFile file, String type, ApplicationForm form, String docType) throws IOException {
+    public void saveFile(MultipartFile file, FileTypeEnum type, ApplicationForm form, FileTypeEnum docType) throws IOException {
         String fileName = file.getOriginalFilename();
         String applicantSerialNo = form.getApplicationSerialNumber();
 
         String modifiedFileName="";
-        if(type=="photo" || type=="signature")
+        if(type==FileTypeEnum.PHOTO || type==FileTypeEnum.SIGNATURE)
              modifiedFileName =  applicantSerialNo + "." + FilenameUtils.getExtension(fileName);
-        else if(type=="document")
+        else if(type==FileTypeEnum.DOCUMENT)
              modifiedFileName =  docType + "_" + System.currentTimeMillis() + "." + FilenameUtils.getExtension(fileName);
 
         Path path = uploadPathService.getFilePath(modifiedFileName, type, form);

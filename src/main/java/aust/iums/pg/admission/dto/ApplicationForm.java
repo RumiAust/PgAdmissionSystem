@@ -30,7 +30,7 @@ public class ApplicationForm {
     @NotNull
     @Size(min = 1, message = "Please enter first name.")
     private String firstName;
-    
+
     private String middleName;
     @NotNull
     @Size(min = 1, message = "Please enter last name.")

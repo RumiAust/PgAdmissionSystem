@@ -95,16 +95,15 @@ public class AdmissionController {
             log.error("errors: " + bindingResult.toString());
             applicant.setDeclaration(false);
             return "application-form";
+        }else{
+          model.addAttribute("applicant", applicant);
+          addressMap(applicant);
+          log.info(" [{}]: Applicant Infos ", applicant.toString());
+          mHelper.saveInfo(applicant);
+          applicant.setWorkExperienceDivId("");
+
+          return "success-page";
         }
-
-
-        model.addAttribute("applicant", applicant);
-        addressMap(applicant);
-        log.info(" [{}]: Applicant Infos ", applicant.toString());
-        mHelper.saveInfo(applicant);
-        applicant.setWorkExperienceDivId("");
-
-        return "success-page";
    /*}catch (Exception e){
       redirectAttributes.addFlashAttribute("errormessage","Files are not saved successfully because "+e.getMessage());
       applicant.setWorkExperienceDivId("");

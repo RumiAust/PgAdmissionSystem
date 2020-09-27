@@ -103,7 +103,7 @@ public class AdmissionController {
           applicant.setWorkExperienceDivId("");
           model.addAttribute("serialNo", serialNo);
 
-          return "redirect:/success-page";
+          return "success-page";
         }
    /*}catch (Exception e){
       redirectAttributes.addFlashAttribute("errormessage","Files are not saved successfully because "+e.getMessage());
@@ -311,7 +311,7 @@ public class AdmissionController {
             return "error";
           }
 
-          return "redirect:/status-check";
+          return "status-check";
       }catch (Exception e){
         log.error("Error :: "+e.getMessage());
           return "error";

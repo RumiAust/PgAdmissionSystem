@@ -288,25 +288,25 @@ public class AdmissionController {
     @PostMapping("/result")
     public String getResult(@ModelAttribute StatusCheckDto pStatusCheckDto, Model model) throws ParseException {
         try {
-          model.addAttribute("search","demo");
           if(pStatusCheckDto.getApplicationSerialNo() !=null && pStatusCheckDto.getDateOfBirth() !=null) {
             Date dateOfBirth=PgUtils.formateDate(pStatusCheckDto.getDateOfBirth());
             Optional<Applicant> applicant =mHelper.getApplicantBy(pStatusCheckDto.getApplicationSerialNo(), dateOfBirth);
             if (applicant.isPresent()){
-              model.addAttribute("valid",1);
+              model.addAttribute("valid",true);
               ApplicantPersonaIInfo applicantPersonaIInfo=applicant.get().getApplicantPersonaIInfo();
              List<JobExperience> jobExperience= applicant.get().getJobExperience();
              List<ApplicantEducationalInfo> educationalInfoList=applicant.get().getApplicantEducationalInfo();
              List<ApplicantAddress> addressList=applicant.get().getApplicantAddresses();
              model.addAttribute("applicantDetails",applicant);
             }else{
-              model.addAttribute("notFound",2);
+              model.addAttribute("notFound",true);
               model.addAttribute("msg","No records found with Serial No: "+pStatusCheckDto.getApplicationSerialNo()+" and " +
                   "Date of Birth : "+pStatusCheckDto.getDateOfBirth());
             }
             model.addAttribute("hideText","yes");
           }else {
-            model.addAttribute("invalid","You must enter Application Serial No and Date of Birth");
+          //  model.addAttribute("invalid","You must enter Application Serial No and Date of Birth");
+            return "error";
           }
 
           return "status-check";

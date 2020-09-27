@@ -93,6 +93,7 @@ public class AdmissionController {
 
         if (bindingResult.hasErrors() || otherErrors) {
             log.error("errors: " + bindingResult.toString());
+            applicant.setDeclaration(false);
             return "application-form";
         }
 

@@ -74,7 +74,7 @@ public class FileStorageService {
                 throw new RuntimeException("Invalid applicant  photo dimension. Photo must have a dimensions of " + width + " px x " + photoHeight + " px (width x height)");
             }
             if (file.getSize() / 1000 > maxSize) {
-                throw new RuntimeException("Invalid applicant photo size. Maximum allowed photo size is" + maxSize + "KB");
+                throw new RuntimeException("Invalid applicant photo size. Maximum allowed photo size is " + maxSize + " KB");
             }
 
         } else if (type == FileTypeEnum.SIGNATURE) {
@@ -83,14 +83,14 @@ public class FileStorageService {
             if (!validateDimension(false, file)) {
                 throw new RuntimeException("Invalid applicant signature dimension. Signature must have a dimensions of " + width + " px x " + photoHeight + " px (width x height)");
             }
-            if (file.getSize() / 1000 > maxSize) {
-                throw new RuntimeException("Invalid applicant signature size. Maximum allowed signature size is" + maxSize + "KB");
+            if ((file.getSize() / 1000) > maxSize) {
+                throw new RuntimeException("Invalid applicant signature size. Maximum allowed signature size is " + maxSize + " KB");
             }
         } else if (type == FileTypeEnum.BSC || type==FileTypeEnum.HSC || type==FileTypeEnum.SSC ||type== FileTypeEnum.BSC || type==FileTypeEnum.MSC || type==FileTypeEnum.EXPERIENCE) {
             if (!(file.getOriginalFilename().endsWith(".jpg") || file.getOriginalFilename().endsWith(".png") || file.getOriginalFilename().endsWith(".jpeg") || file.getOriginalFilename().endsWith(".pdf") || file.getOriginalFilename().endsWith(".zip")))
                 throw new RuntimeException("Invalid applicant file type( accepted: jpeg, jpg, png, pdf, zip)");
-            if (file.getSize() / 1000 > maxDocumentSize) {
-                throw new RuntimeException("Invalid applicant file size. Maximum allowed file size is" + maxSize + "KB");
+            if ((file.getSize() / 1000) > maxDocumentSize) {
+                throw new RuntimeException("Invalid applicant file size. Maximum allowed file size is " + maxDocumentSize + " KB");
             }
         }
 

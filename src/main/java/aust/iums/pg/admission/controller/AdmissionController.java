@@ -253,7 +253,7 @@ public class AdmissionController {
         String programInfo[] = applicant.getProgramId().split("-");
         applicant.setProgramId(programInfo[0]);
         applicant.setProgramName(programInfo[1]);
-        applicant.setSemesterId(semester.getSemesterId());
+        applicant.setSemesterId(semester.getId().toString());
 
         String pDivision[] = applicant.getPresentDivisionId().split("-");
         applicant.setPresentDivisionId(pDivision[0]);

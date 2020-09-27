@@ -19,11 +19,6 @@ public class Program {
   private Long id;
   
   @NotNull
-  @Column(name = "PROGRAM_ID")
-  private String programId;
-
-  
-  @NotNull
   @Column(name = "PROGRAM_NAME_SHORT")
   private String  programShortName;
   
@@ -43,9 +38,8 @@ public class Program {
     
   }
 
-  public Program(Long pId, String pProgramId, String pProgramShortName, String pProgramLongName, Instant pCreatedOn, Instant pUpdatedOn) {
+  public Program(Long pId, String pProgramShortName, String pProgramLongName, Instant pCreatedOn, Instant pUpdatedOn) {
     id = pId;
-    programId = pProgramId;
     programShortName = pProgramShortName;
     programLongName = pProgramLongName;
     createdOn = pCreatedOn;
@@ -60,13 +54,6 @@ public class Program {
     id = pId;
   }
 
-  public String getProgramId() {
-    return programId;
-  }
-
-  public void setProgramId(String pProgramId) {
-    programId = pProgramId;
-  }
 
   public String getProgramShortName() {
     return programShortName;
@@ -104,7 +91,6 @@ public class Program {
   public String toString() {
     return "Program{" +
         "id=" + id +
-        ", programId='" + programId + '\'' +
         ", programShortName='" + programShortName + '\'' +
         ", programLongName='" + programLongName + '\'' +
         ", createdOn=" + createdOn +

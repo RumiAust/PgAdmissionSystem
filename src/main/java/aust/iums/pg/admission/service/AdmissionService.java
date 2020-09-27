@@ -99,7 +99,7 @@ public class AdmissionService {
         return thanas;
     }
     public Optional<Applicant> getDetailsBy(String pSerialNo, Date pDateOfBirth){
-//     Optional<Applicant> info= mApplicantRepository.findByApplicationSn(pSerialNo);
+     Optional<Applicant> info1= mApplicantRepository.findByApplicationSn(pSerialNo);
      /* Optional<Applicant> infos=mApplicantRepository.findByApplicationSnAndApplicantPersonaIInfo_DateOfBirthAAndApplicantAddress(pSerialNo, pDateOfBirth,"1064");*/
       Optional<Applicant> info=mApplicantRepository.findByApplicationSnAndApplicantPersonaIInfo_DateOfBirth(pSerialNo, pDateOfBirth);
 //      Optional<Applicant> info=mApplicantRepository.findByApplicationSnAndApplicantPersonaIInfo_ApplicationSn(pSerialNo,pSerialNo);
@@ -111,8 +111,8 @@ public class AdmissionService {
         String applicantSerialNo = mApplicantRepository.getApplicantSerialNo().toString();
         pApp.setApplicationSerialNumber(applicantSerialNo);
         Applicant applicant = new Applicant();
-        applicant.setSemesterId(pApp.getSemesterId());
-        applicant.setProgramId(pApp.getProgramId());
+        applicant.setSemesterId(Long.parseLong(pApp.getSemesterId()));
+        applicant.setProgramId(Long.parseLong(pApp.getProgramId()));
         applicant.setApplicationSn(applicantSerialNo);
         applicant.setStatus(AdmissionEnum.APPLIED.getLabel());
         applicant.setCreatedOn(Instant.now());

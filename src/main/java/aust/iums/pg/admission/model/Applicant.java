@@ -1,5 +1,6 @@
 package aust.iums.pg.admission.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -24,11 +25,11 @@ public class Applicant {
 
   @NotNull
   @Column(name = "SEMESTER_ID")
-  private String semesterId;
+  private Long semesterId;
 
   @NotNull
   @Column(name = "PROGRAM_ID")
-  private String programId;
+  private Long programId;
 
   @NotNull
   @Column(name = "APPLICANTION_SN")
@@ -60,6 +61,8 @@ public class Applicant {
   private Instant updatedOn;
 
 
+
+
   /*@OneToMany
   @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ID",updatable=false)
   List<ApplicantAddress> applicantAddress;*/
@@ -76,10 +79,34 @@ public class Applicant {
   @OneToMany(mappedBy = "applicant")
   List<JobExperience> jobExperience = new ArrayList<>();
 
+  @ManyToOne(optional = false)
+  @JoinColumn(insertable = false, updatable = false)
+  private Semester semester;
+
+  @ManyToOne(optional = false)
+  @JoinColumn(insertable = false, updatable = false)
+  private Program program;
+
+
   public Applicant() {
 
   }
 
+  public Semester getSemester() {
+    return semester;
+  }
+
+  public void setSemester(Semester pSemester) {
+    semester = pSemester;
+  }
+
+  public Program getProgram() {
+    return program;
+  }
+
+  public void setProgram(Program pProgram) {
+    program = pProgram;
+  }
 
   public ApplicantPersonaIInfo getApplicantPersonaIInfo() {
     return applicantPersonaIInfo;
@@ -98,19 +125,19 @@ public class Applicant {
     id = pId;
   }
 
-  public String getSemesterId() {
+  public Long getSemesterId() {
     return semesterId;
   }
 
-  public void setSemesterId(String pSemesterId) {
+  public void setSemesterId(Long pSemesterId) {
     semesterId = pSemesterId;
   }
 
-  public String getProgramId() {
+  public Long getProgramId() {
     return programId;
   }
 
-  public void setProgramId(String pProgramId) {
+  public void setProgramId(Long pProgramId) {
     programId = pProgramId;
   }
 
@@ -213,12 +240,14 @@ public class Applicant {
         Objects.equals(getApplicantAddresses(), applicant.getApplicantAddresses()) &&
         Objects.equals(getApplicantEducationalInfo(), applicant.getApplicantEducationalInfo()) &&
         Objects.equals(getApplicantPersonaIInfo(), applicant.getApplicantPersonaIInfo()) &&
-        Objects.equals(getJobExperience(), applicant.getJobExperience());
+        Objects.equals(getJobExperience(), applicant.getJobExperience()) &&
+        Objects.equals(getSemester(), applicant.getSemester()) &&
+        Objects.equals(getProgram(), applicant.getProgram());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getSemesterId(), getProgramId(), getApplicationSn(), getStatus(), getAppliedOn(), getApplicationFeePaidOn(), getSelectedRejectedOn(), getCreatedOn(), getUpdatedOn(), getApplicantAddresses(), getApplicantEducationalInfo(), getApplicantPersonaIInfo(), getJobExperience());
+    return Objects.hash(getId(), getSemesterId(), getProgramId(), getApplicationSn(), getStatus(), getAppliedOn(), getApplicationFeePaidOn(), getSelectedRejectedOn(), getCreatedOn(), getUpdatedOn(), getApplicantAddresses(), getApplicantEducationalInfo(), getApplicantPersonaIInfo(), getJobExperience(), getSemester(), getProgram());
   }
 
   @Override
@@ -238,6 +267,8 @@ public class Applicant {
         ", applicantEducationalInfo=" + applicantEducationalInfo +
         ", applicantPersonaIInfo=" + applicantPersonaIInfo +
         ", jobExperience=" + jobExperience +
+        ", semester=" + semester +
+        ", program=" + program +
         '}';
   }
 }

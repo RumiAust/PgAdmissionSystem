@@ -18,9 +18,9 @@ public class Semester {
   @SequenceGenerator(name = "sequenceGenerator")
   private Long id;
 
-  @NotNull
+ /* @NotNull
   @Column(name = "SEMESTER_ID")
-  private String semesterId;
+  private String semesterId;*/
 
 
   @NotNull
@@ -43,9 +43,8 @@ public class Semester {
 
   }
 
-  public Semester(Long pId, String pSemesterId, String pSemesterName, Integer pIsActive, Instant pCreatedOn, Instant pUpdatedOn) {
+  public Semester(Long pId, String pSemesterName, Integer pIsActive, Instant pCreatedOn, Instant pUpdatedOn) {
     id = pId;
-    semesterId = pSemesterId;
     semesterName = pSemesterName;
     isActive = pIsActive;
     createdOn = pCreatedOn;
@@ -60,13 +59,6 @@ public class Semester {
     id = pId;
   }
 
-  public String getSemesterId() {
-    return semesterId;
-  }
-
-  public void setSemesterId(String pSemesterId) {
-    semesterId = pSemesterId;
-  }
 
   public String getSemesterName() {
     return semesterName;
@@ -104,7 +96,6 @@ public class Semester {
   public String toString() {
     return "Semester{" +
         "id=" + id +
-        ", semesterId='" + semesterId + '\'' +
         ", semesterName='" + semesterName + '\'' +
         ", isActive=" + isActive +
         ", createdOn=" + createdOn +

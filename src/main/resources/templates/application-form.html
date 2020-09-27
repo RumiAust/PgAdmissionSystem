@@ -214,10 +214,9 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Contact Number</div>
                                         </div>
-                                        <input type="text" class="form-control" pattern="[0]{1}[1]{1}[0-9]{9}"
+                                        <input type="text" class="form-control"
                                                th:field="*{mobileNumber}" th:errorclass="alert-danger">
                                     </div>
-                                    <span class="help-block" style="margin-left:10px; color: #f99827">Format: 01#########.</span>
                                     <span class="error" style="padding-left:10px; color: red"
                                           th:if="${#fields.hasErrors('mobileNumber')}"
                                           th:errors="*{mobileNumber}"></span>
@@ -265,10 +264,12 @@
                                         </div>
                                         &nbsp;&nbsp;&nbsp;
                                         <div style="margin-top: 5px">
-                                            <input type="radio" th:field="*{gender}" value="Male"
-                                                   th:errorclass="alert-danger"> Male
-                                            <input type="radio" th:field="*{gender}" value="Female"
-                                                   th:errorclass="alert-danger"> Female
+                                            <label for="gender1"><input id="gender1" type="radio" th:field="*{gender}"
+                                                                        value="Male"
+                                                                        th:errorclass="alert-danger"> Male</label>
+                                            <label for="gender2"><input id="gender2" type="radio" th:field="*{gender}"
+                                                                        value="Female"
+                                                                        th:errorclass="alert-danger"> Female</label>
                                         </div>
                                     </div>
                                     <span class="error" style="padding-left:10px; color: red"
@@ -285,10 +286,15 @@
                                         </div>
                                         &nbsp; &nbsp; &nbsp;
                                         <div style="margin-top: 5px">
-                                            <input type="radio" th:field="*{maritalStatus}" value="Married"
-                                                   th:errorclass="alert-danger"> Married
-                                            <input type="radio" th:field="*{maritalStatus}" value="Unmarried"
-                                                   th:errorclass="alert-danger"> Unmarried
+                                            <label for="maritalStatus1">
+                                                <input id="maritalStatus1" type="radio" th:field="*{maritalStatus}"
+                                                       value="Married"
+                                                       th:errorclass="alert-danger"> Married</label>
+                                            <label for="maritalStatus2">
+                                                <input id="maritalStatus2" type="radio"
+                                                       th:field="*{maritalStatus}"
+                                                       value="Unmarried"
+                                                       th:errorclass="alert-danger"> Unmarried</label>
                                         </div>
 
                                     </div>
@@ -869,7 +875,8 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">District:</div>
                                         </div>
-                                        <select th:field="*{presentDistrictId}" id="presentDistrictId"
+                                        <select th:attr="data-id=${applicant.presentDistrictId}"
+                                                th:field="*{presentDistrictId}" id="presentDistrictId"
                                                 th:errorclass="alert-danger"
                                                 onchange="addThana()">
                                             <!--     <option class="form-control form-control-sm" th:each="p : ${districtList}"
@@ -890,7 +897,8 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Thana:</div>
                                         </div>
-                                        <select id="presentThanaId" th:field="*{presentThanaId}"
+                                        <select th:attr="data-id=${applicant.presentThanaId}" id="presentThanaId"
+                                                th:field="*{presentThanaId}"
                                                 th:errorclass="alert-danger">
 
                                             <!-- <option class="form-control form-control-sm" th:each="p : ${thanaList}"
@@ -953,7 +961,8 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">District:</div>
                                         </div>
-                                        <select th:field="*{permanentDistrictId}" id="permanentDistrictId"
+                                        <select th:attr="data-id=${applicant.permanentDistrictId}"
+                                                th:field="*{permanentDistrictId}" id="permanentDistrictId"
                                                 th:errorclass="alert-danger"
                                                 onchange="addPermanentThana()">
                                             <!--<option class="form-control form-control-sm" th:each="p : ${districtList}"
@@ -974,7 +983,8 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Thana:</div>
                                         </div>
-                                        <select th:field="*{permanentThanaId}" id="permanentThanaId"
+                                        <select th:attr="data-id=${applicant.permanentThanaId}"
+                                                th:field="*{permanentThanaId}" id="permanentThanaId"
                                                 th:errorclass="alert-danger">
                                             <!--<option class="form-control form-control-sm" th:each="p : ${thanaList}"
                                                     th:value="${p.getId()+'-'+p.getThanaName()}"
@@ -1091,33 +1101,35 @@
             </div>
 
             <div>
-                <h6><input onclick="enableSubmit(this)" id="declaration" type="checkbox" th:field="*{declaration}"> I do hereby declare
+                <label for="declaration"><h6><input onclick="enableSubmit(this)" id="declaration" type="checkbox" th:field="*{declaration}"> I do
+                    hereby declare
                     that the information as stated
                     in the Admission application form is true. If any of the information is found incorrect, my
                     admission is liable to be cancelled. If any of the certificates/academic transcripts/documents
                     attached with this form is found altered/forged, my admission is also liable to be cancelled.I also
                     declare that I will abide by all the existing as well as any new rules and regulations of the
                     University, if made in future, and the orders of the AUST authority; otherwise my admission is
-                    liable to be cancelled.</h6>
+                    liable to be cancelled.</h6></label>
 
             </div>
             <div class="modal" id="exampleModalCenter" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Confirmation</h5>
+                            <h5 class="modal-title">Confirm and proceed to payment</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p>Do you want to proceed? After clicking <span style="color: red"><b>Yes</b></span> you can not
-                                change data.<br>
-                                Press <span style="color: red"><b>No</b></span> to keep editing.</p>
+                            <p>Confirm Correctness of Application Data
+                                By proceeding to payment the application data is submitted to the university and cannot
+                                be changed afterwards. If all data is correct then proceed to payment. If you want to
+                                check the data again, click cancel.</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                            <button type="submit" class="btn btn-success" name="save" value="save">Yes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-success" name="save" value="save">Proceed</button>
                         </div>
                     </div>
                 </div>
@@ -1129,7 +1141,8 @@
 <div class="row" style="margin-bottom: 20px">
     <div class="col-md-4"></div>
     <div class="col-sm-12 col-md-4" align="center">
-        <button id="submitBtn" disabled type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
+        <button id="submitBtn" disabled type="button" class="btn btn-success" data-toggle="modal"
+                data-target="#exampleModalCenter">
             Submit
         </button>
     </div>
@@ -1154,6 +1167,15 @@
 <script>
     $(document).ready(function () {
 
+        if ($('#declaration').is(":checked")) {
+            $('#submitBtn').attr("disabled", false);
+        }
+        if ($('#presentDivisionId').val() !== "") {
+            addDistrict();
+        }
+        if ($('#permanentDivisionId').val() !== "") {
+            addPermanentDistrict();
+        }
 
 
         function readPhotoURL(input) {
@@ -1209,12 +1231,22 @@
                 dataType: 'json',
                 success: function (data) {
                     mySelect.find('option').remove();
-                    mySelect.append('<option selected="selected" value="">Select District</option>');
-                    $.each(data, function () {
-                        console.log(this);
-                        mySelect.append(
-                            $('<option></option>').val(this.id + "-" + this.districtName).html(this.districtName));
-                    });
+                    var value = mySelect.data('id');
+                    if (value !== undefined) {
+                        mySelect.append('<option value="">Select District</option>');
+                        $.each(data, function () {
+                            if (value == (this.id + "-" + this.districtName)) {
+                                mySelect.append($('<option selected="selected"></option>').val(this.id + "-" + this.districtName).html(this.districtName));
+                                addThana();
+                            } else mySelect.append($('<option></option>').val(this.id + "-" + this.districtName).html(this.districtName));
+                        });
+                    } else {
+                        mySelect.append('<option selected="selected" value="">Select District</option>');
+                        $.each(data, function () {
+                            mySelect.append(
+                                $('<option></option>').val(this.id + "-" + this.districtName).html(this.districtName));
+                        });
+                    }
                 }
             });
         } else {
@@ -1233,12 +1265,21 @@
                 url: "getThana/" + districtId,
                 success: function (data) {
                     mySelect.find('option').remove();
-                    mySelect.append('<option selected="selected" value="">Select Thana</option>');
-                    $.each(data, function () {
-                        console.log(this);
-                        mySelect.append(
-                            $('<option></option>').val(this.id + "-" + this.thanaName).html(this.thanaName));
-                    });
+                    var value = mySelect.data('id');
+                    if (value !== undefined) {
+                        mySelect.append('<option value="">Select Thana</option>');
+                        $.each(data, function () {
+                            if (value == (this.id + "-" + this.thanaName))
+                                mySelect.append($('<option selected="selected"></option>').val(this.id + "-" + this.thanaName).html(this.thanaName));
+                            else mySelect.append($('<option></option>').val(this.id + "-" + this.thanaName).html(this.thanaName));
+                        });
+                    } else {
+                        mySelect.append('<option selected="selected" value="">Select Thana</option>');
+                        $.each(data, function () {
+                            mySelect.append(
+                                $('<option></option>').val(this.id + "-" + this.thanaName).html(this.thanaName));
+                        });
+                    }
                 }
             });
         } else {
@@ -1259,12 +1300,22 @@
                 dataType: 'json',
                 success: function (data) {
                     mySelect.find('option').remove();
-                    mySelect.append('<option selected="selected" value="">Select District</option>');
-                    $.each(data, function () {
-                        console.log(this);
-                        mySelect.append(
-                            $('<option></option>').val(this.id + "-" + this.districtName).html(this.districtName));
-                    });
+                    var value = mySelect.data('id');
+                    if (value !== undefined) {
+                        mySelect.append('<option value="">Select District</option>');
+                        $.each(data, function () {
+                            if (value == (this.id + "-" + this.districtName)) {
+                                mySelect.append($('<option selected="selected"></option>').val(this.id + "-" + this.districtName).html(this.districtName));
+                                addPermanentThana();
+                            } else mySelect.append($('<option></option>').val(this.id + "-" + this.districtName).html(this.districtName));
+                        });
+                    } else {
+                        mySelect.append('<option selected="selected" value="">Select District</option>');
+                        $.each(data, function () {
+                            mySelect.append(
+                                $('<option></option>').val(this.id + "-" + this.districtName).html(this.districtName));
+                        });
+                    }
                 }
             });
         } else {
@@ -1283,12 +1334,21 @@
                 url: "getThana/" + districtId,
                 success: function (data) {
                     mySelect.find('option').remove();
-                    mySelect.append('<option selected="selected" value="">Select Thana</option>');
-                    $.each(data, function () {
-                        console.log(this);
-                        mySelect.append(
-                            $('<option></option>').val(this.id + "-" + this.thanaName).html(this.thanaName));
-                    });
+                    var value = mySelect.data('id');
+                    if (value !== undefined) {
+                        mySelect.append('<option value="">Select Thana</option>');
+                        $.each(data, function () {
+                            if (value == (this.id + "-" + this.thanaName))
+                                mySelect.append($('<option selected="selected"></option>').val(this.id + "-" + this.thanaName).html(this.thanaName));
+                            else mySelect.append($('<option></option>').val(this.id + "-" + this.thanaName).html(this.thanaName));
+                        });
+                    } else {
+                        mySelect.append('<option selected="selected" value="">Select Thana</option>');
+                        $.each(data, function () {
+                            mySelect.append(
+                                $('<option></option>').val(this.id + "-" + this.thanaName).html(this.thanaName));
+                        });
+                    }
                 }
             });
         } else {
@@ -1296,13 +1356,12 @@
         }
     }
 
-function enableSubmit(th){
-    if($(th).is(":checked")){
-        $('#submitBtn').attr("disabled", false);
-        }
-        else if($('#declaration').prop("checked") == false){
+    function enableSubmit(th) {
+        if ($(th).is(":checked")) {
+            $('#submitBtn').attr("disabled", false);
+        } else if ($('#declaration').prop("checked") == false) {
             $('#submitBtn').attr("disabled", true);
         }
-}
+    }
 
 </script>

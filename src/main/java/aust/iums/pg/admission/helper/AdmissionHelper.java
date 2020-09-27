@@ -60,8 +60,9 @@ public class AdmissionHelper {
     return thanas;
   }
 
-  public void saveInfo(ApplicationForm pApplicationForm) throws ParseException, IOException {
-    mAdmissionService.save(pApplicationForm);
+  public String saveInfo(ApplicationForm pApplicationForm) throws ParseException, IOException {
+   String serialNo= mAdmissionService.save(pApplicationForm);
+   return serialNo;
   }
   public Optional<Applicant> getApplicantBy(String pSerialNo, Date pDateOfBirth){
    return mAdmissionService.getDetailsBy(pSerialNo, pDateOfBirth);

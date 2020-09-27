@@ -107,7 +107,7 @@ public class AdmissionService {
      return info;
     }
 
-    public void save(ApplicationForm pApp) throws ParseException, IOException {
+    public String save(ApplicationForm pApp) throws ParseException, IOException {
         String applicantSerialNo = mApplicantRepository.getApplicantSerialNo().toString();
         pApp.setApplicationSerialNumber(applicantSerialNo);
         Applicant applicant = new Applicant();
@@ -265,7 +265,7 @@ public class AdmissionService {
         if(pApp.getSignature() !=null) {
           fileStorageService.saveFile(pApp.getSignature(), "signature", pApp, "");
         }
-
+     return applicantSerialNo;
     }
 
 

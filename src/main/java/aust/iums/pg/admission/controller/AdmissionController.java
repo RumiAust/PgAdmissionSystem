@@ -96,13 +96,14 @@ public class AdmissionController {
             applicant.setDeclaration(false);
             return "application-form";
         }else{
-          model.addAttribute("applicant", applicant);
+         /* model.addAttribute("applicant", applicant);*/
           addressMap(applicant);
           log.info(" [{}]: Applicant Infos ", applicant.toString());
-          mHelper.saveInfo(applicant);
+          String serialNo=  mHelper.saveInfo(applicant);
           applicant.setWorkExperienceDivId("");
+          model.addAttribute("serialNo", serialNo);
 
-          return "success-page";
+          return "redirect:/success-page";
         }
    /*}catch (Exception e){
       redirectAttributes.addFlashAttribute("errormessage","Files are not saved successfully because "+e.getMessage());
@@ -310,7 +311,7 @@ public class AdmissionController {
             return "error";
           }
 
-          return "status-check";
+          return "redirect:/status-check";
       }catch (Exception e){
         log.error("Error :: "+e.getMessage());
           return "error";

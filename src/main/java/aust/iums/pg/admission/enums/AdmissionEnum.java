@@ -11,7 +11,9 @@ public enum AdmissionEnum {
 
   APPLIED(1, "APPLIED"),
   PAYMENT_COMPLETED(2, "PAYMENT COMPLETED"),
-  ADMISSION_OFFERED(3, "ADMISSION_OFFERED");
+  ADMISSION_OFFERED(3, "ADMISSION_OFFERED"),
+  ADMISSION_REJECTED(4, "ADMISSION_REJECTED"),
+  ADMISSION_WAITING_LIST(5, "ADMISSION_WAITING_LIST");
 
   private static final Map<Integer, AdmissionEnum> Lookup = new HashMap<>();
   private static final Map<String, AdmissionEnum> lookUpByLabel = new HashMap<>();

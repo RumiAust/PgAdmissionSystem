@@ -294,6 +294,7 @@ public class AdmissionController {
             if (applicant.isPresent()){
               model.addAttribute("valid",true);
               ApplicantPersonaIInfo applicantPersonaIInfo=applicant.get().getApplicantPersonaIInfo();
+              applicantPersonaIInfo.setMiddleName(applicantPersonaIInfo.getMiddleName()==null ? " ":applicantPersonaIInfo.getMiddleName());
              List<JobExperience> jobExperience= applicant.get().getJobExperience();
              List<ApplicantEducationalInfo> educationalInfoList=applicant.get().getApplicantEducationalInfo();
              List<ApplicantAddress> addressList=applicant.get().getApplicantAddresses();

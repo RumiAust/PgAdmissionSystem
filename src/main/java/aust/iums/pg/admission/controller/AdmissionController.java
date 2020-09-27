@@ -103,7 +103,7 @@ public class AdmissionController {
         mHelper.saveInfo(applicant);
         applicant.setWorkExperienceDivId("");
 
-        return "form-view";
+        return "success-page";
    /*}catch (Exception e){
       redirectAttributes.addFlashAttribute("errormessage","Files are not saved successfully because "+e.getMessage());
       applicant.setWorkExperienceDivId("");

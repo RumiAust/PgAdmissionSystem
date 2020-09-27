@@ -80,28 +80,28 @@ public class AdmissionController {
     }
 
     @GetMapping("/applicationForm")
-    public String applicationForm(Model model) {
+    public String applicationForm(Model model)
+    {
         return "application-form";
     }
 
     @PostMapping(value = "/apply", params = {"save"})
     public String greetingSubmit(@Valid @ModelAttribute("applicant") ApplicationForm applicant, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) throws IOException, ParseException {
-
-
+      addressMap(applicant);
+      ApplicationDeadline deadline=mHelper.getDeadlineBy(Long.parseLong(applicant.getSemesterId()),Long.parseLong(applicant.getProgramId()));
         boolean otherErrors = isOtherErrors(applicant);
-
-
         if (bindingResult.hasErrors() || otherErrors) {
             log.error("errors: " + bindingResult.toString());
             applicant.setDeclaration(false);
             return "application-form";
         }else{
          /* model.addAttribute("applicant", applicant);*/
-          addressMap(applicant);
+
           log.info(" [{}]: Applicant Infos ", applicant.toString());
           String serialNo=  mHelper.saveInfo(applicant);
           applicant.setWorkExperienceDivId("");
           model.addAttribute("serialNo", serialNo);
+          model.addAttribute("deadline", deadline);
 
           return "success-page";
         }

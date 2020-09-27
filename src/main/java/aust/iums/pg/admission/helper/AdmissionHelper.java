@@ -23,6 +23,9 @@ public class AdmissionHelper {
   @Autowired
   AdmissionService mAdmissionService;
 
+  @Autowired
+  ApplicationDeadlineRepository mApplicationDeadlineRepository;
+
   public AdmissionHelper(AdmissionService pAdmissionService) {
     this.mAdmissionService = pAdmissionService;
   }
@@ -30,6 +33,10 @@ public class AdmissionHelper {
   public Semester getActiveSemester(){
     Semester semester=mAdmissionService.getSemesters(SemesterEnum.ACTIVE.getValue());
     return semester;
+  }
+
+  public ApplicationDeadline getDeadlineBy(Long pSemesterId,Long pProgramId){
+    return mApplicationDeadlineRepository.findBySemesterIdAndProgramId(pSemesterId,pProgramId);
   }
 
   public List<Program> getAllPrograms(){

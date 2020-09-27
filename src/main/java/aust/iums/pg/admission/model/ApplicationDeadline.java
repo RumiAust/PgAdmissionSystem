@@ -24,11 +24,11 @@ public class ApplicationDeadline {
 
   @NotNull
   @Column(name = "SEMESTER_ID")
-  private String semesterId;
+  private Long semesterId;
 
   @NotNull
   @Column(name = "PROGRAM_ID")
-  private String programId;
+  private Long programId;
 
 
   @NotNull
@@ -54,15 +54,7 @@ public class ApplicationDeadline {
 
   }
 
-  public ApplicationDeadline(Long pId, String pSemesterId, String pProgramId, Instant pFromDate, Instant pToDate, Instant pCreatedOn, Instant pUpdatedOn) {
-    id = pId;
-    semesterId = pSemesterId;
-    programId = pProgramId;
-    fromDate = pFromDate;
-    toDate = pToDate;
-    createdOn = pCreatedOn;
-    updatedOn = pUpdatedOn;
-  }
+
 
   public Long getId() {
     return id;
@@ -72,19 +64,19 @@ public class ApplicationDeadline {
     id = pId;
   }
 
-  public String getSemesterId() {
+  public Long getSemesterId() {
     return semesterId;
   }
 
-  public void setSemesterId(String pSemesterId) {
+  public void setSemesterId(Long pSemesterId) {
     semesterId = pSemesterId;
   }
 
-  public String getProgramId() {
+  public Long getProgramId() {
     return programId;
   }
 
-  public void setProgramId(String pProgramId) {
+  public void setProgramId(Long pProgramId) {
     programId = pProgramId;
   }
 

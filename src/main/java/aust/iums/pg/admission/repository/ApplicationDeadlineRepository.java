@@ -7,4 +7,6 @@ import org.springframework.data.repository.CrudRepository;
  * Created by Monjur-E-Morshed on 9/13/2020.
  */
 public interface ApplicationDeadlineRepository extends CrudRepository<ApplicationDeadline,Long> {
+
+  ApplicationDeadline findBySemesterIdAndProgramId(Long pSemesterId,Long pProgramId);
 }

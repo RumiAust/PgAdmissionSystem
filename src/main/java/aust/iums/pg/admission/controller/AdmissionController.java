@@ -60,6 +60,14 @@ public class AdmissionController {
         return religions;
     }
 
+    @ModelAttribute("passingYearList")
+    public List<Integer> passingYearModel() {
+        List<Integer> passingYearList = new ArrayList<>();
+        for(Integer i=2000; i<2031; i++)
+            passingYearList.add(i);
+        return passingYearList;
+    }
+
     @ModelAttribute("programList")
     public List<Program> programListModel() {
         List<Program> programs = mHelper.getAllPrograms();

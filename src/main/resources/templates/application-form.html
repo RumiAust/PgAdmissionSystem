@@ -405,8 +405,12 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Year of Passing</div>
                                             </div>
-                                            <input type="number" class="form-control" th:field="*{sscPassingYear}"
-                                                   th:errorclass="alert-danger">
+                                            <select th:field="*{sscPassingYear}" th:errorclass="alert-danger">
+                                                <option selected="selected" value="">Select Year of Passing</option>
+                                                <option class="form-control form-control-sm" th:each="p : ${passingYearList}"
+                                                        th:value="${p}"
+                                                        th:text="${p}"></option>
+                                            </select>
                                         </div>
                                         <span class="error" style="padding-left:10px; color: red"
                                               th:if="${#fields.hasErrors('sscPassingYear')}"
@@ -505,8 +509,12 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Year of Passing</div>
                                             </div>
-                                            <input type="number" class="form-control" th:field="*{hscPassingYear}"
-                                                   th:errorclass="alert-danger">
+                                            <select th:field="*{hscPassingYear}" th:errorclass="alert-danger">
+                                                <option selected="selected" value="">Select Year of Passing</option>
+                                                <option class="form-control form-control-sm" th:each="p : ${passingYearList}"
+                                                        th:value="${p}"
+                                                        th:text="${p}"></option>
+                                            </select>
                                         </div>
                                         <span class="error" style="padding-left:10px; color: red"
                                               th:if="${#fields.hasErrors('hscPassingYear')}"
@@ -605,8 +613,12 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Year of Passing</div>
                                             </div>
-                                            <input type="number" class="form-control" th:field="*{bscPassingYear}"
-                                                   th:errorclass="alert-danger">
+                                            <select th:field="*{bscPassingYear}" th:errorclass="alert-danger">
+                                                <option selected="selected" value="">Select Year of Passing</option>
+                                                <option class="form-control form-control-sm" th:each="p : ${passingYearList}"
+                                                        th:value="${p}"
+                                                        th:text="${p}"></option>
+                                            </select>
                                         </div>
                                         <span class="error" style="padding-left:10px; color: red"
                                               th:if="${#fields.hasErrors('bscPassingYear')}"
@@ -689,7 +701,12 @@
                                             <div class="input-group-prepend-na">
                                                 <div class="input-group-text">Year of Passing</div>
                                             </div>
-                                            <input type="number" class="form-control" th:field="*{mscPassingYear}">
+                                            <select th:field="*{mscPassingYear}" th:errorclass="alert-danger">
+                                                <option selected="selected" value="">Select Year of Passing</option>
+                                                <option class="form-control form-control-sm" th:each="p : ${passingYearList}"
+                                                        th:value="${p}"
+                                                        th:text="${p}"></option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

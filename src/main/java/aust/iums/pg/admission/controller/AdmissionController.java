@@ -160,6 +160,8 @@ public class AdmissionController {
         String pDis[] = disId.split("-");
         int id = Integer.parseInt(pDis[0]);
         List<Thana> thanas = mHelper.getAllThanasByDisId(id);
+        Optional<Thana> others = mHelper.getThanaById(Long.parseLong("9999"));
+        thanas.add(others.get());
         return thanas;
     }
 

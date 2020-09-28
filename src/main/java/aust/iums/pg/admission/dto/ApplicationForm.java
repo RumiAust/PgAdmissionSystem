@@ -137,6 +137,7 @@ public class ApplicationForm {
     @Size(min = 1, message = "Please select thana.")
     private String presentThanaId;
     private String presentThana;
+    private String presentOtherThana;
     @NotNull
     @Size(max=254,message = "Maximum character length is 254 characters.")
     @Size(min = 1, message = "Please enter present address.")
@@ -153,6 +154,7 @@ public class ApplicationForm {
     @Size(min = 1, message = "Please select thana.")
     private String permanentThanaId;
     private String permanentThana;
+    private String permanentOtherThana;
     @NotNull
     @Size(max=254,message = "Maximum character length is 254 characters.")
     @Size(min = 1, message = "Please enter permanent address.")
@@ -176,6 +178,22 @@ public class ApplicationForm {
     // modal Id
     private String modalId;
 
+
+    public String getPresentOtherThana() {
+        return presentOtherThana;
+    }
+
+    public void setPresentOtherThana(String presentOtherThana) {
+        this.presentOtherThana = presentOtherThana;
+    }
+
+    public String getPermanentOtherThana() {
+        return permanentOtherThana;
+    }
+
+    public void setPermanentOtherThana(String permanentOtherThana) {
+        this.permanentOtherThana = permanentOtherThana;
+    }
 
     @Override
     public String toString() {
@@ -231,6 +249,7 @@ public class ApplicationForm {
                 ", presentDistrict='" + presentDistrict + '\'' +
                 ", presentThanaId='" + presentThanaId + '\'' +
                 ", presentThana='" + presentThana + '\'' +
+                ", presentOtherThana='" + presentOtherThana + '\'' +
                 ", presentAddress='" + presentAddress + '\'' +
                 ", permanentDivisionId='" + permanentDivisionId + '\'' +
                 ", permanentDivision='" + permanentDivision + '\'' +
@@ -238,6 +257,7 @@ public class ApplicationForm {
                 ", permanentDistrict='" + permanentDistrict + '\'' +
                 ", permanentThanaId='" + permanentThanaId + '\'' +
                 ", permanentThana='" + permanentThana + '\'' +
+                ", permanentOtherThana='" + permanentOtherThana + '\'' +
                 ", permanentAddress='" + permanentAddress + '\'' +
                 ", photo=" + photo +
                 ", signature=" + signature +

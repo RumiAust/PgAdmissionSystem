@@ -69,7 +69,7 @@
                 <div class="card border-secondary mb-3" style="margin-top: 10px">
                     <div class="card-header" style="max-height: 50px">
                         <strong style="font-size: 20px;color: deeppink">
-                            <i class="fa fa-user-plus" style="color: lightskyblue"></i>
+                            <i class="fa fa-user" style="color: lightskyblue"></i>
                             Personal Information
                         </strong>
                     </div>
@@ -855,7 +855,6 @@
                     <div class="card-body">
                         <strong>Present Address</strong>
                         <div class="row">
-                            <!-- Date of Birth -->
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group required">
                                     <div class="input-group">
@@ -876,7 +875,6 @@
                                 </div>
                             </div>
 
-                            <!-- national_id_number -->
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group required">
                                     <div class="input-group">
@@ -898,7 +896,6 @@
                                 </div>
                             </div>
 
-                            <!-- contact_number -->
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group required">
                                     <div class="input-group">
@@ -907,7 +904,8 @@
                                         </div>
                                         <select th:attr="data-id=${applicant.presentThanaId}" id="presentThanaId"
                                                 th:field="*{presentThanaId}"
-                                                th:errorclass="alert-danger">
+                                                th:errorclass="alert-danger"
+                                                onchange="checkOther()">
 
                                             <!-- <option class="form-control form-control-sm" th:each="p : ${thanaList}"
                                                      th:value="${p.getId()+'-'+p.getThanaName()}"
@@ -920,8 +918,20 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row otherPresentThana" style="display: none" align="right">
+                            <div class="col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <div class="input-group" style="padding-left: 5px">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Thana (if not found)</div>
+                                        </div>
+                                        <input type="text" class="form-control" th:field="*{presentOtherThana}"
+                                               th:errorclass="alert-danger">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
-                            <!-- Date of Birth -->
                             <div class="col-sm-12">
                                 <div class="form-group required">
                                     <div class="input-group">
@@ -940,7 +950,6 @@
 
                         <strong>Permanent Address</strong>
                         <div class="row">
-                            <!-- Date of Birth -->
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group required">
                                     <div class="input-group">
@@ -962,7 +971,6 @@
                                 </div>
                             </div>
 
-                            <!-- national_id_number -->
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group required">
                                     <div class="input-group">
@@ -993,7 +1001,8 @@
                                         </div>
                                         <select th:attr="data-id=${applicant.permanentThanaId}"
                                                 th:field="*{permanentThanaId}" id="permanentThanaId"
-                                                th:errorclass="alert-danger">
+                                                th:errorclass="alert-danger"
+                                                onchange="checkOther()">
                                             <!--<option class="form-control form-control-sm" th:each="p : ${thanaList}"
                                                     th:value="${p.getId()+'-'+p.getThanaName()}"
                                                     th:text="${p.getThanaName()}"></option>-->
@@ -1005,8 +1014,20 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row otherPermanentThana" style="display: none" align="right">
+                            <div class="col-sm-12 col-md-4" >
+                                <div class="form-group">
+                                    <div class="input-group" style="padding-left: 5px">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Thana (if not found)</div>
+                                        </div>
+                                        <input type="text" class="form-control" th:field="*{permanentOtherThana}"
+                                               th:errorclass="alert-danger">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
-                            <!-- Date of Birth -->
                             <div class="col-sm-12">
                                 <div class="form-group required">
                                     <div class="input-group">
@@ -1022,7 +1043,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -1109,7 +1129,8 @@
             </div>
 
             <div>
-                <label for="declaration"><h6><input onclick="enableSubmit(this)" id="declaration" type="checkbox" th:field="*{declaration}"> I do
+                <label for="declaration"><h6><input onclick="enableSubmit(this)" id="declaration" type="checkbox"
+                                                    th:field="*{declaration}"> I do
                     hereby declare
                     that the information as stated
                     in the Admission application form is true. If any of the information is found incorrect, my
@@ -1135,11 +1156,16 @@
                                 be changed afterwards. If all data is correct then proceed to payment. If you want to
                                 check the data again, click cancel.</p>
                             <ol style=" ">
-                            <li>After the successful submission of the online application, you will get an eight(8) digit <b>Application serial number</b>. You need to provide this application serial number as <b>AUST Transaction ID</b> during payment of the Application fees.</li>
+                                <li>After the successful submission of the online application, you will get an eight(8)
+                                    digit <b>Application serial number</b>. You need to provide this application serial
+                                    number as <b>AUST Transaction ID</b> during payment of the Application fees.
+                                </li>
 
-                            <li>Detail information of Application fees payment through bKash wallet is described <a href="http://admission.aust.edu/application-instruction.html#feesPayment" style="color: blue;" target="_blank">here</a></li>
+                                <li>Detail information of Application fees payment through bKash wallet is described <a
+                                        href="http://admission.aust.edu/application-instruction.html#feesPayment"
+                                        style="color: blue;" target="_blank">here</a></li>
 
-                            <li>You must submit the online application and pay the fees before the deadline</li>
+                                <li>You must submit the online application and pay the fees before the deadline</li>
                             </ol>
                         </div>
                         <div class="modal-footer">
@@ -1191,6 +1217,8 @@
         if ($('#permanentDivisionId').val() !== "") {
             addPermanentDistrict();
         }
+
+
 
 
         function readPhotoURL(input) {
@@ -1287,6 +1315,7 @@
                             if (value == (this.id + "-" + this.thanaName))
                                 mySelect.append($('<option selected="selected"></option>').val(this.id + "-" + this.thanaName).html(this.thanaName));
                             else mySelect.append($('<option></option>').val(this.id + "-" + this.thanaName).html(this.thanaName));
+
                         });
                     } else {
                         mySelect.append('<option selected="selected" value="">Select Thana</option>');
@@ -1295,12 +1324,14 @@
                                 $('<option></option>').val(this.id + "-" + this.thanaName).html(this.thanaName));
                         });
                     }
+                    checkOther();
                 }
             });
         } else {
             mySelect.find('option').remove();
         }
     }
+
 
     function addPermanentDistrict() {
         var mySelect = $('#permanentDistrictId');
@@ -1364,11 +1395,31 @@
                                 $('<option></option>').val(this.id + "-" + this.thanaName).html(this.thanaName));
                         });
                     }
+                    checkOther();
                 }
+
             });
         } else {
             mySelect.find('option').remove();
         }
+    }
+
+
+    function checkOther() {
+        var thanaId = $('#presentThanaId').val();
+        if (thanaId == "9999-Others") {
+            $('.otherPresentThana').css("display", "block");
+        } else {
+            $('.otherPresentThana').css("display", "none");
+        }
+
+        var permanentThanaId = $('#permanentThanaId').val();
+        if (permanentThanaId == "9999-Others") {
+            $('.otherPermanentThana').css("display", "block");
+        } else {
+            $('.otherPermanentThana').css("display", "none");
+        }
+
     }
 
     function enableSubmit(th) {

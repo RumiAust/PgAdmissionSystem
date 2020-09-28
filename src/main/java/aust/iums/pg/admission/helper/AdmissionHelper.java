@@ -61,6 +61,10 @@ public class AdmissionHelper {
     List<Thana> thanas= mAdmissionService.getThanas();
     return thanas;
   }
+  public Optional<Thana> getThanaById(Long i) {
+    Optional<Thana> thana = mAdmissionService.getThanaById(i);
+    return thana;
+  }
 
   public List<Thana> getAllThanasByDisId(int disId){
     List<Thana> thanas= mAdmissionService.getThanaByDisId(disId);
@@ -74,4 +78,6 @@ public class AdmissionHelper {
   public Optional<Applicant> getApplicantBy(String pSerialNo, Date pDateOfBirth){
    return mAdmissionService.getDetailsBy(pSerialNo, pDateOfBirth);
   }
+
+
 }

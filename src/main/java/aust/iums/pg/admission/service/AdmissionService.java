@@ -85,6 +85,10 @@ public class AdmissionService {
         List<Thana> thanas = (List<Thana>) mThanaRepository.findAll();
         return thanas;
     }
+    public Optional<Thana> getThanaById(Long i) {
+        Optional<Thana> thana = mThanaRepository.findById(i);
+        return thana;
+    }
 
     public List<District> getDistrictByDivId(int divId) {
         List<District> districts = mDistrictRepository.findByDivisionId(divId);
@@ -266,6 +270,7 @@ public class AdmissionService {
         }
         return applicantSerialNo;
     }
+
 
 
 }

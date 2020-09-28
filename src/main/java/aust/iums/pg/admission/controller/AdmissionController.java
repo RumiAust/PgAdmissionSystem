@@ -92,7 +92,6 @@ public class AdmissionController {
 
     @PostMapping(value = "/apply", params = {"save"})
     public String greetingSubmit(@Valid @ModelAttribute("applicant") ApplicationForm applicant, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) throws IOException, ParseException {
-
         boolean otherErrors = isOtherErrors(applicant);
         if (bindingResult.hasErrors() || otherErrors) {
             log.error("errors: " + bindingResult.toString());
@@ -107,7 +106,6 @@ public class AdmissionController {
           applicant.setWorkExperienceDivId("");
           model.addAttribute("serialNo", serialNo);
           model.addAttribute("deadline", deadline);
-
           return "success-page";
         }
    /*}catch (Exception e){

@@ -106,7 +106,7 @@
                             </div>
 
                             <div class="col-sm-12 col-md-4">
-                                <div class="form-group required">
+                                <div class="form-group">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Last Name</div>
@@ -463,6 +463,9 @@
                                             <input type="text" class="form-control" th:field="*{hscBoardName}"
                                                    th:errorclass="alert-danger">
                                         </div>
+                                        <span class="error" style="padding-left:10px; color: red"
+                                              th:if="${#fields.hasErrors('hscBoardName')}"
+                                              th:errors="*{hscBoardName}"></span>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-4">
@@ -774,7 +777,7 @@
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
-                                                        <div class="input-group-text">jobResponsibility</div>
+                                                        <div class="input-group-text">Job Responsibility</div>
                                                     </div>
                                                     <input thtype="text" class="form-control"
                                                            th:field="*{workExperienceList[__${rowStat.index}__].jobResponsibility}">

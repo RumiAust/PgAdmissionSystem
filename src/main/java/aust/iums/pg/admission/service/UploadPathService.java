@@ -42,7 +42,6 @@ public class UploadPathService {
     ApplicantRepository mApplicantRepository;
 
 
-
     public Path getFilePath(String modifiedFileName, FileTypeEnum type, ApplicationForm form) throws IOException {
         Semester semes;
         String basePath = "";
@@ -55,27 +54,42 @@ public class UploadPathService {
             basePath = apPhotoBasePath;
         } else if (type == FileTypeEnum.SIGNATURE) {
             basePath = apSignatureBasePath;
-        } else if (type == FileTypeEnum.DOCUMENT) {
+        } else if (type == FileTypeEnum.SSC || type == FileTypeEnum.HSC || type == FileTypeEnum.BSC || type == FileTypeEnum.MSC || type == FileTypeEnum.EXPERIENCE) {
             basePath = apFileBasePath;
         }
 
-        Path directory = Paths.get(basePath+"/"+semester);
+        Path directory = Paths.get(basePath + "/" + semester);
 
         if (!Files.exists(directory)) {
             Files.createDirectory(directory);
         }
-        directory = Paths.get(basePath+"/"+semester+"/"+program);
+        directory = Paths.get(basePath + "/" + semester + "/" + program);
         if (!Files.exists(directory)) {
             Files.createDirectory(directory);
         }
-
-        if(type==FileTypeEnum.DOCUMENT) {
-            directory = Paths.get(basePath + "/" + semester + "/" + program + "/" + application_sn);
+        if (type == FileTypeEnum.SSC || type == FileTypeEnum.HSC || type == FileTypeEnum.BSC || type == FileTypeEnum.MSC) {
+            directory = Paths.get(basePath + "/" + semester + "/" + program + "/" + "EDUCATION");
             if (!Files.exists(directory)) {
                 Files.createDirectory(directory);
             }
+            directory = Paths.get(basePath + "/" + semester + "/" + program +  "/" + "EDUCATION" + "/" + application_sn);
+            if (!Files.exists(directory)) {
+                Files.createDirectory(directory);
+            }
+            Path path = Paths.get(basePath + "/" + semester + "/" + program +  "/" + "EDUCATION" + "/" + application_sn + "/" + modifiedFileName);
 
-            Path path = Paths.get(basePath + "/" + semester + "/" + program + "/" + application_sn + "/" + modifiedFileName);
+            return path;
+        }
+        if(type == FileTypeEnum.EXPERIENCE){
+            directory = Paths.get(basePath + "/" + semester + "/" + program + "/" + FileTypeEnum.EXPERIENCE);
+            if (!Files.exists(directory)) {
+                Files.createDirectory(directory);
+            }
+            directory = Paths.get(basePath + "/" + semester + "/" + program + "/" + FileTypeEnum.EXPERIENCE + "/" + application_sn );
+            if (!Files.exists(directory)) {
+                Files.createDirectory(directory);
+            }
+            Path path = Paths.get(basePath + "/" + semester + "/" + program + "/" + FileTypeEnum.EXPERIENCE + "/" + application_sn  + "/" + modifiedFileName);
 
             return path;
         }

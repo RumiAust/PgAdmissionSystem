@@ -138,6 +138,7 @@ public class ApplicationForm {
     private String presentThanaId;
     private String presentThana;
     @NotNull
+    @Size(max=254,message = "Maximum character length is 254 characters.")
     @Size(min = 1, message = "Please enter present address.")
     private String presentAddress;
     @NotNull
@@ -153,6 +154,7 @@ public class ApplicationForm {
     private String permanentThanaId;
     private String permanentThana;
     @NotNull
+    @Size(max=254,message = "Maximum character length is 254 characters.")
     @Size(min = 1, message = "Please enter permanent address.")
     private String permanentAddress;
     // photo and signature

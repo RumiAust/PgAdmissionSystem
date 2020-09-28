@@ -21,10 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by Monjur-E-Morshed on 9/16/2020.
@@ -46,6 +43,8 @@ public class AdmissionController {
         ApplicationForm applicationForm = new ApplicationForm();
         applicationForm.setWorkExperienceList(new ArrayList<>());
         applicationForm.setWorkExperienceDivId("");
+
+
         return applicationForm;
     }
 
@@ -53,6 +52,12 @@ public class AdmissionController {
     public Semester semesterModel() {
         semester = mHelper.getActiveSemester();
         return semester;
+    }
+
+    @ModelAttribute("religionList")
+    public List<String> religionModel() {
+        List<String> religions= Arrays.asList("BUDDHISM", "CHRISTIANITY", "HINDUISM", "ISLAM", "JAINISM" ,"JUDAISM", "OTHERS");
+        return religions;
     }
 
     @ModelAttribute("programList")

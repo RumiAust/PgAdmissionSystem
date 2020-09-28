@@ -245,11 +245,16 @@
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group required">
                                     <div class="input-group">
+
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Religion</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{religion}"
-                                               th:errorclass="alert-danger">
+                                        <select th:field="*{religion}" th:errorclass="alert-danger">
+                                            <option selected="selected" value="">Select Religion</option>
+                                            <option class="form-control form-control-sm" th:each="p : ${religionList}"
+                                                    th:value="${p}"
+                                                    th:text="${p}"></option>
+                                        </select>
                                     </div>
                                     <span class="error" style="padding-left:10px; color: red"
                                           th:if="${#fields.hasErrors('religion')}"

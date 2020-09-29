@@ -115,7 +115,6 @@ public class AdmissionController {
             applicant.setDeclaration(false);
             return "application-form";
         } else {
-            /* model.addAttribute("applicant", applicant);*/
             addressMap(applicant);
             ApplicationDeadline deadline = mHelper.getDeadlineBy(Long.parseLong(applicant.getSemesterId()), Long.parseLong(applicant.getProgramId()));
             log.info(" [{}]: Applicant Infos ", applicant.toString());
@@ -125,11 +124,7 @@ public class AdmissionController {
             model.addAttribute("deadline", deadline);
             return "success-page";
         }
-   /*}catch (Exception e){
-      redirectAttributes.addFlashAttribute("errormessage","Files are not saved successfully because "+e.getMessage());
-      applicant.setWorkExperienceDivId("");
-      return ""+e.getMessage();
-    }*/
+
     }
 
     @GetMapping("/statusCheck")

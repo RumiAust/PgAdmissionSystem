@@ -5,10 +5,14 @@ import aust.iums.pg.admission.enums.SemesterEnum;
 import aust.iums.pg.admission.model.*;
 import aust.iums.pg.admission.repository.*;
 import aust.iums.pg.admission.service.AdmissionService;
+import aust.iums.pg.admission.service.ApplicationFormPdfGenerator;
+import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +26,9 @@ public class AdmissionHelper {
 
   @Autowired
   AdmissionService mAdmissionService;
+
+  @Autowired
+  ApplicationFormPdfGenerator pApplicationFormPdfGenerator;
 
   @Autowired
   ApplicationDeadlineRepository mApplicationDeadlineRepository;
@@ -79,5 +86,8 @@ public class AdmissionHelper {
    return mAdmissionService.getDetailsBy(pSerialNo, pDateOfBirth);
   }
 
+   public ByteArrayInputStream getApplicationFormPdf(String applicationSn, String dateOfBirth) throws IOException, DocumentException {
+    return pApplicationFormPdfGenerator.createApplicationForm(applicationSn, dateOfBirth);
+   }
 
 }

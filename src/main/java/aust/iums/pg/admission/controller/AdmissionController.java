@@ -8,9 +8,14 @@ import aust.iums.pg.admission.helper.AdmissionHelper;
 import aust.iums.pg.admission.model.*;
 import aust.iums.pg.admission.service.FileStorageService;
 import aust.iums.pg.admission.utils.PgUtils;
+import com.itextpdf.text.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,8 +23,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.StreamingOutput;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.util.*;
 
@@ -56,14 +66,14 @@ public class AdmissionController {
 
     @ModelAttribute("religionList")
     public List<String> religionModel() {
-        List<String> religions= Arrays.asList("BUDDHISM", "CHRISTIANITY", "HINDUISM", "ISLAM", "JAINISM" ,"JUDAISM", "OTHERS");
+        List<String> religions = Arrays.asList("BUDDHISM", "CHRISTIANITY", "HINDUISM", "ISLAM", "JAINISM", "JUDAISM", "OTHERS");
         return religions;
     }
 
     @ModelAttribute("passingYearList")
     public List<Integer> passingYearModel() {
         List<Integer> passingYearList = new ArrayList<>();
-        for(Integer i=2000; i<2031; i++)
+        for (Integer i = 2000; i < 2031; i++)
             passingYearList.add(i);
         return passingYearList;
     }
@@ -93,8 +103,7 @@ public class AdmissionController {
     }
 
     @GetMapping("/applicationForm")
-    public String applicationForm(Model model)
-    {
+    public String applicationForm(Model model) {
         return "application-form";
     }
 
@@ -105,16 +114,16 @@ public class AdmissionController {
             log.error("errors: " + bindingResult.toString());
             applicant.setDeclaration(false);
             return "application-form";
-        }else{
-         /* model.addAttribute("applicant", applicant);*/
+        } else {
+            /* model.addAttribute("applicant", applicant);*/
             addressMap(applicant);
-            ApplicationDeadline deadline=mHelper.getDeadlineBy(Long.parseLong(applicant.getSemesterId()),Long.parseLong(applicant.getProgramId()));
-          log.info(" [{}]: Applicant Infos ", applicant.toString());
-          String serialNo=  mHelper.saveInfo(applicant);
-          applicant.setWorkExperienceDivId("");
-          model.addAttribute("serialNo", serialNo);
-          model.addAttribute("deadline", deadline);
-          return "success-page";
+            ApplicationDeadline deadline = mHelper.getDeadlineBy(Long.parseLong(applicant.getSemesterId()), Long.parseLong(applicant.getProgramId()));
+            log.info(" [{}]: Applicant Infos ", applicant.toString());
+            String serialNo = mHelper.saveInfo(applicant);
+            applicant.setWorkExperienceDivId("");
+            model.addAttribute("serialNo", serialNo);
+            model.addAttribute("deadline", deadline);
+            return "success-page";
         }
    /*}catch (Exception e){
       redirectAttributes.addFlashAttribute("errormessage","Files are not saved successfully because "+e.getMessage());
@@ -122,6 +131,67 @@ public class AdmissionController {
       return ""+e.getMessage();
     }*/
     }
+
+    @GetMapping("/statusCheck")
+    public String statusCheck(Model model) {
+        StatusCheckDto app = new StatusCheckDto();
+        model.addAttribute("applicantInfo", app);
+        return "status-check";
+    }
+
+    @RequestMapping(value = "/downloadAppForm/{applicationSn}/{dateOfBirth}", method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> downloadAppForm(HttpServletResponse response, @PathVariable(name = "applicationSn") String applicationSn, @PathVariable(name = "dateOfBirth") String dateOfBirth) throws IOException, DocumentException {
+        ByteArrayInputStream bis = mHelper.getApplicationFormPdf(applicationSn, dateOfBirth);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=applicant_form.pdf");
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bis));
+
+         /*new StreamingOutput() {
+            @Override
+            public void write(OutputStream pOutputStream) throws WebApplicationException {
+
+            }
+        };*/
+    }
+
+
+    @PostMapping("/result")
+    public String getResult(@ModelAttribute StatusCheckDto pStatusCheckDto, Model model) throws ParseException {
+        try {
+            if (pStatusCheckDto.getApplicationSerialNo() != null && pStatusCheckDto.getDateOfBirth() != null) {
+                Date dateOfBirth = PgUtils.formateDate(pStatusCheckDto.getDateOfBirth());
+                Optional<Applicant> applicant = mHelper.getApplicantBy(pStatusCheckDto.getApplicationSerialNo(), dateOfBirth);
+                if (applicant.isPresent()) {
+                    model.addAttribute("valid", true);
+                    ApplicantPersonaIInfo applicantPersonaIInfo = applicant.get().getApplicantPersonaIInfo();
+                    applicantPersonaIInfo.setMiddleName(applicantPersonaIInfo.getMiddleName() == null ? " " : applicantPersonaIInfo.getMiddleName());
+                    List<JobExperience> jobExperience = applicant.get().getJobExperience();
+                    List<ApplicantEducationalInfo> educationalInfoList = applicant.get().getApplicantEducationalInfo();
+                    List<ApplicantAddress> addressList = applicant.get().getApplicantAddresses();
+                    model.addAttribute("applicantDetails", applicant);
+                } else {
+                    model.addAttribute("notFound", true);
+                    model.addAttribute("msg", "No records found with Serial No: " + pStatusCheckDto.getApplicationSerialNo() + " and " +
+                            "Date of Birth : " + pStatusCheckDto.getDateOfBirth());
+                }
+                model.addAttribute("hideText", "yes");
+            } else {
+                //  model.addAttribute("invalid","You must enter Application Serial No and Date of Birth");
+                return "error";
+            }
+
+            return "status-check";
+        } catch (Exception e) {
+            log.error("Error :: " + e.getMessage());
+            return "error";
+        }
+
+    }
+
 
     @PostMapping(value = "/apply", params = {"addRow"})
     public String addRow(@ModelAttribute("applicant") ApplicationForm applicationForm, final BindingResult bindingResult, Model model) {
@@ -172,9 +242,6 @@ public class AdmissionController {
         thanas.add(others.get());
         return thanas;
     }
-
-
-
 
 
     private boolean isOtherErrors(ApplicationForm applicant) {
@@ -290,46 +357,5 @@ public class AdmissionController {
         applicant.setPermanentThana(perThana[1]);
     }
 
-
-  @GetMapping("/statusCheck")
-  public String statusCheck(Model model) {
-    StatusCheckDto app= new StatusCheckDto();
-    model.addAttribute("applicantInfo",app);
-    return "status-check";
-  }
-
-
-    @PostMapping("/result")
-    public String getResult(@ModelAttribute StatusCheckDto pStatusCheckDto, Model model) throws ParseException {
-        try {
-          if(pStatusCheckDto.getApplicationSerialNo() !=null && pStatusCheckDto.getDateOfBirth() !=null) {
-            Date dateOfBirth=PgUtils.formateDate(pStatusCheckDto.getDateOfBirth());
-            Optional<Applicant> applicant =mHelper.getApplicantBy(pStatusCheckDto.getApplicationSerialNo(), dateOfBirth);
-            if (applicant.isPresent()){
-              model.addAttribute("valid",true);
-              ApplicantPersonaIInfo applicantPersonaIInfo=applicant.get().getApplicantPersonaIInfo();
-              applicantPersonaIInfo.setMiddleName(applicantPersonaIInfo.getMiddleName()==null ? " ":applicantPersonaIInfo.getMiddleName());
-             List<JobExperience> jobExperience= applicant.get().getJobExperience();
-             List<ApplicantEducationalInfo> educationalInfoList=applicant.get().getApplicantEducationalInfo();
-             List<ApplicantAddress> addressList=applicant.get().getApplicantAddresses();
-             model.addAttribute("applicantDetails",applicant);
-            }else{
-              model.addAttribute("notFound",true);
-              model.addAttribute("msg","No records found with Serial No: "+pStatusCheckDto.getApplicationSerialNo()+" and " +
-                  "Date of Birth : "+pStatusCheckDto.getDateOfBirth());
-            }
-            model.addAttribute("hideText","yes");
-          }else {
-          //  model.addAttribute("invalid","You must enter Application Serial No and Date of Birth");
-            return "error";
-          }
-
-          return "status-check";
-      }catch (Exception e){
-        log.error("Error :: "+e.getMessage());
-          return "error";
-      }
-
-  }
 
 }

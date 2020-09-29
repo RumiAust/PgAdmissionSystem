@@ -21,10 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by Monjur-E-Morshed on 9/16/2020.
@@ -46,6 +43,8 @@ public class AdmissionController {
         ApplicationForm applicationForm = new ApplicationForm();
         applicationForm.setWorkExperienceList(new ArrayList<>());
         applicationForm.setWorkExperienceDivId("");
+
+
         return applicationForm;
     }
 
@@ -53,6 +52,20 @@ public class AdmissionController {
     public Semester semesterModel() {
         semester = mHelper.getActiveSemester();
         return semester;
+    }
+
+    @ModelAttribute("religionList")
+    public List<String> religionModel() {
+        List<String> religions= Arrays.asList("BUDDHISM", "CHRISTIANITY", "HINDUISM", "ISLAM", "JAINISM" ,"JUDAISM", "OTHERS");
+        return religions;
+    }
+
+    @ModelAttribute("passingYearList")
+    public List<Integer> passingYearModel() {
+        List<Integer> passingYearList = new ArrayList<>();
+        for(Integer i=2000; i<2031; i++)
+            passingYearList.add(i);
+        return passingYearList;
     }
 
     @ModelAttribute("programList")
@@ -87,7 +100,6 @@ public class AdmissionController {
 
     @PostMapping(value = "/apply", params = {"save"})
     public String greetingSubmit(@Valid @ModelAttribute("applicant") ApplicationForm applicant, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) throws IOException, ParseException {
-
         boolean otherErrors = isOtherErrors(applicant);
         if (bindingResult.hasErrors() || otherErrors) {
             log.error("errors: " + bindingResult.toString());
@@ -102,7 +114,6 @@ public class AdmissionController {
           applicant.setWorkExperienceDivId("");
           model.addAttribute("serialNo", serialNo);
           model.addAttribute("deadline", deadline);
-
           return "success-page";
         }
    /*}catch (Exception e){
@@ -157,6 +168,8 @@ public class AdmissionController {
         String pDis[] = disId.split("-");
         int id = Integer.parseInt(pDis[0]);
         List<Thana> thanas = mHelper.getAllThanasByDisId(id);
+        Optional<Thana> others = mHelper.getThanaById(Long.parseLong("9999"));
+        thanas.add(others.get());
         return thanas;
     }
 

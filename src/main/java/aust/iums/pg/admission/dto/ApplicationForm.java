@@ -18,7 +18,7 @@ public class ApplicationForm {
     private String applicationSerialNumber;
 
     //program info
-    @NotNull
+    @NotNull(message = "Please select program.")
     @Size(min = 1, message = "Please select program.")
     private String programId;
     private String programName;
@@ -27,15 +27,12 @@ public class ApplicationForm {
     //personal info
     private String fullName;
 
-    @NotNull
+    @NotNull(message = "Please enter first name.")
     @Size(min = 1, message = "Please enter first name.")
     private String firstName;
-
     private String middleName;
-    @NotNull
-    @Size(min = 1, message = "Please enter last name.")
     private String lastName;
-    @NotNull
+    @NotNull(message = "Please enter father name.")
     @Size(min = 1, message = "Please enter father name.")
     private String fatherName;
     @NotNull
@@ -60,10 +57,10 @@ public class ApplicationForm {
     @Size(min = 1,message = "Please enter email.")
     @Email
     private String email;
-    @NotNull
+    @NotNull(message = "Please select gender.")
     @Size(min = 1, message = "Please select gender.")
     private String gender;
-    @NotNull
+    @NotNull(message = "Please select marital status.")
     @Size(min = 1, message = "Please select marital status.")
     private String maritalStatus;
 
@@ -80,7 +77,7 @@ public class ApplicationForm {
     @NotNull
     @Size(min = 1, message = "Please enter division/class/grade.")
     private String sscGrade;
-    @NotNull
+    @NotNull(message = "Please select passing year.")
     private Integer sscPassingYear;
     @NotNull(message = "Please select file.")
     private MultipartFile sscFile;
@@ -96,7 +93,7 @@ public class ApplicationForm {
     @NotNull
     @Size(min = 1, message = "Please enter division/class/grade.")
     private String hscGrade;
-    @NotNull
+    @NotNull(message = "Please select passing year.")
     private Integer hscPassingYear;
     @NotNull(message = "Please select file.")
     private MultipartFile hscFile;
@@ -112,7 +109,7 @@ public class ApplicationForm {
     @NotNull
     @Size(min = 1, message = "Please enter division/class/grade.")
     private String bscGrade;
-    @NotNull
+    @NotNull(message = "Please select passing year.")
     private Integer bscPassingYear;
     @NotNull(message = "Please select file.")
     private MultipartFile bscFile;
@@ -128,34 +125,38 @@ public class ApplicationForm {
     private String workExperienceDivId;
 
     //contact info
-    @NotNull
+    @NotNull(message = "Please select division.")
     @Size(min = 1, message = "Please select division.")
     private String presentDivisionId;
     private String presentDivision;
-    @NotNull
+    @NotNull(message = "Please select district.")
     @Size(min = 1, message = "Please select district.")
     private String presentDistrictId;
     private String presentDistrict;
-    @NotNull
+    @NotNull(message = "Please select thana.")
     @Size(min = 1, message = "Please select thana.")
     private String presentThanaId;
     private String presentThana;
+    private String presentOtherThana;
     @NotNull
+    @Size(max=254,message = "Maximum character length is 254 characters.")
     @Size(min = 1, message = "Please enter present address.")
     private String presentAddress;
     @NotNull
     @Size(min = 1, message = "Please select division.")
     private String permanentDivisionId;
     private String permanentDivision;
-    @NotNull
+    @NotNull(message = "Please select district.")
     @Size(min = 1, message = "Please select district.")
     private String permanentDistrictId;
     private String permanentDistrict;
-    @NotNull
+    @NotNull(message = "Please select thana.")
     @Size(min = 1, message = "Please select thana.")
     private String permanentThanaId;
     private String permanentThana;
+    private String permanentOtherThana;
     @NotNull
+    @Size(max=254,message = "Maximum character length is 254 characters.")
     @Size(min = 1, message = "Please enter permanent address.")
     private String permanentAddress;
     // photo and signature
@@ -177,6 +178,22 @@ public class ApplicationForm {
     // modal Id
     private String modalId;
 
+
+    public String getPresentOtherThana() {
+        return presentOtherThana;
+    }
+
+    public void setPresentOtherThana(String presentOtherThana) {
+        this.presentOtherThana = presentOtherThana;
+    }
+
+    public String getPermanentOtherThana() {
+        return permanentOtherThana;
+    }
+
+    public void setPermanentOtherThana(String permanentOtherThana) {
+        this.permanentOtherThana = permanentOtherThana;
+    }
 
     @Override
     public String toString() {
@@ -232,6 +249,7 @@ public class ApplicationForm {
                 ", presentDistrict='" + presentDistrict + '\'' +
                 ", presentThanaId='" + presentThanaId + '\'' +
                 ", presentThana='" + presentThana + '\'' +
+                ", presentOtherThana='" + presentOtherThana + '\'' +
                 ", presentAddress='" + presentAddress + '\'' +
                 ", permanentDivisionId='" + permanentDivisionId + '\'' +
                 ", permanentDivision='" + permanentDivision + '\'' +
@@ -239,6 +257,7 @@ public class ApplicationForm {
                 ", permanentDistrict='" + permanentDistrict + '\'' +
                 ", permanentThanaId='" + permanentThanaId + '\'' +
                 ", permanentThana='" + permanentThana + '\'' +
+                ", permanentOtherThana='" + permanentOtherThana + '\'' +
                 ", permanentAddress='" + permanentAddress + '\'' +
                 ", photo=" + photo +
                 ", signature=" + signature +

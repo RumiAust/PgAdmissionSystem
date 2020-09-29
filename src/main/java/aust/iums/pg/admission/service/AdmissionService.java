@@ -85,6 +85,10 @@ public class AdmissionService {
         List<Thana> thanas = (List<Thana>) mThanaRepository.findAll();
         return thanas;
     }
+    public Optional<Thana> getThanaById(Long i) {
+        Optional<Thana> thana = mThanaRepository.findById(i);
+        return thana;
+    }
 
     public List<District> getDistrictByDivId(int divId) {
         List<District> districts = mDistrictRepository.findByDivisionId(divId);
@@ -241,31 +245,32 @@ public class AdmissionService {
         if (pApp.getWorkExperienceList() != null) {
             for (WorkExperienceList data : pApp.getWorkExperienceList()) {
                 if (!data.getExperienceFile().isEmpty())
-                    fileStorageService.saveFile(data.getExperienceFile(),  FileTypeEnum.DOCUMENT, pApp,  FileTypeEnum.EXPERIENCE);
+                    fileStorageService.saveFile(data.getExperienceFile(), pApp,  FileTypeEnum.EXPERIENCE);
             }
         }
 
         if (!pApp.getSscFile().isEmpty()) {
-            fileStorageService.saveFile(pApp.getSscFile(), FileTypeEnum.DOCUMENT, pApp, FileTypeEnum.SSC);
+            fileStorageService.saveFile(pApp.getSscFile(),  pApp, FileTypeEnum.SSC);
         }
         if (!pApp.getHscFile().isEmpty()) {
-            fileStorageService.saveFile(pApp.getHscFile(),  FileTypeEnum.DOCUMENT, pApp,  FileTypeEnum.HSC);
+            fileStorageService.saveFile(pApp.getHscFile(), pApp,  FileTypeEnum.HSC);
         }
         if (!pApp.getBscFile().isEmpty()) {
-            fileStorageService.saveFile(pApp.getBscFile(),  FileTypeEnum.DOCUMENT, pApp,  FileTypeEnum.BSC);
+            fileStorageService.saveFile(pApp.getBscFile(), pApp,  FileTypeEnum.BSC);
         }
         if (!pApp.getMscFile().isEmpty()) {
-            fileStorageService.saveFile(pApp.getMscFile(),  FileTypeEnum.DOCUMENT, pApp,  FileTypeEnum.MSC);
+            fileStorageService.saveFile(pApp.getMscFile(), pApp,  FileTypeEnum.MSC);
         }
 
         if (!pApp.getPhoto().isEmpty()) {
-            fileStorageService.saveFile(pApp.getPhoto(),  FileTypeEnum.PHOTO, pApp,  FileTypeEnum.PHOTO);
+            fileStorageService.saveFile(pApp.getPhoto(), pApp,  FileTypeEnum.PHOTO);
         }
         if (!pApp.getSignature().isEmpty()) {
-            fileStorageService.saveFile(pApp.getSignature(),  FileTypeEnum.SIGNATURE, pApp,  FileTypeEnum.SIGNATURE);
+            fileStorageService.saveFile(pApp.getSignature(), pApp,  FileTypeEnum.SIGNATURE);
         }
         return applicantSerialNo;
     }
+
 
 
 }

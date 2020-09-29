@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface ThanaRepository extends CrudRepository<Thana,Long> {
     List<Thana> findByDistrictId(int disId);
+
 }

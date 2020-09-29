@@ -3,6 +3,7 @@ package aust.iums.pg.admission.model;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * Created by Monjur-E-Morshed on 9/11/2020.
@@ -19,9 +20,6 @@ public class District {
   @Column(name = "DIVISION_ID")
   private Integer divisionId;
 
-  @NotNull
-  @Column(name = "DISTRICT_ID")
-  private Integer  districtId;
 
   @NotNull
   @Column(name = "DISTRICT_NAME")
@@ -60,13 +58,6 @@ public class District {
     divisionId = pDivisionId;
   }
 
-  public Integer getDistrictId() {
-    return districtId;
-  }
-
-  public void setDistrictId(Integer pDistrictId) {
-    districtId = pDistrictId;
-  }
 
   public String getDistrictName() {
     return districtName;
@@ -81,8 +72,23 @@ public class District {
     return "District{" +
         "id=" + id +
         ", divisionId=" + divisionId +
-        ", districtId=" + districtId +
         ", districtName='" + districtName + '\'' +
         '}';
+  }
+
+  @Override
+  public boolean equals(Object pO) {
+    if (this == pO) return true;
+    if (!(pO instanceof District)) return false;
+    District district = (District) pO;
+    return Objects.equals(getId(), district.getId()) &&
+        Objects.equals(getDivisionId(), district.getDivisionId()) &&
+        Objects.equals(getDistrictName(), district.getDistrictName()) &&
+        Objects.equals(getCode(), district.getCode());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getId(), getDivisionId(), getDistrictName(), getCode());
   }
 }

@@ -3,6 +3,7 @@ package aust.iums.pg.admission.model;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * Created by Monjur-E-Morshed on 9/11/2020.
@@ -20,9 +21,6 @@ public class Thana {
   @Column(name = "DISTRICT_ID")
   private Integer  districtId;
 
-  @NotNull
-  @Column(name = "THANA_ID")
-  private Integer  thanaId;
 
   @NotNull
   @Column(name = "THANA_NAME")
@@ -48,13 +46,6 @@ public class Thana {
     districtId = pDistrictId;
   }
 
-  public Integer getThanaId() {
-    return thanaId;
-  }
-
-  public void setThanaId(Integer pThanaId) {
-    thanaId = pThanaId;
-  }
 
   public String getThanaName() {
     return thanaName;
@@ -69,8 +60,22 @@ public class Thana {
     return "Thana{" +
         "id=" + id +
         ", districtId=" + districtId +
-        ", thanaId=" + thanaId +
         ", thanaName='" + thanaName + '\'' +
         '}';
+  }
+
+  @Override
+  public boolean equals(Object pO) {
+    if (this == pO) return true;
+    if (!(pO instanceof Thana)) return false;
+    Thana thana = (Thana) pO;
+    return Objects.equals(getId(), thana.getId()) &&
+        Objects.equals(getDistrictId(), thana.getDistrictId()) &&
+        Objects.equals(getThanaName(), thana.getThanaName());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getId(), getDistrictId(), getThanaName());
   }
 }

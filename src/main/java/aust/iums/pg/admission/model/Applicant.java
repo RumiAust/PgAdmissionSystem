@@ -87,46 +87,9 @@ public class Applicant {
   @JoinColumn(insertable = false, updatable = false)
   private Program program;
 
-  @ManyToOne(optional = false)
-  @JoinColumn(insertable = false, updatable = false)
-  private Division division;
-
-  @ManyToOne(optional = false)
-  @JoinColumn(insertable = false, updatable = false)
-  private District district;
-
-  @ManyToOne(optional = false)
-  @JoinColumn(insertable = false, updatable = false)
-  private Thana thana;
-
-
 
   public Applicant() {
 
-  }
-
-  public Division getDivision() {
-    return division;
-  }
-
-  public void setDivision(Division pDivision) {
-    division = pDivision;
-  }
-
-  public District getDistrict() {
-    return district;
-  }
-
-  public void setDistrict(District pDistrict) {
-    district = pDistrict;
-  }
-
-  public Thana getThana() {
-    return thana;
-  }
-
-  public void setThana(Thana pThana) {
-    thana = pThana;
   }
 
   public Semester getSemester() {
@@ -259,6 +222,7 @@ public class Applicant {
     applicantAddresses = pApplicantAddresses;
   }
 
+
   @Override
   public boolean equals(Object pO) {
     if (this == pO) return true;
@@ -279,39 +243,14 @@ public class Applicant {
         Objects.equals(getApplicantPersonaIInfo(), applicant.getApplicantPersonaIInfo()) &&
         Objects.equals(getJobExperience(), applicant.getJobExperience()) &&
         Objects.equals(getSemester(), applicant.getSemester()) &&
-        Objects.equals(getProgram(), applicant.getProgram()) &&
-        Objects.equals(getDivision(), applicant.getDivision()) &&
-        Objects.equals(getDistrict(), applicant.getDistrict()) &&
-        Objects.equals(getThana(), applicant.getThana());
+        Objects.equals(getProgram(), applicant.getProgram());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getSemesterId(), getProgramId(), getApplicationSn(), getStatus(), getAppliedOn(), getApplicationFeePaidOn(), getSelectedRejectedOn(), getCreatedOn(), getUpdatedOn(), getApplicantAddresses(), getApplicantEducationalInfo(), getApplicantPersonaIInfo(), getJobExperience(), getSemester(), getProgram(), getDivision(), getDistrict(), getThana());
+    return Objects.hash(getId(), getSemesterId(), getProgramId(), getApplicationSn(), getStatus(), getAppliedOn(), getApplicationFeePaidOn(), getSelectedRejectedOn(), getCreatedOn(), getUpdatedOn(), getApplicantAddresses(), getApplicantEducationalInfo(), getApplicantPersonaIInfo(), getJobExperience(), getSemester(), getProgram());
   }
 
-  @Override
-  public String toString() {
-    return "Applicant{" +
-        "id=" + id +
-        ", semesterId=" + semesterId +
-        ", programId=" + programId +
-        ", applicationSn='" + applicationSn + '\'' +
-        ", status='" + status + '\'' +
-        ", appliedOn=" + appliedOn +
-        ", applicationFeePaidOn=" + applicationFeePaidOn +
-        ", selectedRejectedOn=" + selectedRejectedOn +
-        ", createdOn=" + createdOn +
-        ", updatedOn=" + updatedOn +
-        ", applicantAddresses=" + applicantAddresses +
-        ", applicantEducationalInfo=" + applicantEducationalInfo +
-        ", applicantPersonaIInfo=" + applicantPersonaIInfo +
-        ", jobExperience=" + jobExperience +
-        ", semester=" + semester +
-        ", program=" + program +
-        ", division=" + division +
-        ", district=" + district +
-        ", thana=" + thana +
-        '}';
-  }
+
+
 }

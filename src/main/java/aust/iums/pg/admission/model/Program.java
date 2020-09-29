@@ -87,14 +87,4 @@ public class Program {
     updatedOn = pUpdatedOn;
   }
 
-  @Override
-  public String toString() {
-    return "Program{" +
-        "id=" + id +
-        ", programShortName='" + programShortName + '\'' +
-        ", programLongName='" + programLongName + '\'' +
-        ", createdOn=" + createdOn +
-        ", updatedOn=" + updatedOn +
-        '}';
-  }
 }

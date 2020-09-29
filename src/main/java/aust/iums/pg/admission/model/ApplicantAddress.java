@@ -49,11 +49,25 @@ public class ApplicantAddress {
   @Column(name = "LINE2")
   private String line2;
 
- /* @ManyToOne
+  @ManyToOne(optional = false)
+  @JoinColumn(insertable = false, updatable = false)
+  private Division division;
+
+  @ManyToOne(optional = false)
+  @JoinColumn(insertable = false, updatable = false)
+  private District district;
+
+  @ManyToOne(optional = false)
+  @JoinColumn(insertable = false, updatable = false)
+  private Thana thana;
+
+
+  /* @ManyToOne
   @JoinColumn(name = "APPLICANT_ID", referencedColumnName = "ID",updatable=false)
   Applicant applicant;*/
  @ManyToOne
  private Applicant applicant;
+
 
   public ApplicantAddress() {
 
@@ -61,6 +75,30 @@ public class ApplicantAddress {
 
   public Applicant getApplicant() {
     return applicant;
+  }
+
+  public Division getDivision() {
+    return division;
+  }
+
+  public void setDivision(Division pDivision) {
+    division = pDivision;
+  }
+
+  public District getDistrict() {
+    return district;
+  }
+
+  public void setDistrict(District pDistrict) {
+    district = pDistrict;
+  }
+
+  public Thana getThana() {
+    return thana;
+  }
+
+  public void setThana(Thana pThana) {
+    thana = pThana;
   }
 
   public void setApplicant(Applicant pApplicant) {
@@ -143,36 +181,25 @@ public class ApplicantAddress {
   public boolean equals(Object pO) {
     if (this == pO) return true;
     if (!(pO instanceof ApplicantAddress)) return false;
-    ApplicantAddress that = (ApplicantAddress) pO;
-    return Objects.equals(getId(), that.getId()) &&
-        Objects.equals(getApplicationSn(), that.getApplicationSn()) &&
-        Objects.equals(getAddressType(), that.getAddressType()) &&
-        Objects.equals(getDivisionId(), that.getDivisionId()) &&
-        Objects.equals(getDistrictId(), that.getDistrictId()) &&
-        Objects.equals(getThanaId(), that.getThanaId()) &&
-        Objects.equals(getThanaOther(), that.getThanaOther()) &&
-        Objects.equals(getLine1(), that.getLine1()) &&
-        Objects.equals(getLine2(), that.getLine2()) &&
-        Objects.equals(getApplicant(), that.getApplicant());
+    ApplicantAddress address = (ApplicantAddress) pO;
+    return Objects.equals(getId(), address.getId()) &&
+        Objects.equals(getApplicationSn(), address.getApplicationSn()) &&
+        Objects.equals(getAddressType(), address.getAddressType()) &&
+        Objects.equals(getDivisionId(), address.getDivisionId()) &&
+        Objects.equals(getDistrictId(), address.getDistrictId()) &&
+        Objects.equals(getThanaId(), address.getThanaId()) &&
+        Objects.equals(getThanaOther(), address.getThanaOther()) &&
+        Objects.equals(getLine1(), address.getLine1()) &&
+        Objects.equals(getLine2(), address.getLine2()) &&
+        Objects.equals(getDivision(), address.getDivision()) &&
+        Objects.equals(getDistrict(), address.getDistrict()) &&
+        Objects.equals(getThana(), address.getThana()) &&
+        Objects.equals(getApplicant(), address.getApplicant());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getApplicationSn(), getAddressType(), getDivisionId(), getDistrictId(), getThanaId(), getThanaOther(), getLine1(), getLine2(), getApplicant());
+    return Objects.hash(getId(), getApplicationSn(), getAddressType(), getDivisionId(), getDistrictId(), getThanaId(), getThanaOther(), getLine1(), getLine2(), getDivision(), getDistrict(), getThana(), getApplicant());
   }
 
-  @Override
-  public String toString() {
-    return "ApplicantAddress{" +
-        "id=" + id +
-        ", applicationSn='" + applicationSn + '\'' +
-        ", addressType='" + addressType + '\'' +
-        ", divisionId=" + divisionId +
-        ", districtId=" + districtId +
-        ", thanaId=" + thanaId +
-        ", thanaOther='" + thanaOther + '\'' +
-        ", line1='" + line1 + '\'' +
-        ", line2='" + line2 + '\'' +
-        '}';
-  }
 }

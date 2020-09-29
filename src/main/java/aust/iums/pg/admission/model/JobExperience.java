@@ -133,17 +133,5 @@ public class JobExperience {
     return Objects.hash(getId(), getApplicationSn(), getApplicant(), getOrganizationName(), getDesignation(), getJobResponsibilities(), getFromDate(), getToDate());
   }
 
-  @Override
-  public String toString() {
-    return "JobExperience{" +
-        "id=" + id +
-        ", applicationSn='" + applicationSn + '\'' +
-        ", organizationName='" + organizationName + '\'' +
-        ", designation='" + designation + '\'' +
-        ", jobResponsibilities='" + jobResponsibilities + '\'' +
-        ", fromDate=" + fromDate +
-        ", toDate=" + toDate +
-        '}';
-  }
 
 }

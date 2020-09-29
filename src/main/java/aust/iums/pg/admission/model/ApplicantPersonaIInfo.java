@@ -268,26 +268,4 @@ public class ApplicantPersonaIInfo {
     return Objects.hash(getId(), getApplicationSn(), getFirstName(), getMiddleName(), getLastName(), getFatherName(), getMotherName(), getGender(), getReligion(), getNationality(), getDateOfBirth(), getPlaceOfBirth(), getMobileNumber(), getEmailAddress(), getMaritalStatus(), getCreatedOn(), getUpdatedOn(), getApplicant());
   }
 
-  @Override
-  public String toString() {
-    return "ApplicantPersonaIInfo{" +
-        "id=" + id +
-        ", applicationSn='" + applicationSn + '\'' +
-        ", firstName='" + firstName + '\'' +
-        ", middleName='" + middleName + '\'' +
-        ", lastName='" + lastName + '\'' +
-        ", fatherName='" + fatherName + '\'' +
-        ", motherName='" + motherName + '\'' +
-        ", gender='" + gender + '\'' +
-        ", religion='" + religion + '\'' +
-        ", nationality='" + nationality + '\'' +
-        ", dateOfBirth=" + dateOfBirth +
-        ", placeOfBirth='" + placeOfBirth + '\'' +
-        ", mobileNumber='" + mobileNumber + '\'' +
-        ", emailAddress='" + emailAddress + '\'' +
-        ", maritalStatus='" + maritalStatus + '\'' +
-        ", createdOn=" + createdOn +
-        ", updatedOn=" + updatedOn +
-        '}';
-  }
 }

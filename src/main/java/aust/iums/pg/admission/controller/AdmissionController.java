@@ -169,6 +169,7 @@ public class AdmissionController {
                     model.addAttribute("valid", true);
                     ApplicantPersonaIInfo applicantPersonaIInfo = applicant.get().getApplicantPersonaIInfo();
                     applicantPersonaIInfo.setMiddleName(applicantPersonaIInfo.getMiddleName() == null ? " " : applicantPersonaIInfo.getMiddleName());
+                    applicantPersonaIInfo.setLastName(applicantPersonaIInfo.getLastName() == null ? " " : applicantPersonaIInfo.getLastName());
                     List<JobExperience> jobExperience = applicant.get().getJobExperience();
                     List<ApplicantEducationalInfo> educationalInfoList = applicant.get().getApplicantEducationalInfo();
                     List<ApplicantAddress> addressList = applicant.get().getApplicantAddresses();
@@ -342,9 +343,14 @@ public class AdmissionController {
         String pDistrict[] = applicant.getPresentDistrictId().split("-");
         applicant.setPresentDistrictId(pDistrict[0]);
         applicant.setPresentDistrict(pDistrict[1]);
-        String pThana[] = applicant.getPresentThanaId().split("-");
-        applicant.setPresentThanaId(pThana[0]);
-        applicant.setPresentThana(pThana[1]);
+        if(applicant.getPresentOtherThana() ==null) {
+          String pThana[] = applicant.getPresentThanaId().split("-");
+          applicant.setPresentThanaId(pThana[0]);
+          applicant.setPresentThana(pThana[1]);
+        }else {
+          applicant.setPresentThanaId("9999");
+          applicant.setPresentThana(applicant.getPresentOtherThana());
+        }
 
         String perDivision[] = applicant.getPermanentDivisionId().split("-");
         applicant.setPermanentDivisionId(perDivision[0]);
@@ -352,9 +358,14 @@ public class AdmissionController {
         String perDistrict[] = applicant.getPermanentDistrictId().split("-");
         applicant.setPermanentDistrictId(perDistrict[0]);
         applicant.setPermanentDistrict(perDistrict[1]);
+      if(applicant.getPermanentOtherThana() ==null) {
         String perThana[] = applicant.getPermanentThanaId().split("-");
         applicant.setPermanentThanaId(perThana[0]);
         applicant.setPermanentThana(perThana[1]);
+      }else {
+        applicant.setPresentThanaId("9999");
+        applicant.setPresentThana(applicant.getPermanentOtherThana());
+      }
     }
 
 

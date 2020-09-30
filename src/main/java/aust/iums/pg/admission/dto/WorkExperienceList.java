@@ -16,6 +16,17 @@ public class WorkExperienceList {
   private String fromDate;
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private String toDate;
+
+  private int visbility;
+
+  public int getVisbility() {
+    return visbility;
+  }
+
+  public void setVisbility(int visbility) {
+    this.visbility = visbility;
+  }
+
   private MultipartFile experienceFile;
 
   private String experienceFileError;

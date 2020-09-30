@@ -171,7 +171,9 @@ public class AdmissionService {
 
 
         List<JobExperience> workExperienceLists = new ArrayList<>();
-        if (pApp.getWorkExperienceList() != null) {
+        /*int size=pApp.getWorkExperienceList().size();
+
+      if (pApp.getWorkExperienceList().size()>0) {
             for (WorkExperienceList data : pApp.getWorkExperienceList()) {
                 JobExperience obj = new JobExperience();
                 //fileStorageService.saveFile(data.getExperienceFile(), "document", pApp, "exp");
@@ -184,7 +186,7 @@ public class AdmissionService {
                 obj.setApplicant(applicant);
                 workExperienceLists.add(obj);
             }
-        }
+        }*/
 
 
         List<ApplicantEducationalInfo> educationalInfoList = new ArrayList<>();
@@ -249,12 +251,12 @@ public class AdmissionService {
     }*/
 
         /*Save all Files*/
-        if (pApp.getWorkExperienceList() != null) {
+        /*if (pApp.getWorkExperienceList() != null) {
             for (WorkExperienceList data : pApp.getWorkExperienceList()) {
                 if (!data.getExperienceFile().isEmpty())
                     fileStorageService.saveFile(data.getExperienceFile(), pApp,  FileTypeEnum.EXPERIENCE);
             }
-        }
+        }*/
 
         if (!pApp.getSscFile().isEmpty()) {
             fileStorageService.saveFile(pApp.getSscFile(),  pApp, FileTypeEnum.SSC);

@@ -137,7 +137,7 @@ public class AdmissionController {
     }
 
     @RequestMapping(value = "/downloadAppForm/{applicationSn}/{dateOfBirth}", method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<InputStreamResource> downloadAppForm(HttpServletResponse response, @PathVariable(name = "applicationSn") String applicationSn, @PathVariable(name = "dateOfBirth") String dateOfBirth) throws IOException, DocumentException {
+    public ResponseEntity<InputStreamResource> downloadAppForm(HttpServletResponse response, @PathVariable(name = "applicationSn") String applicationSn, @PathVariable(name = "dateOfBirth") String dateOfBirth) throws IOException, DocumentException, ParseException {
         ByteArrayInputStream bis = mHelper.getApplicationFormPdf(applicationSn, dateOfBirth);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=applicant_form.pdf");

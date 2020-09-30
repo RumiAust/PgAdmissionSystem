@@ -407,7 +407,8 @@
                                             </div>
                                             <select th:field="*{sscPassingYear}" th:errorclass="alert-danger">
                                                 <option selected="selected" value="">Select Year of Passing</option>
-                                                <option class="form-control form-control-sm" th:each="p : ${passingYearList}"
+                                                <option class="form-control form-control-sm"
+                                                        th:each="p : ${passingYearList}"
                                                         th:value="${p}"
                                                         th:text="${p}"></option>
                                             </select>
@@ -511,7 +512,8 @@
                                             </div>
                                             <select th:field="*{hscPassingYear}" th:errorclass="alert-danger">
                                                 <option selected="selected" value="">Select Year of Passing</option>
-                                                <option class="form-control form-control-sm" th:each="p : ${passingYearList}"
+                                                <option class="form-control form-control-sm"
+                                                        th:each="p : ${passingYearList}"
                                                         th:value="${p}"
                                                         th:text="${p}"></option>
                                             </select>
@@ -615,7 +617,8 @@
                                             </div>
                                             <select th:field="*{bscPassingYear}" th:errorclass="alert-danger">
                                                 <option selected="selected" value="">Select Year of Passing</option>
-                                                <option class="form-control form-control-sm" th:each="p : ${passingYearList}"
+                                                <option class="form-control form-control-sm"
+                                                        th:each="p : ${passingYearList}"
                                                         th:value="${p}"
                                                         th:text="${p}"></option>
                                             </select>
@@ -703,7 +706,8 @@
                                             </div>
                                             <select th:field="*{mscPassingYear}" th:errorclass="alert-danger">
                                                 <option selected="selected" value="">Select Year of Passing</option>
-                                                <option class="form-control form-control-sm" th:each="p : ${passingYearList}"
+                                                <option class="form-control form-control-sm"
+                                                        th:each="p : ${passingYearList}"
                                                         th:value="${p}"
                                                         th:text="${p}"></option>
                                             </select>
@@ -744,7 +748,8 @@
                             <thead>
                             <tr class="col-sm-12">
                                 <td class="col-sm-4" align="right" style="padding: 10px">
-                                    <button class="btn btn-success" type="submit" name="addRow">Add New</button>
+                                    <label id="addbtn" class="btn btn-success" onclick="addRow()" name="addRow">Add
+                                        New</label>
                                 </td>
                             </tr>
                             </thead>
@@ -760,101 +765,112 @@
                                     </ul>
                                 </div>
                             </div>
-                            <tr class="border" style="margin: 20px;" th:each="row,rowStat : *{workExperienceList}">
-                                <td class="col-sm-12" style="padding: 20px;">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text">Organization Name:</div>
+                            <div id="container">
+                                <tr th:id="${rowStat.index}" th:attr="data-id=${rowStat.index}"
+                                    class="border workRow" style="display: none; margin: 20px;"
+                                    th:each="row,rowStat : *{workExperienceList}">
+                                    <td class="col-sm-12" style="padding: 20px;">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">Organization Name:</div>
+                                                        </div>
+                                                        <input th:id="organizationName+${rowStat.index}" type="text"
+                                                               class="form-control"
+                                                               th:field="*{workExperienceList[__${rowStat.index}__].organizationName}">
                                                     </div>
-                                                    <input type="text" class="form-control"
-                                                           th:field="*{workExperienceList[__${rowStat.index}__].organizationName}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <!-- Date of Birth -->
-                                        <div class="col-sm-12 col-md-6">
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text">Designation:</div>
-                                                    </div>
-                                                    <input type="text" class="form-control"
-                                                           th:field="*{workExperienceList[__${rowStat.index}__].designation}">
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="col-sm-12 col-md-6">
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text">Job Responsibility</div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">Designation:</div>
+                                                        </div>
+                                                        <input th:id="designation+${rowStat.index}" type="text"
+                                                               class="form-control"
+                                                               th:field="*{workExperienceList[__${rowStat.index}__].designation}">
                                                     </div>
-                                                    <input thtype="text" class="form-control"
-                                                           th:field="*{workExperienceList[__${rowStat.index}__].jobResponsibility}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">Job Responsibility</div>
+                                                        </div>
+                                                        <input th:id="jobResponsibility+${rowStat.index}" type="text"
+                                                               class="form-control"
+                                                               th:field="*{workExperienceList[__${rowStat.index}__].jobResponsibility}">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
 
-                                    <div class="row">
-                                        <div class="col-sm-12 col-md-4">
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text">From Date</div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-4">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">From Date</div>
+                                                        </div>
+                                                        <input th:id="fromDate+${rowStat.index}" type="date"
+                                                               class="form-control"
+                                                               th:field="*{workExperienceList[__${rowStat.index}__].fromDate}">
                                                     </div>
-                                                    <input type="date" class="form-control"
-                                                           th:field="*{workExperienceList[__${rowStat.index}__].fromDate}">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-4">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">To Date:</div>
+                                                        </div>
+                                                        <input th:id="toDate+${rowStat.index}" type="date"
+                                                               class="form-control"
+                                                               th:field="*{workExperienceList[__${rowStat.index}__].toDate}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-4">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">Upload</div>
+                                                        </div>
+                                                        <input th:id="experienceFile+${rowStat.index}" type="file"
+                                                               class="form-control"
+                                                               accept=".jpg, .jpeg, .png, .pdf, .zip"
+                                                               th:field="*{workExperienceList[__${rowStat.index}__].experienceFile}">
+
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-md-4">
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text">To Date:</div>
-                                                    </div>
-                                                    <input type="date" class="form-control"
-                                                           th:field="*{workExperienceList[__${rowStat.index}__].toDate}">
-                                                </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4">
+
+                                            </div>
+                                            <div class="col-md-4" align="center">
+                                                <label th:id="${rowStat.index}" class="btn btn-danger" name="removeRow"
+                                                       onclick="removeRow(this)"><i class="fa fa-trash-o"></i>
+                                                </label>
+                                                <input th:id="visibility+${rowStat.index}" type="hidden"
+                                                       th:field="*{workExperienceList[__${rowStat.index}__].visbility}">
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-md-4">
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text">Upload</div>
-                                                    </div>
-                                                    <input type="file" class="form-control"
-                                                           th:value="${applicant.workExperienceList[__${rowStat.index}__].experienceFile}"
-                                                           accept=".jpg, .jpeg, .png, .pdf, .zip"
-                                                           th:field="*{workExperienceList[__${rowStat.index}__].experienceFile}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                    <div class="row">
-                                        <div class="col-md-4">
-
-                                        </div>
-                                        <div class="col-md-4" align="center">
-                                            <button class="btn btn-danger" type="submit" name="removeRow"
-                                                    th:value="${rowStat.index}"><i class="fa fa-trash-o"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            </div>
                             </tbody>
                         </table>
                     </div>
@@ -1032,7 +1048,7 @@
                             </div>
                         </div>
                         <div class="row otherPermanentThana" style="display: none" align="right">
-                            <div class="col-sm-12 col-md-4" >
+                            <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <div class="input-group" style="padding-left: 5px">
                                         <div class="input-group-prepend">
@@ -1225,6 +1241,7 @@
 <script>
     $(document).ready(function () {
 
+
         if ($('#declaration').is(":checked")) {
             $('#submitBtn').attr("disabled", false);
         }
@@ -1234,8 +1251,6 @@
         if ($('#permanentDivisionId').val() !== "") {
             addPermanentDistrict();
         }
-
-
 
 
         function readPhotoURL(input) {
@@ -1446,5 +1461,79 @@
             $('#submitBtn').attr("disabled", true);
         }
     }
+
+
+
+    function addRow() {
+        var serial = [];
+        var rows = [];
+        /*$('#addbtn').off("click");*/
+        var j = 0;
+        for (var i = 0; i < 10; i++) {
+            if ($('#visibility' + i).val() == 0) {
+                serial.push(i);
+                j++;
+            }
+        }
+        for (var i = 0; i < 10; i++) {
+            if ($('#visibility' + i).val() == 1) {
+                serial.push(i);
+                j++;
+            }
+        }
+        console.log(serial+" "+j);
+        for (i = 9; i=>0; i--) {
+            if ($('#visibility' + i).val() == 0) {
+                $('#' + i).css("display", "block");
+                $('#visibility' + i).val(1);
+                console.log(i);
+                break;
+            }
+        }
+
+        $('.workRow').each(function () {
+            rows[$(this).data('id')] = $(this);
+        });
+
+        $.each(serial, function (index, value) {
+            $('#container').append(rows[value]);
+        });
+
+
+    }
+
+    /*function replaceData(index) {
+
+        for (var i = index; i >= 0; i--) {
+            if ($('#visibility' + index - 1).val() == 1) {
+                $('#organizationName' + index).val($('#organizationName' + index - 1).val());
+                $('#designation' + index).val($('#organizationName' + index - 1).val());
+                $('#jobResponsibility' + index).val($('#organizationName' + index - 1).val());
+                $('#toDate' + index).val($('#organizationName' + index - 1).val());
+                $('#fromDate' + index).val($('#organizationName' + index - 1).val());
+                $('#experienceFile' + index).val($('#organizationName' + index - 1).val());
+            } else if ($('#visibility' + index - 1).val() == 0) {
+                break;
+            }
+        }
+
+    }*/
+
+    function removeRow(ths) {
+        var index = ths.id;
+        console.log(index);
+
+
+        $('#organizationName' + index).val("");
+        $('#designation' + index).val("");
+        $('#jobResponsibility' + index).val("");
+        $('#toDate' + index).val("");
+        $('#fromDate' + index).val("");
+        $('#experienceFile' + index).val("");
+        $('#'+index).css("display","none");
+        $('#visibility' + index).val(0);
+
+    }
+
 
 </script>

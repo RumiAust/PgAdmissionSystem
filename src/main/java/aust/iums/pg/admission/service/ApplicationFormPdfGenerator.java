@@ -65,13 +65,13 @@ public class ApplicationFormPdfGenerator {
         Optional<Applicant> applicant = mHelper.getApplicantBy(applicationSn,dob);
         Long semesterId=applicant.get().getSemesterId();
         Optional<Semester> semester= mHelper.getSemesterById(semesterId);
-        additionalPath = semester.get().getSemesterName();
+        additionalPath = semester.get().getSemesterName().replaceAll(" ", "-").toLowerCase();
         Long programId=applicant.get().getProgramId();
         Optional<Program>program=mHelper.getProgramById(programId);
         additionalPath=additionalPath+"/"+program.get().getProgramShortName();
         String photoBasePath, signatureBasePath;
-        photoBasePath = apPhotoBasePath + additionalPath + "/" + applicationSn+ ".jpeg";
-        signatureBasePath = apSignatureBasePath + additionalPath + "/" + applicationSn + ".jpeg";
+        photoBasePath = apPhotoBasePath + additionalPath + "/" + applicationSn+ ".jpg";
+        signatureBasePath = apSignatureBasePath + additionalPath + "/" + applicationSn + ".jpg";
 
 
         Document document = new Document();
@@ -131,7 +131,98 @@ public class ApplicationFormPdfGenerator {
       h2.addCell(cell);
       document.add(h2);
 
-        document.close();
+      //
+      PdfPTable pInfoOuter = new PdfPTable(1);
+      pInfoOuter.setWidthPercentage(100);
+      PdfPTable appFrom = new PdfPTable(5);
+      appFrom.setWidthPercentage(100);
+
+
+      cell = new PdfPCell(new Phrase("APPLICATION FORM FOR ADMISSION", font19B));
+      cell.setBorder(0);
+      cell.setColspan(4);
+      cell.setMinimumHeight(25);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      appFrom.addCell(cell);
+
+      //applicant image
+      Image photo = Image.getInstance(photoBasePath);
+      cell = new PdfPCell(photo, true);
+      cell.setPadding(2);
+      //  cell.setBorder(0);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      cell.setRowspan(5);
+      appFrom.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("(Undergraduate) ", font14B));
+      cell.setBorder(0);
+      cell.setMinimumHeight(25);
+      cell.setColspan(4);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      appFrom.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("" + semester.get().getSemesterName() + " SEMESTER ", font17B));
+      cell.setBorder(0);
+      cell.setColspan(4);
+      cell.setMinimumHeight(30);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      appFrom.addCell(cell);
+
+      //inner table of applicant serial No
+      PdfPTable appSerialNo = new PdfPTable(5 + applicationSn.length());
+      appSerialNo.setWidthPercentage(100);
+
+      cell = new PdfPCell(new Phrase(" ", font19B));
+      cell.setBorder(0);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      appSerialNo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("Application No:", font14R));
+      cell.setColspan(3);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      appSerialNo.addCell(cell);
+
+      char[] ch = applicationSn.toCharArray();
+      for (char c : ch) {
+        cell = new PdfPCell(new Phrase("" + c, font19B));
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setUseAscender(true);
+        cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+        appSerialNo.addCell(cell);
+      }
+
+      cell = new PdfPCell(new Phrase(" ", font19B));
+      cell.setBorder(0);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      appSerialNo.addCell(cell);
+
+
+      cell = new PdfPCell(appSerialNo);
+      cell.setColspan(4);
+      cell.setBorder(0);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      appFrom.addCell(cell);
+
+
+      cell = new PdfPCell(appFrom);
+      cell.setBorder(0);
+      pInfoOuter.addCell(cell);
+      document.add(pInfoOuter);
+
+      //
+
+      chunk = new Chunk(" ", font14B);
+      paragraph = new Paragraph();
+      paragraph.setAlignment(Element.ALIGN_LEFT);
+      paragraph.add(chunk);
+      document.add(paragraph);
+
+
+      document.close();
 
         return new ByteArrayInputStream(baos.toByteArray());
 

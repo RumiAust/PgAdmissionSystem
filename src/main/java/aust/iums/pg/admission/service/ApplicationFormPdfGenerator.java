@@ -2,10 +2,7 @@ package aust.iums.pg.admission.service;
 
 import aust.iums.pg.admission.enums.AdmissionEnum;
 import aust.iums.pg.admission.helper.AdmissionHelper;
-import aust.iums.pg.admission.model.Applicant;
-import aust.iums.pg.admission.model.ApplicantAddress;
-import aust.iums.pg.admission.model.Program;
-import aust.iums.pg.admission.model.Semester;
+import aust.iums.pg.admission.model.*;
 import aust.iums.pg.admission.repository.ApplicantRepository;
 import aust.iums.pg.admission.utils.PgUtils;
 import com.itextpdf.text.*;
@@ -542,12 +539,312 @@ public class ApplicationFormPdfGenerator {
       document.add(pInfo);
 
 
-     Chunk chunkNo = new Chunk("18.  ", font11R);
+
+      //edu
+      List<ApplicantEducationalInfo> eduInfoList=applicant.get().getApplicantEducationalInfo();
+      chunk = new Chunk(" ");
+      paragraph= new Paragraph(chunk);
+      document.add(paragraph);
+
+      Chunk  chunkNo = new Chunk("13.  ", font11R);
       paragraph = new Paragraph();
       paragraph.setAlignment(Element.ALIGN_CENTER);
       paragraph.add(chunk);
 
-     Chunk chunkDetails = new Chunk("\tDeclaration: ", font11B);
+      Chunk chunkDetails = new Chunk("\tEducational Qualifications: ", font11B);
+      paragraph = new Paragraph();
+      paragraph.setAlignment(Element.ALIGN_CENTER);
+      paragraph.add(chunk);
+
+      paragraph = new Paragraph();
+      paragraph.add(chunkNo);
+      paragraph.add(chunkDetails);
+      document.add(paragraph);
+
+
+      //education table
+
+      PdfPTable educationInfo = new PdfPTable(16);
+      educationInfo.setSpacingBefore(5);
+      educationInfo.setSpacingAfter(5);
+      educationInfo.setWidthPercentage(100);
+
+      cell = new PdfPCell(new Phrase("Examinations", font11B));
+      cell.setMinimumHeight(20);
+      cell.setColspan(3);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("School/College/Institution", font11B));
+      cell.setColspan(4);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("Board/Institution", font11B));
+      cell.setColspan(3);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("Total Marks/Grade", font11B));
+      cell.setColspan(2);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("Division/Class/Grade", font11B));
+      cell.setColspan(2);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("Year of Passing", font11B));
+      cell.setColspan(2);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      //ssc
+
+      cell = new PdfPCell(new Phrase("SSC or Equivalent", font11R));
+      cell.setMinimumHeight(20);
+      cell.setColspan(3);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase(""+eduInfoList.get(0).getInstituteName() , fontSchoolNameR));
+      cell.setColspan(4);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("" + eduInfoList.get(0).getBoard(), fontSchoolNameR));
+      cell.setColspan(3);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("" + eduInfoList.get(0).getTotalMarks(), fontSchoolNameR));
+      cell.setColspan(2);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("" + eduInfoList.get(0).getDivisionClassGrade(), fontSchoolNameR));
+      cell.setColspan(2);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("" + eduInfoList.get(0).getPassingYear(), fontSchoolNameR));
+      cell.setColspan(2);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      //hsc
+
+      cell = new PdfPCell(new Phrase("HSC or Equivalent", font11R));
+      cell.setMinimumHeight(20);
+      cell.setColspan(3);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase(""+eduInfoList.get(1).getInstituteName() , fontSchoolNameR));
+      cell.setColspan(4);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("" + eduInfoList.get(1).getBoard(), fontSchoolNameR));
+      cell.setColspan(3);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("" + eduInfoList.get(1).getTotalMarks(), fontSchoolNameR));
+      cell.setColspan(2);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("" + eduInfoList.get(1).getDivisionClassGrade(), fontSchoolNameR));
+      cell.setColspan(2);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("" + eduInfoList.get(1).getPassingYear(), fontSchoolNameR));
+      cell.setColspan(2);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      //bsc
+
+      cell = new PdfPCell(new Phrase("BBA/B.Com/B.Sc./B.A./ Equivalent", font11R));
+      cell.setMinimumHeight(20);
+      cell.setColspan(3);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase(""+eduInfoList.get(2).getInstituteName() , fontSchoolNameR));
+      cell.setColspan(4);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("" + eduInfoList.get(2).getBoard(), fontSchoolNameR));
+      cell.setColspan(3);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("" + eduInfoList.get(2).getTotalMarks(), fontSchoolNameR));
+      cell.setColspan(2);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("" + eduInfoList.get(2).getDivisionClassGrade(), fontSchoolNameR));
+      cell.setColspan(2);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("" + eduInfoList.get(2).getPassingYear(), fontSchoolNameR));
+      cell.setColspan(2);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      //msc
+
+      cell = new PdfPCell(new Phrase("M.Com/M.A./MBA/M.Sc.", font11R));
+      cell.setMinimumHeight(20);
+      cell.setColspan(3);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase(""+eduInfoList.get(3).getInstituteName()  ==null? " ":eduInfoList.get(3).getInstituteName(), fontSchoolNameR));
+      cell.setColspan(4);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("" + eduInfoList.get(3).getBoard()==null? " ":eduInfoList.get(3).getBoard(), fontSchoolNameR));
+      cell.setColspan(3);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("" + eduInfoList.get(3).getTotalMarks()==null? " ":eduInfoList.get(3).getTotalMarks(), fontSchoolNameR));
+      cell.setColspan(2);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("" + eduInfoList.get(3).getDivisionClassGrade()==null ? " ":eduInfoList.get(3).getDivisionClassGrade(), fontSchoolNameR));
+      cell.setColspan(2);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+      Integer mscYear=eduInfoList.get(3).getPassingYear();
+      String yr="";
+      if(mscYear==null){
+        yr=" ";
+      }else {
+        yr=mscYear.toString();
+      }
+
+      cell = new PdfPCell(new Phrase("" + yr, fontSchoolNameR));
+      cell.setColspan(2);
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      educationInfo.addCell(cell);
+
+      document.add(educationInfo);
+
+
+
+
+
+      //
+
+
+      chunkNo = new Chunk("18.  ", font11R);
+      paragraph = new Paragraph();
+      paragraph.setAlignment(Element.ALIGN_CENTER);
+      paragraph.add(chunk);
+
+      chunkDetails = new Chunk("\tDeclaration: ", font11B);
       paragraph = new Paragraph();
       paragraph.setAlignment(Element.ALIGN_CENTER);
       paragraph.add(chunk);

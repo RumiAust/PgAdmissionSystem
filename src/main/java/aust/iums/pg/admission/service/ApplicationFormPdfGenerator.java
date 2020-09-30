@@ -1,5 +1,6 @@
 package aust.iums.pg.admission.service;
 
+import aust.iums.pg.admission.enums.AdmissionEnum;
 import aust.iums.pg.admission.helper.AdmissionHelper;
 import aust.iums.pg.admission.model.Applicant;
 import aust.iums.pg.admission.model.ApplicantAddress;
@@ -638,6 +639,218 @@ public class ApplicationFormPdfGenerator {
 
       //line separator
       document.add(new LineSeparator());
+
+      //office use
+
+      //Student ID Info
+      float[] columnWidths = {6, 2, 2, 2, 2, 2, 2, 2, 2, 2};
+      PdfPTable table = new PdfPTable(columnWidths);
+      table.setSpacingBefore(5);
+      table.setSpacingAfter(5);
+
+      cell = new PdfPCell(new Phrase("Student ID ", font14B));
+      cell.setMinimumHeight(20);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      table.addCell(cell);
+
+      cell = new PdfPCell(new Phrase(" ", font10B));
+      cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+      cell.setMinimumHeight(20);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      table.addCell(cell);
+
+      cell = new PdfPCell(new Phrase(" ", font10B));
+      cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+      cell.setMinimumHeight(20);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      table.addCell(cell);
+
+      cell = new PdfPCell(new Phrase(" ", font10B));
+      cell.setMinimumHeight(20);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      table.addCell(cell);
+
+      cell = new PdfPCell(new Phrase(" ", font10B));
+      cell.setMinimumHeight(20);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      table.addCell(cell);
+
+      cell = new PdfPCell(new Phrase(" ", font10B));
+      cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+      cell.setMinimumHeight(20);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      table.addCell(cell);
+
+      cell = new PdfPCell(new Phrase(" ", font10B));
+      cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+      cell.setMinimumHeight(20);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      table.addCell(cell);
+
+      cell = new PdfPCell(new Phrase(" ", font10B));
+      //cell.setBorder(0);
+      cell.setMinimumHeight(20);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      table.addCell(cell);
+
+      cell = new PdfPCell(new Phrase(" ", font10B));
+      //cell.setBorder(0);
+      cell.setMinimumHeight(20);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      table.addCell(cell);
+
+      cell = new PdfPCell(new Phrase(" ", font10B));
+      //cell.setBorder(0);
+      cell.setMinimumHeight(20);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      table.addCell(cell);
+      document.add(table);
+
+      // office heading
+      PdfPTable officeHeading = new PdfPTable(1);
+      officeHeading.setWidthPercentage(100);
+
+      cell = new PdfPCell(new Phrase("FOR OFFICE USE ONLY", font14B));
+      cell.setBorder(0);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      officeHeading.addCell(cell);
+      cell = new PdfPCell(new Phrase("(DO NOT WRITE ANYTHING BELOW THIS LINE)", font11B));
+      cell.setBorder(0);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      officeHeading.addCell(cell);
+      document.add(officeHeading);
+
+      chunk = new Chunk(" ");
+      paragraph=new Paragraph(chunk);
+      document.add(paragraph);
+
+      // office part of form
+
+      PdfPTable officePart = new PdfPTable(new float[]{.24f,.15f,.2f});
+      officePart.setWidthPercentage(100);
+
+      cell = new PdfPCell(new Phrase("Name of the applicant (As in SSC/O-Level ):", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(25);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      officePart.addCell(cell);
+      cell = new PdfPCell(new Phrase("……………………………………………………………………………", font11R));
+      cell.setBorder(0);
+      cell.setColspan(2);
+      cell.setMinimumHeight(25);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      officePart.addCell(cell);
+      cell = new PdfPCell(new Phrase("The student bearing the above particulars with Merit Position: ……… Payment TransactionID:……………………", font11R));
+      cell.setBorder(0);
+      cell.setColspan(3);
+      cell.setMinimumHeight(25);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      officePart.addCell(cell);
+
+        if(applicant.get().getStatus()== AdmissionEnum.ADMISSION_OFFERED.name()) {
+          chunkNo = new Chunk("admission in the program ", font11R);
+          chunkDetails = new Chunk("" + program.get().getProgramLongName(), font11B);
+          chunkDetails.setUnderline(0.1f, -2f);
+          chunk = new Chunk(" in the First Year First Semester (" + semester.get().getSemesterName() + ")", font11R);
+          paragraph = new Paragraph();
+          paragraph.add(chunkNo);
+          paragraph.add(chunkDetails);
+          paragraph.add(chunk);
+          cell = new PdfPCell(new Phrase(paragraph));
+          cell.setBorder(0);
+          cell.setColspan(3);
+          cell.setMinimumHeight(25);
+          cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+          officePart.addCell(cell);
+        }
+
+
+      document.add(officePart);
+
+      chunk = new Chunk(" ");
+      paragraph= new Paragraph(chunk);
+      document.add(paragraph);
+      for (int i=0;i<4;i++){
+        chunk = new Chunk(" ");
+        paragraph= new Paragraph(chunk);
+        document.add(paragraph);
+      }
+
+      chunk = new Chunk(" ");
+      paragraph= new Paragraph(chunk);
+      document.add(paragraph);
+      chunk = new Chunk(" ");
+      paragraph= new Paragraph(chunk);
+      document.add(paragraph);
+
+
+      //Office Signature part
+      PdfPTable officeFooter = new PdfPTable(7);
+      officeFooter.setWidthPercentage(100);
+
+      cell = new PdfPCell(new Phrase("Verified By:…………………", font11R));
+      cell.setBorder(0);
+      cell.setColspan(2);
+      cell.setMinimumHeight(20);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      officeFooter.addCell(cell);
+      cell = new PdfPCell(new Phrase("_________________________________", font11B));
+      cell.setBorder(0);
+      cell.setColspan(3);
+      cell.setMinimumHeight(20);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      officeFooter.addCell(cell);
+      cell = new PdfPCell(new Phrase("_______________________", font11B));
+      cell.setBorder(0);
+      cell.setColspan(3);
+      cell.setMinimumHeight(20);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      officeFooter.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("(Verification Committee)", font11R));
+      cell.setBorder(0);
+      cell.setColspan(2);
+      cell.setMinimumHeight(25);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      officeFooter.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("Signature of the Admission\nCommittee’s Chairman", font11B));
+      cell.setBorder(0);
+      cell.setColspan(3);
+      cell.setMinimumHeight(25);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      officeFooter.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("Signature of the Registrar", font11B));
+      cell.setBorder(0);
+      cell.setColspan(2);
+      cell.setMinimumHeight(25);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      officeFooter.addCell(cell);
+
+
+
+      cell = new PdfPCell(new Phrase("Date\t:\t……………………", font11R));
+      cell.setBorder(0);
+      cell.setColspan(2);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      officeFooter.addCell(cell);
+
+
+      cell = new PdfPCell(new Phrase("Date\t:\t………………………", font11R));
+      cell.setBorder(0);
+      cell.setColspan(3);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      officeFooter.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("Date\t:\t……………………", font11R));
+      cell.setBorder(0);
+      cell.setColspan(2);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      officeFooter.addCell(cell);
+      document.add(officeFooter);
 
 
 

@@ -2,10 +2,8 @@ package aust.iums.pg.admission.dto;
 
 import org.hibernate.validator.constraints.Email;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.NumberFormat;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -123,6 +121,15 @@ public class ApplicationForm {
     //work experience
     List<WorkExperienceList> workExperienceList;
     private String workExperienceDivId;
+    List<Serial> serialList;
+
+    public List<Serial> getSerialList() {
+        return serialList;
+    }
+
+    public void setSerialList(List<Serial> serialList) {
+        this.serialList = serialList;
+    }
 
     //contact info
     @NotNull(message = "Please select division.")

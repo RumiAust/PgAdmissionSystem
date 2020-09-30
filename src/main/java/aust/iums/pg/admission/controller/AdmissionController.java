@@ -1,6 +1,7 @@
 package aust.iums.pg.admission.controller;
 
 import aust.iums.pg.admission.dto.ApplicationForm;
+import aust.iums.pg.admission.dto.Serial;
 import aust.iums.pg.admission.dto.StatusCheckDto;
 import aust.iums.pg.admission.dto.WorkExperienceList;
 import aust.iums.pg.admission.enums.FileTypeEnum;
@@ -53,6 +54,17 @@ public class AdmissionController {
     public ApplicationForm applicantModel() {
         ApplicationForm applicationForm = new ApplicationForm();
         applicationForm.setWorkExperienceList(new ArrayList<>());
+        applicationForm.setSerialList(new ArrayList<>());
+        for (int i = 0; i < 10; i++) {
+            WorkExperienceList w =new WorkExperienceList();
+            w.setVisbility(0);
+            applicationForm.getWorkExperienceList().add(w);
+
+            Serial serial = new Serial();
+            serial.setDivNumber(i);
+            serial.setVisibility(0);
+            applicationForm.getSerialList().add(serial);
+        }
         applicationForm.setWorkExperienceDivId("");
 
 
@@ -340,13 +352,13 @@ public class AdmissionController {
         String pDistrict[] = applicant.getPresentDistrictId().split("-");
         applicant.setPresentDistrictId(pDistrict[0]);
         applicant.setPresentDistrict(pDistrict[1]);
-        if(applicant.getPresentOtherThana() ==null) {
-          String pThana[] = applicant.getPresentThanaId().split("-");
-          applicant.setPresentThanaId(pThana[0]);
-          applicant.setPresentThana(pThana[1]);
-        }else {
-          applicant.setPresentThanaId("9999");
-          applicant.setPresentThana(applicant.getPresentOtherThana());
+        if (applicant.getPresentOtherThana() == null) {
+            String pThana[] = applicant.getPresentThanaId().split("-");
+            applicant.setPresentThanaId(pThana[0]);
+            applicant.setPresentThana(pThana[1]);
+        } else {
+            applicant.setPresentThanaId("9999");
+            applicant.setPresentThana(applicant.getPresentOtherThana());
         }
 
         String perDivision[] = applicant.getPermanentDivisionId().split("-");
@@ -355,6 +367,16 @@ public class AdmissionController {
         String perDistrict[] = applicant.getPermanentDistrictId().split("-");
         applicant.setPermanentDistrictId(perDistrict[0]);
         applicant.setPermanentDistrict(perDistrict[1]);
+
+        if (applicant.getPermanentOtherThana() == null) {
+            String perThana[] = applicant.getPermanentThanaId().split("-");
+            applicant.setPermanentThanaId(perThana[0]);
+            applicant.setPermanentThana(perThana[1]);
+        } else {
+            applicant.setPresentThanaId("9999");
+            applicant.setPresentThana(applicant.getPermanentOtherThana());
+        }
+
       if(applicant.getPermanentOtherThana() ==null) {
         String perThana[] = applicant.getPermanentThanaId().split("-");
         applicant.setPermanentThanaId(perThana[0]);
@@ -363,6 +385,7 @@ public class AdmissionController {
         applicant.setPermanentThanaId("9999");
         applicant.setPermanentThana(applicant.getPermanentOtherThana());
       }
+
     }
 
 

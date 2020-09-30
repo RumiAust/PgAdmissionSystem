@@ -151,6 +151,7 @@ public class AdmissionService {
         address.setDivisionId(Integer.parseInt(pApp.getPresentDivisionId()));
         address.setDistrictId(Integer.parseInt(pApp.getPresentDistrictId()));
         address.setThanaId(Integer.parseInt(pApp.getPresentThanaId()));
+        address.setThanaOther(pApp.getPresentOtherThana());
         address.setLine1(pApp.getPresentAddress());
         addressList.add(address);
         address = new ApplicantAddress();
@@ -160,6 +161,7 @@ public class AdmissionService {
         address.setDivisionId(Integer.parseInt(pApp.getPermanentDivisionId()));
         address.setDistrictId(Integer.parseInt(pApp.getPermanentDistrictId()));
         address.setThanaId(Integer.parseInt(pApp.getPermanentThanaId()));
+        address.setThanaOther(pApp.getPermanentOtherThana());
         address.setLine1(pApp.getPermanentAddress());
         addressList.add(address);
 

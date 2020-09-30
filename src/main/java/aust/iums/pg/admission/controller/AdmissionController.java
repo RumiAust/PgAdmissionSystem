@@ -31,6 +31,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.ParseException;
+import java.time.Instant;
 import java.util.*;
 
 /**
@@ -121,7 +122,8 @@ public class AdmissionController {
             String serialNo = mHelper.saveInfo(applicant);
             applicant.setWorkExperienceDivId("");
             model.addAttribute("serialNo", serialNo);
-            model.addAttribute("deadline", deadline);
+            String toDate = PgUtils.instantFormatter(deadline.getToDate());
+            model.addAttribute("deadline", toDate);
             return "success-page";
         }
 
@@ -358,8 +360,8 @@ public class AdmissionController {
         applicant.setPermanentThanaId(perThana[0]);
         applicant.setPermanentThana(perThana[1]);
       }else {
-        applicant.setPresentThanaId("9999");
-        applicant.setPresentThana(applicant.getPermanentOtherThana());
+        applicant.setPermanentThanaId("9999");
+        applicant.setPermanentThana(applicant.getPermanentOtherThana());
       }
     }
 

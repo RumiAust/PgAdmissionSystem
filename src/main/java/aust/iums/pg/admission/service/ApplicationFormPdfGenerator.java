@@ -20,14 +20,7 @@ public class ApplicationFormPdfGenerator {
         PdfWriter writer = PdfWriter.getInstance(document, baos);
         document.open();
         document.setPageSize(PageSize.A4);
-
-
-
-
         Font font12R = new Font(Font.FontFamily.HELVETICA, 11.5f, Font.NORMAL);
-
-
-
 
         document.addTitle("Testimonial");
         Paragraph paragraph = new Paragraph();

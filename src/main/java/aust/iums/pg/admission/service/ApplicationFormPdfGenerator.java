@@ -837,9 +837,35 @@ public class ApplicationFormPdfGenerator {
 
 
       //
+      //edu
+      List<JobExperience> jobExperienceList=applicant.get().getJobExperience();
+      chunk = new Chunk(" ");
+      paragraph= new Paragraph(chunk);
+      document.add(paragraph);
 
+       chunkNo = new Chunk("14.  ", font11R);
+      paragraph = new Paragraph();
+      paragraph.setAlignment(Element.ALIGN_CENTER);
+      paragraph.add(chunk);
 
-      chunkNo = new Chunk("18.  ", font11R);
+      chunkDetails = new Chunk("\tJob Experience ", font11B);
+      paragraph = new Paragraph();
+      paragraph.setAlignment(Element.ALIGN_CENTER);
+      paragraph.add(chunk);
+
+      paragraph = new Paragraph();
+      paragraph.add(chunkNo);
+      paragraph.add(chunkDetails);
+      document.add(paragraph);
+
+      chunk = new Chunk(" ");
+      paragraph= new Paragraph(chunk);
+      document.add(paragraph);
+      chunk = new Chunk(" ");
+      paragraph= new Paragraph(chunk);
+      document.add(paragraph);
+
+      chunkNo = new Chunk("15.  ", font11R);
       paragraph = new Paragraph();
       paragraph.setAlignment(Element.ALIGN_CENTER);
       paragraph.add(chunk);
@@ -859,6 +885,8 @@ public class ApplicationFormPdfGenerator {
       paragraph=new Paragraph(chunk);
       document.add(paragraph);
 
+
+      //dec
 
       paragraph= new Paragraph("I do hereby declare that the information as stated in the Admission application form is true. If any of the information is found incorrect, my admission is liable to be cancelled.", font11R);
       // paragraph.setLeading(18);

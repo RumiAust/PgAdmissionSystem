@@ -156,7 +156,7 @@ public class ApplicationFormPdfGenerator {
       cell.setRowspan(5);
       appFrom.addCell(cell);
 
-      cell = new PdfPCell(new Phrase("(Undergraduate) ", font14B));
+      cell = new PdfPCell(new Phrase("INTO MASTER PROGRAM ", font14B));
       cell.setBorder(0);
       cell.setMinimumHeight(25);
       cell.setColspan(4);
@@ -220,6 +220,19 @@ public class ApplicationFormPdfGenerator {
       paragraph.setAlignment(Element.ALIGN_LEFT);
       paragraph.add(chunk);
       document.add(paragraph);
+
+      PdfPTable programName = new PdfPTable(1);
+      h2.setSpacingBefore(5);
+      h2.setSpacingAfter(5);
+      h2.setWidthPercentage(100);
+      cell = new PdfPCell(new Phrase("Program : "+program.get().getProgramLongName(), font19B));
+      cell.setBorder(0);
+      cell.setColspan(4);
+      cell.setMinimumHeight(25);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      programName.addCell(cell);
+      document.add(programName);
+
 
 
       document.close();

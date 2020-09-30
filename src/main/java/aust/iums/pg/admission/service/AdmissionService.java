@@ -8,15 +8,10 @@ import aust.iums.pg.admission.repository.*;
 import aust.iums.pg.admission.utils.PgUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -66,6 +61,15 @@ public class AdmissionService {
         Semester semester = mSemesterRepository.findAllByIsActive(pStatus.intValue());
         return semester;
     }
+  public Optional<Semester> getSemesterById(Long pId) {
+    Optional<Semester> semester = mSemesterRepository.findById(pId);
+    return semester;
+  }
+
+  public Optional<Program> getProgramById(Long pId) {
+    Optional<Program> program = mProgramRepository.findById(pId);
+    return program;
+  }
 
     public List<Program> getPrograms() {
         List<Program> programList = (List<Program>) mProgramRepository.findAll();
@@ -151,6 +155,7 @@ public class AdmissionService {
         address.setDivisionId(Integer.parseInt(pApp.getPresentDivisionId()));
         address.setDistrictId(Integer.parseInt(pApp.getPresentDistrictId()));
         address.setThanaId(Integer.parseInt(pApp.getPresentThanaId()));
+        address.setThanaOther(pApp.getPresentOtherThana());
         address.setLine1(pApp.getPresentAddress());
         addressList.add(address);
         address = new ApplicantAddress();
@@ -160,6 +165,7 @@ public class AdmissionService {
         address.setDivisionId(Integer.parseInt(pApp.getPermanentDivisionId()));
         address.setDistrictId(Integer.parseInt(pApp.getPermanentDistrictId()));
         address.setThanaId(Integer.parseInt(pApp.getPermanentThanaId()));
+        address.setThanaOther(pApp.getPermanentOtherThana());
         address.setLine1(pApp.getPermanentAddress());
         addressList.add(address);
 

@@ -66,6 +66,11 @@ public class AdmissionService {
     return semester;
   }
 
+  public Optional<Program> getProgramById(Long pId) {
+    Optional<Program> program = mProgramRepository.findById(pId);
+    return program;
+  }
+
     public List<Program> getPrograms() {
         List<Program> programList = (List<Program>) mProgramRepository.findAll();
         return programList;

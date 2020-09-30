@@ -44,6 +44,10 @@ public class AdmissionHelper {
     Optional<Semester> semester=mAdmissionService.getSemesterById(pSemesterId);
     return semester;
   }
+  public Optional<Program> getProgramById(Long pProgramId){
+    Optional<Program> program=mAdmissionService.getProgramById(pProgramId);
+    return program;
+  }
 
   public ApplicationDeadline getDeadlineBy(Long pSemesterId,Long pProgramId){
     return mApplicationDeadlineRepository.findBySemesterIdAndProgramId(pSemesterId,pProgramId);

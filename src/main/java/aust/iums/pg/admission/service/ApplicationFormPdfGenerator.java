@@ -2,6 +2,7 @@ package aust.iums.pg.admission.service;
 
 import aust.iums.pg.admission.helper.AdmissionHelper;
 import aust.iums.pg.admission.model.Applicant;
+import aust.iums.pg.admission.model.Program;
 import aust.iums.pg.admission.model.Semester;
 import aust.iums.pg.admission.repository.ApplicantRepository;
 import aust.iums.pg.admission.utils.PgUtils;
@@ -59,13 +60,18 @@ public class ApplicationFormPdfGenerator {
       Font fontSchoolNameR = new Font(Font.FontFamily.HELVETICA, 9.0f, Font.NORMAL);
       int minimumPersonalInfoRowHeight = 26;
 
-      if (applicationSn!= null && dateOfBirth != null) {
+
         Date dob = PgUtils.formateDate(dateOfBirth);
         Optional<Applicant> applicant = mHelper.getApplicantBy(applicationSn,dob);
         Long semesterId=applicant.get().getSemesterId();
-       Optional<Semester> semester= mHelper.getSemesterById(semesterId);
-        additionalPath = semester.get().getSemesterName().replaceAll(" ", "-").toLowerCase();
-      }
+        Optional<Semester> semester= mHelper.getSemesterById(semesterId);
+        additionalPath = semester.get().getSemesterName();
+        Long programId=applicant.get().getProgramId();
+        Optional<Program>program=mHelper.getProgramById(programId);
+        additionalPath=additionalPath+"/"+program.get().getProgramShortName();
+        String photoBasePath, signatureBasePath;
+        photoBasePath = apPhotoBasePath + additionalPath + "/" + applicationSn+ ".jpeg";
+        signatureBasePath = apSignatureBasePath + additionalPath + "/" + applicationSn + ".jpeg";
 
 
         Document document = new Document();
@@ -74,12 +80,56 @@ public class ApplicationFormPdfGenerator {
         document.open();
         document.setPageSize(PageSize.A4);
 
-        Paragraph paragraph = new Paragraph();
-        PdfPCell cell = new PdfPCell();
-        Chunk chunk = new Chunk();
-        paragraph.add("minhaz");
-        document.add(paragraph);
+      Paragraph paragraph = new Paragraph();
+      PdfPCell cell = new PdfPCell();
+      Chunk chunk = new Chunk();
 
+      final ClassLoader classloader = this.getClass().getClassLoader();
+      String aust = "logo-aust.png";
+      final URL austLogoUrl = classloader.getResource("static/" + aust);
+
+      PdfPTable h2 = new PdfPTable(1);
+      h2.setSpacingBefore(5);
+      h2.setSpacingAfter(5);
+      h2.setWidthPercentage(100);
+      PdfPTable header = new PdfPTable(new float[]{.15f,.15f,.2f,.2f,.2f,.2f});
+      header.setSpacingBefore(5);
+      header.setSpacingAfter(5);
+      header.setWidthPercentage(100);
+
+      Image austLogo = Image.getInstance(austLogoUrl);
+      cell = new PdfPCell(austLogo, true);
+      cell.setBorder(0);
+      cell.setPadding(2);
+      cell.setRowspan(3);
+      cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+      cell.setUseAscender(true);
+      cell.setFixedHeight(60);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      header.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("    Ahsanullah University of Science and Technology", font18B));
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      cell.setBorder(0);
+      cell.setColspan(5);
+      header.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("(Approved by the Government of the People’s Republic of Bangladesh and Sponsored by the Dhaka Ahsania Mission)", font10R));
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      cell.setBorder(0);
+      cell.setColspan(5);
+      header.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("141-142 Love Road, Tejgaon Industrial Area, Dhaka-1208", font12R));
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      cell.setBorder(0);
+      cell.setColspan(5);
+      header.addCell(cell);
+
+      cell = new PdfPCell(header);
+      cell.setBorder(0);
+      h2.addCell(cell);
+      document.add(h2);
 
         document.close();
 

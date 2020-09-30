@@ -269,8 +269,8 @@ public class ApplicationFormPdfGenerator {
       cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
       pInfo.addCell(cell);
       String fName=applicant.get().getApplicantPersonaIInfo().getFirstName().toUpperCase();
-      String  mName=applicant.get().getApplicantPersonaIInfo().getMiddleName() ==null ? " ":applicant.get().getApplicantPersonaIInfo().getMiddleName();
-      String lName=applicant.get().getApplicantPersonaIInfo().getLastName()==null ? " ":applicant.get().getApplicantPersonaIInfo().getLastName();
+      String  mName=applicant.get().getApplicantPersonaIInfo().getMiddleName() ==null ? " ":applicant.get().getApplicantPersonaIInfo().getMiddleName().toUpperCase();
+      String lName=applicant.get().getApplicantPersonaIInfo().getLastName()==null ? " ":applicant.get().getApplicantPersonaIInfo().getLastName().toUpperCase();
       String  fullName=fName+mName+lName;
       paragraph= new Paragraph(""+fullName, font11R);
       paragraph.add(dottedline);

@@ -8,6 +8,7 @@ import aust.iums.pg.admission.enums.FileTypeEnum;
 import aust.iums.pg.admission.helper.AdmissionHelper;
 import aust.iums.pg.admission.model.*;
 import aust.iums.pg.admission.service.FileStorageService;
+import aust.iums.pg.admission.service.PgAdmissionMailService;
 import aust.iums.pg.admission.utils.PgUtils;
 import com.itextpdf.text.DocumentException;
 import org.slf4j.Logger;
@@ -46,6 +47,9 @@ public class AdmissionController {
 
     @Autowired
     AdmissionHelper mHelper;
+
+    @Autowired
+    PgAdmissionMailService mPgAdmissionMailService;
 
     private final Logger log = LoggerFactory.getLogger(AdmissionController.class);
     Semester semester;
@@ -121,7 +125,7 @@ public class AdmissionController {
     }
 
     @PostMapping(value = "/apply", params = {"save"})
-    public String greetingSubmit(@Valid @ModelAttribute("applicant") ApplicationForm applicant, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) throws IOException, ParseException {
+    public String greetingSubmit(@Valid @ModelAttribute("applicant") ApplicationForm applicant, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) throws Exception {
         boolean otherErrors = isOtherErrors(applicant);
         if (bindingResult.hasErrors() || otherErrors) {
             log.error("errors: " + bindingResult.toString());
@@ -136,6 +140,12 @@ public class AdmissionController {
             model.addAttribute("serialNo", serialNo);
             String toDate = PgUtils.instantFormatter(deadline.getToDate());
             model.addAttribute("deadline", toDate);
+
+            String dob=applicant.getDateOfBirth();
+
+            ByteArrayInputStream bis = mHelper.getApplicationFormPdf(serialNo, dob);
+            applicant.setApplicationSerialNumber(serialNo);
+            mPgAdmissionMailService.sendEmailFromTemplate(applicant,"Aust","Admission",bis);
             return "success-page";
         }
 

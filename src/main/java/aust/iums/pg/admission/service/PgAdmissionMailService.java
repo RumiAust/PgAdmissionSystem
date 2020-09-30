@@ -47,8 +47,12 @@ public class PgAdmissionMailService {
       log.debug("Email doesn't exist for user '{}'",pApplicationForm.getApplicationSerialNumber());
       return;
     }
+    String fName=pApplicationForm.getFirstName().toUpperCase();
+    String  mName=pApplicationForm.getMiddleName() ==null ? " ":pApplicationForm.getMiddleName().toUpperCase();
+    String lName=pApplicationForm.getLastName()==null ? " ":pApplicationForm.getLastName().toUpperCase();
+    String  fullName=fName+mName+lName;
     Context context = new Context();
-    context.setVariable("studentName", pApplicationForm.getFirstName());
+    context.setVariable("studentName", fullName);
     context.setVariable("serialNo", pApplicationForm.getApplicationSerialNumber());
    // context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
     String content = templateEngine.process("mail/applicationSuccessEmail", context);

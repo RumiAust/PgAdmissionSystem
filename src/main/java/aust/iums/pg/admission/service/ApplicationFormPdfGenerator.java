@@ -2,6 +2,7 @@ package aust.iums.pg.admission.service;
 
 import aust.iums.pg.admission.helper.AdmissionHelper;
 import aust.iums.pg.admission.model.Applicant;
+import aust.iums.pg.admission.model.ApplicantAddress;
 import aust.iums.pg.admission.model.Program;
 import aust.iums.pg.admission.model.Semester;
 import aust.iums.pg.admission.repository.ApplicantRepository;
@@ -10,6 +11,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.draw.DottedLineSeparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +24,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
 import java.text.ParseException;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ApplicationFormPdfGenerator {
@@ -227,11 +232,309 @@ public class ApplicationFormPdfGenerator {
       h2.setWidthPercentage(100);
       cell = new PdfPCell(new Phrase("Program : "+program.get().getProgramLongName(), font19B));
       cell.setBorder(0);
-      cell.setColspan(4);
       cell.setMinimumHeight(25);
       cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
       programName.addCell(cell);
       document.add(programName);
+
+      chunk = new Chunk(" ", font14B);
+      paragraph = new Paragraph();
+      paragraph.setAlignment(Element.ALIGN_LEFT);
+      paragraph.add(chunk);
+      document.add(paragraph);
+
+      //personal info
+
+      // pinfo test
+      DottedLineSeparator dottedline = new DottedLineSeparator();
+      dottedline.setOffset(-4);
+      dottedline.setGap(5f);
+
+      float[] cWidths = {2, 2, 2, 2, 2, 2, 2, 2, 2, 2,2,2};
+      PdfPTable pInfo = new PdfPTable(cWidths);
+      pInfo.setWidthPercentage(100);
+
+      cell = new PdfPCell(new Phrase("1. Full Name (as in SSC/GCE ‘O’ Level)", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(5);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+      cell = new PdfPCell(new Phrase(":", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+      String fName=applicant.get().getApplicantPersonaIInfo().getFirstName().toUpperCase();
+      String  mName=applicant.get().getApplicantPersonaIInfo().getMiddleName() ==null ? " ":applicant.get().getApplicantPersonaIInfo().getMiddleName();
+      String lName=applicant.get().getApplicantPersonaIInfo().getLastName()==null ? " ":applicant.get().getApplicantPersonaIInfo().getLastName();
+      String  fullName=fName+mName+lName;
+      paragraph= new Paragraph(""+fullName, font11R);
+      paragraph.add(dottedline);
+      cell = new PdfPCell(paragraph);
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(6);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("2. Father’s Name", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(2);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+      cell = new PdfPCell(new Phrase(":", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      pInfo.addCell(cell);
+      paragraph= new Paragraph(""+applicant.get().getApplicantPersonaIInfo().getFatherName().toUpperCase(), font11R);
+      paragraph.add(dottedline);
+      cell = new PdfPCell(paragraph);
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(9);//…
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("3. Mother’s Name", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(2);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+      cell = new PdfPCell(new Phrase(":", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      pInfo.addCell(cell);
+      paragraph= new Paragraph(""+applicant.get().getApplicantPersonaIInfo().getMotherName().toUpperCase(), font11R);
+      paragraph.add(dottedline);
+      cell = new PdfPCell(paragraph);
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(9);//…
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+
+
+      cell = new PdfPCell(new Phrase("4. Gender", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(2);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+      cell = new PdfPCell(new Phrase(":", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      pInfo.addCell(cell);
+      paragraph= new Paragraph(""+applicant.get().getApplicantPersonaIInfo().getGender(), font11R);
+      paragraph.add(dottedline);
+      cell = new PdfPCell(paragraph);
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(3);//…
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+      cell = new PdfPCell(new Phrase("5. Religion", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(2);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+      cell = new PdfPCell(new Phrase(":", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      pInfo.addCell(cell);
+      paragraph= new Paragraph(""+applicant.get().getApplicantPersonaIInfo().getReligion(), font11R);
+      paragraph.add(dottedline);
+      cell = new PdfPCell(paragraph);
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(3);//…
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+
+
+      cell = new PdfPCell(new Phrase("6. Nationality", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(2);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+      cell = new PdfPCell(new Phrase(":", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      pInfo.addCell(cell);
+      paragraph= new Paragraph(""+applicant.get().getApplicantPersonaIInfo().getNationality(), font11R);
+      paragraph.add(dottedline);
+      cell = new PdfPCell(paragraph);
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(3);//…
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+      String birthDate=PgUtils.dateToString(applicant.get().getApplicantPersonaIInfo().getDateOfBirth());
+      cell = new PdfPCell(new Phrase("7. Date of Birth", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(2);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+      cell = new PdfPCell(new Phrase(":", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      pInfo.addCell(cell);
+      paragraph= new Paragraph(""+birthDate, font11R);
+      paragraph.add(dottedline);
+      cell = new PdfPCell(paragraph);
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(3);//…
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("8. Place of Birth", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(2);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+      cell = new PdfPCell(new Phrase(":", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      pInfo.addCell(cell);
+      paragraph= new Paragraph(""+applicant.get().getApplicantPersonaIInfo().getPlaceOfBirth()==null ? " ":applicant.get().getApplicantPersonaIInfo().getPlaceOfBirth(), font11R);
+      paragraph.add(dottedline);
+      cell = new PdfPCell(paragraph);
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(9);//…
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+
+
+      cell = new PdfPCell(new Phrase("9. Mobile Number", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(2);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+      cell = new PdfPCell(new Phrase(":", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      pInfo.addCell(cell);
+      paragraph= new Paragraph(""+applicant.get().getApplicantPersonaIInfo().getMobileNumber(), font11R);
+      paragraph.add(dottedline);
+      cell = new PdfPCell(paragraph);
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(3);//…
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+      cell = new PdfPCell(new Phrase("10.Email Address", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(2);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+      cell = new PdfPCell(new Phrase(":", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      pInfo.addCell(cell);
+      paragraph= new Paragraph(""+applicant.get().getApplicantPersonaIInfo().getEmailAddress(), font11R);
+      paragraph.add(dottedline);
+      cell = new PdfPCell(paragraph);
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(3);//…
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+
+       List<ApplicantAddress> applicantAddressList=applicant.get().getApplicantAddresses().stream().sorted(Comparator.comparing(ApplicantAddress::getAddressType).reversed()).collect(Collectors.toList());
+
+      cell = new PdfPCell(new Phrase("11. Present Address", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(3);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+      cell = new PdfPCell(new Phrase(":", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      pInfo.addCell(cell);
+      paragraph= new Paragraph(applicantAddressList.get(0).getLine1()==null ? " ": applicantAddressList.get(0).getLine1(), font11R);
+      paragraph.add(dottedline);
+      cell = new PdfPCell(paragraph);
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(8);//…
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+      String divisionName=applicantAddressList.get(0).getDivision().getDivisionName();
+      String districtName=applicantAddressList.get(0).getDistrict().getDistrictName();
+      String thanaName="";
+      if(applicantAddressList.get(0).getThanaOther() !=null){
+        thanaName=applicantAddressList.get(0).getThana().getThanaName();
+      }else{
+        thanaName=applicantAddressList.get(0).getThanaOther();
+      }
+
+      paragraph= new Paragraph(""+divisionName+","+districtName+","+thanaName, font11R);
+      paragraph.add(dottedline);
+      cell = new PdfPCell(paragraph);
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(12);//…
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("12. Permanent Address", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(3);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+      cell = new PdfPCell(new Phrase(":", font11R));
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      pInfo.addCell(cell);
+      paragraph= new Paragraph(applicantAddressList.get(1).getLine1()==null ? " ": applicantAddressList.get(1).getLine1(), font11R);
+      paragraph.add(dottedline);
+      cell = new PdfPCell(paragraph);
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(8);//…
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+      divisionName=applicantAddressList.get(1).getDivision().getDivisionName();
+      districtName=applicantAddressList.get(1).getDistrict().getDistrictName();
+      thanaName="";
+      if(applicantAddressList.get(1).getThanaOther() !=null){
+        thanaName=applicantAddressList.get(1).getThana().getThanaName();
+      }else{
+        thanaName=applicantAddressList.get(1).getThanaOther();
+      }
+
+      paragraph= new Paragraph(""+divisionName+", "+districtName+", "+thanaName, font11R);
+      paragraph.add(dottedline);
+      cell = new PdfPCell(paragraph);
+      cell.setBorder(0);
+      cell.setMinimumHeight(minimumPersonalInfoRowHeight);
+      cell.setColspan(12);//…
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      pInfo.addCell(cell);
+      document.add(pInfo);
 
 
 

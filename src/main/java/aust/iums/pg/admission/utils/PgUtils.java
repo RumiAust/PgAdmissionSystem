@@ -29,5 +29,10 @@ public class PgUtils {
     String output = formatter.format(myDate);
     return output;
   }
+  public static String dateToString(Date pDate){
+    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    String strDate = dateFormat.format(pDate);
+    return strDate;
+  }
 
 }

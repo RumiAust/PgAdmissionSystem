@@ -545,6 +545,9 @@ public class ApplicationFormPdfGenerator {
       chunk = new Chunk(" ");
       paragraph= new Paragraph(chunk);
       document.add(paragraph);
+      chunk = new Chunk(" ");
+      paragraph= new Paragraph(chunk);
+      document.add(paragraph);
 
       Chunk  chunkNo = new Chunk("13.  ", font11R);
       paragraph = new Paragraph();
@@ -837,7 +840,15 @@ public class ApplicationFormPdfGenerator {
 
 
       //
-      //edu
+      chunk = new Chunk(" ");
+      paragraph= new Paragraph(chunk);
+      document.add(paragraph);
+      chunk = new Chunk(" ");
+      paragraph= new Paragraph(chunk);
+      document.add(paragraph);
+
+
+      //job
       List<JobExperience> jobExperienceList=applicant.get().getJobExperience();
       chunk = new Chunk(" ");
       paragraph= new Paragraph(chunk);
@@ -857,6 +868,89 @@ public class ApplicationFormPdfGenerator {
       paragraph.add(chunkNo);
       paragraph.add(chunkDetails);
       document.add(paragraph);
+
+      PdfPTable jobInfo = new PdfPTable(14);
+      jobInfo.setSpacingBefore(5);
+      jobInfo.setSpacingAfter(5);
+      jobInfo.setWidthPercentage(100);
+
+      cell = new PdfPCell(new Phrase("Name of the organization/Employer", font11B));
+      cell.setMinimumHeight(20);
+      cell.setColspan(4);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      jobInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("Designation", font11B));
+      cell.setMinimumHeight(20);
+      cell.setColspan(2);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      jobInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("Job Responsibilty", font11B));
+      cell.setMinimumHeight(20);
+      cell.setColspan(4);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      jobInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("Duration", font11B));
+      cell.setMinimumHeight(20);
+      cell.setColspan(4);
+      cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+      cell.setUseAscender(true);
+      cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+      jobInfo.addCell(cell);
+
+      if(jobExperienceList.size()>0){
+        for(int i=0;i<jobExperienceList.size();i++) {
+          cell = new PdfPCell(new Phrase("" + jobExperienceList.get(i).getOrganizationName(), font11B));
+          cell.setMinimumHeight(20);
+          cell.setColspan(4);
+          cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+          cell.setUseAscender(true);
+          cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+          jobInfo.addCell(cell);
+
+          cell = new PdfPCell(new Phrase(""+jobExperienceList.get(i).getDesignation(), font11B));
+          cell.setMinimumHeight(20);
+          cell.setColspan(2);
+          cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+          cell.setUseAscender(true);
+          cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+          jobInfo.addCell(cell);
+
+          cell = new PdfPCell(new Phrase(""+jobExperienceList.get(i).getJobResponsibilities(), font11B));
+          cell.setMinimumHeight(20);
+          cell.setColspan(4);
+          cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+          cell.setUseAscender(true);
+          cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+          jobInfo.addCell(cell);
+
+          String fromDate=PgUtils.dateToString(jobExperienceList.get(i).getFromDate());
+          String toDate=PgUtils.dateToString(jobExperienceList.get(i).getToDate());
+          cell = new PdfPCell(new Phrase(fromDate+" - "+toDate, font11B));
+          cell.setMinimumHeight(20);
+          cell.setColspan(4);
+          cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+          cell.setUseAscender(true);
+          cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+          jobInfo.addCell(cell);
+        }
+      }
+
+      document.add(jobInfo);
+
+
 
       chunk = new Chunk(" ");
       paragraph= new Paragraph(chunk);

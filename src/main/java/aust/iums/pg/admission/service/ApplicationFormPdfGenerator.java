@@ -12,6 +12,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.DottedLineSeparator;
+import com.itextpdf.text.pdf.draw.LineSeparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
 import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -483,7 +486,8 @@ public class ApplicationFormPdfGenerator {
       String divisionName=applicantAddressList.get(0).getDivision().getDivisionName();
       String districtName=applicantAddressList.get(0).getDistrict().getDistrictName();
       String thanaName="";
-      if(applicantAddressList.get(0).getThanaOther() !=null){
+      String t=applicantAddressList.get(0).getThanaOther();
+      if(applicantAddressList.get(0).getThanaOther() ==null){
         thanaName=applicantAddressList.get(0).getThana().getThanaName();
       }else{
         thanaName=applicantAddressList.get(0).getThanaOther();
@@ -520,7 +524,7 @@ public class ApplicationFormPdfGenerator {
       divisionName=applicantAddressList.get(1).getDivision().getDivisionName();
       districtName=applicantAddressList.get(1).getDistrict().getDistrictName();
       thanaName="";
-      if(applicantAddressList.get(1).getThanaOther() !=null){
+      if(applicantAddressList.get(1).getThanaOther() ==null){
         thanaName=applicantAddressList.get(1).getThana().getThanaName();
       }else{
         thanaName=applicantAddressList.get(1).getThanaOther();
@@ -535,6 +539,108 @@ public class ApplicationFormPdfGenerator {
       cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
       pInfo.addCell(cell);
       document.add(pInfo);
+
+
+     Chunk chunkNo = new Chunk("18.  ", font11R);
+      paragraph = new Paragraph();
+      paragraph.setAlignment(Element.ALIGN_CENTER);
+      paragraph.add(chunk);
+
+     Chunk chunkDetails = new Chunk("\tDeclaration: ", font11B);
+      paragraph = new Paragraph();
+      paragraph.setAlignment(Element.ALIGN_CENTER);
+      paragraph.add(chunk);
+
+
+      paragraph = new Paragraph();
+      paragraph.add(chunkNo);
+      paragraph.add(chunkDetails);
+      document.add(paragraph);
+
+      chunk = new Chunk(" ");
+      paragraph=new Paragraph(chunk);
+      document.add(paragraph);
+
+
+      paragraph= new Paragraph("I do hereby declare that the information as stated in the Admission application form is true. If any of the information is found incorrect, my admission is liable to be cancelled.", font11R);
+      // paragraph.setLeading(18);
+      paragraph.setAlignment(Element.ALIGN_JUSTIFIED);
+      document.add(paragraph);
+
+      paragraph= new Paragraph("If any of the certificates/academic transcripts/documents attached with this form is found altered/forged, my admission is also liable to be cancelled.", font11R);
+      paragraph.setAlignment(Element.ALIGN_JUSTIFIED);
+
+      document.add(paragraph);
+
+      paragraph= new Paragraph("I also declare that I will abide by all the existing as well as any new rules and regulations of the University, if made in future, and the orders of the AUST authority; otherwise my admission is liable to be cancelled.", font11R);
+      paragraph.setAlignment(Element.ALIGN_JUSTIFIED);
+      document.add(paragraph);
+
+
+
+      PdfPTable signatureInfo = new PdfPTable(4);
+      signatureInfo.setSpacingBefore(5);
+      signatureInfo.setSpacingAfter(5);
+      signatureInfo.setWidthPercentage(100);
+
+      cell = new PdfPCell(new Phrase(" ", font11R));
+      cell.setBorder(0);
+      cell.setColspan(3);
+      cell.setRowspan(3);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      signatureInfo.addCell(cell);
+
+
+      //signature
+      Image signature = Image.getInstance(signatureBasePath);
+      cell = new PdfPCell(signature, true);
+      cell.setPadding(2);
+      cell.setBorder(0);
+      cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+      cell.setFixedHeight(30);
+      signatureInfo.addCell(cell);
+
+      cell = new PdfPCell(new Phrase("Signature of the Applicant", font10B));
+      cell.setBorder(0);
+      cell.setMinimumHeight(20);
+      cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+      signatureInfo.addCell(cell);
+      //
+      LocalDateTime myDateObj = LocalDateTime.now();
+      DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+      String formattedDate = myDateObj.format(myFormatObj);
+
+      PdfPTable date = new PdfPTable(new float[]{.1f,.1f,.2f});
+      date.setWidthPercentage(100);
+      dottedline = new DottedLineSeparator();
+      dottedline.setOffset(-2);
+      dottedline.setGap(5f);
+      paragraph= new Paragraph("Date :", font11R);
+      cell = new PdfPCell(new Phrase(paragraph));
+      cell.setBorder(0);
+      date.addCell(cell);
+      paragraph= new Paragraph(""+formattedDate, font11R);
+      cell = new PdfPCell(new Phrase(paragraph));
+      cell.setColspan(2);
+      cell.setBorder(0);
+      date.addCell(cell);
+
+      //
+      cell = new PdfPCell(date);
+      cell.setBorder(0);
+      cell.setMinimumHeight(20);
+      signatureInfo.addCell(cell);
+
+      document.add(signatureInfo);
+
+
+      // office use only
+
+      //line separator
+      document.add(new LineSeparator());
+
+
+
 
 
 

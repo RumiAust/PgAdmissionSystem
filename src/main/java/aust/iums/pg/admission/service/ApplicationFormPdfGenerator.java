@@ -86,7 +86,7 @@ public class ApplicationFormPdfGenerator {
         Optional<Program>program=mHelper.getProgramById(programId);
         additionalPath=additionalPath+"/"+program.get().getProgramShortName();
         String photoBasePath, signatureBasePath;
-        photoBasePath = apPhotoBasePath +"/"+ additionalPath + "/" + applicationSn+ ".jpg";
+        photoBasePath = apPhotoBasePath + additionalPath + "/" + applicationSn+ ".jpg";
         signatureBasePath = apSignatureBasePath + additionalPath + "/" + applicationSn + ".jpg";
 
 

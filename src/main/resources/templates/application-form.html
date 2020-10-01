@@ -81,7 +81,8 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">First Name</div>
                                         </div>
-                                        <input type="text" th:field="*{firstName}" class="form-control" name="firstName"
+                                        <input maxlength="100" type="text" th:field="*{firstName}" class="form-control"
+                                               name="firstName"
                                                th:errorclass="alert-danger">
                                     </div>
                                     <span class="error" style="padding-left:10px; color: red"
@@ -96,7 +97,7 @@
                                         <div class="input-group-prepend-ng">
                                             <div class="input-group-text">Middle Name</div>
                                         </div>
-                                        <input type="text" th:field="*{middleName}" class="form-control"
+                                        <input maxlength="100" type="text" th:field="*{middleName}" class="form-control"
                                                name="middleName" th:errorclass="alert-danger">
                                     </div>
                                     <span class="error" style="padding-left:10px; color: red"
@@ -111,7 +112,8 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Last Name</div>
                                         </div>
-                                        <input type="text" th:field="*{lastName}" class="form-control" name="lastName"
+                                        <input maxlength="100" type="text" th:field="*{lastName}" class="form-control"
+                                               name="lastName"
                                                th:errorclass="alert-danger">
                                     </div>
                                     <span class="error" style="padding-left:10px; color: red"
@@ -130,7 +132,7 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Father's Name</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{fatherName}"
+                                        <input maxlength="100" type="text" class="form-control" th:field="*{fatherName}"
                                                th:errorclass="alert-danger">
                                     </div>
                                     <span class="error" style="padding-left:10px; color: red"
@@ -146,7 +148,7 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Mother's Name</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{motherName}"
+                                        <input maxlength="100" type="text" class="form-control" th:field="*{motherName}"
                                                th:errorclass="alert-danger">
                                     </div>
                                     <span class="error" style="padding-left:10px; color: red"
@@ -182,7 +184,7 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Place of Birth</div>
                                         </div>
-                                        <input type="text" class="form-control"
+                                        <input maxlength="100" type="text" class="form-control"
                                                th:field="*{placeOfBirth}" th:errorclass="alert-danger">
                                     </div>
                                     <span class="error" style="padding-left:10px; color: red"
@@ -197,7 +199,8 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Nationality</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{nationality}"
+                                        <input maxlength="100" type="text" class="form-control"
+                                               th:field="*{nationality}"
                                                th:errorclass="alert-danger">
                                     </div>
                                     <span class="error" style="padding-left:10px; color: red"
@@ -214,7 +217,7 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Contact Number</div>
                                         </div>
-                                        <input type="text" class="form-control"
+                                        <input maxlength="20" type="text" class="form-control"
                                                th:field="*{mobileNumber}" th:errorclass="alert-danger">
                                     </div>
                                     <span class="error" style="padding-left:10px; color: red"
@@ -229,7 +232,7 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Email</div>
                                         </div>
-                                        <input type="email" class="form-control" th:field="*{email}"
+                                        <input maxlength="100" type="email" class="form-control" th:field="*{email}"
                                                th:errorclass="alert-danger">
 
                                     </div>
@@ -343,7 +346,8 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">School/College/Institution:</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{sscInstituteName}"
+                                            <input maxlength="100" type="text" class="form-control"
+                                                   th:field="*{sscInstituteName}"
                                                    th:errorclass="alert-danger">
                                         </div>
                                         <span class="error" style="padding-left:10px; color: red"
@@ -360,7 +364,8 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Board</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{sscBoardName}"
+                                            <input maxlength="100" type="text" class="form-control"
+                                                   th:field="*{sscBoardName}"
                                                    th:errorclass="alert-danger">
                                         </div>
                                         <span class="error" style="padding-left:10px; color: red"
@@ -374,7 +379,8 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Total Marks/Grade</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{sscMarks}"
+                                            <input maxlength="100" type="text" class="form-control"
+                                                   th:field="*{sscMarks}"
                                                    th:errorclass="alert-danger">
                                         </div>
                                         <span class="error" style="padding-left:10px; color: red"
@@ -388,7 +394,8 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Division/Class/Grade</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{sscGrade}"
+                                            <input maxlength="100" type="text" class="form-control"
+                                                   th:field="*{sscGrade}"
                                                    th:errorclass="alert-danger">
                                         </div>
                                         <span class="error" style="padding-left:10px; color: red"
@@ -448,7 +455,8 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">School/College/Institution:</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{hscInstituteName}"
+                                            <input maxlength="100" type="text" class="form-control"
+                                                   th:field="*{hscInstituteName}"
                                                    th:errorclass="alert-danger">
                                         </div>
                                         <span class="error" style="padding-left:10px; color: red"
@@ -465,7 +473,8 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Board</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{hscBoardName}"
+                                            <input maxlength="100" type="text" class="form-control"
+                                                   th:field="*{hscBoardName}"
                                                    th:errorclass="alert-danger">
                                         </div>
                                         <span class="error" style="padding-left:10px; color: red"
@@ -479,7 +488,8 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Total Marks/Grade</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{hscMarks}"
+                                            <input maxlength="100" type="text" class="form-control"
+                                                   th:field="*{hscMarks}"
                                                    th:errorclass="alert-danger">
                                         </div>
                                         <span class="error" style="padding-left:10px; color: red"
@@ -493,7 +503,8 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Division/Class/Grade</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{hscGrade}"
+                                            <input maxlength="100" type="text" class="form-control"
+                                                   th:field="*{hscGrade}"
                                                    th:errorclass="alert-danger">
                                         </div>
                                         <span class="error" style="padding-left:10px; color: red"
@@ -553,7 +564,8 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">School/College/Institution:</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{bscInstituteName}"
+                                            <input maxlength="100" type="text" class="form-control"
+                                                   th:field="*{bscInstituteName}"
                                                    th:errorclass="alert-danger">
                                         </div>
                                         <span class="error" style="padding-left:10px; color: red"
@@ -570,7 +582,8 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Board</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{bscBoardName}"
+                                            <input maxlength="100" type="text" class="form-control"
+                                                   th:field="*{bscBoardName}"
                                                    th:errorclass="alert-danger">
                                         </div>
                                         <span class="error" style="padding-left:10px; color: red"
@@ -584,7 +597,8 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Total Marks/Grade</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{bscMarks}"
+                                            <input maxlength="100" type="text" class="form-control"
+                                                   th:field="*{bscMarks}"
                                                    th:errorclass="alert-danger">
                                         </div>
                                         <span class="error" style="padding-left:10px; color: red"
@@ -598,7 +612,8 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Division/Class/Grade</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{bscGrade}"
+                                            <input maxlength="100" type="text" class="form-control"
+                                                   th:field="*{bscGrade}"
                                                    th:errorclass="alert-danger">
                                         </div>
                                         <span class="error" style="padding-left:10px; color: red"
@@ -658,13 +673,13 @@
                                             <div class="input-group-prepend-na">
                                                 <div class="input-group-text">School/College/Institution:</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{mscInstituteName}">
+                                            <input maxlength="100" type="text" class="form-control"
+                                                   th:field="*{mscInstituteName}">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <!-- Date of Birth -->
                                 <div class="col-sm-12 col-md-4">
                                     <div class="form-group required">
                                         <div class="input-group">
@@ -681,7 +696,8 @@
                                             <div class="input-group-prepend-na">
                                                 <div class="input-group-text">Total Marks/Grade</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{mscMarks}">
+                                            <input maxlength="100" type="text" class="form-control"
+                                                   th:field="*{mscMarks}">
                                         </div>
                                     </div>
                                 </div>
@@ -691,7 +707,8 @@
                                             <div class="input-group-prepend-na">
                                                 <div class="input-group-text">Division/Class/Grade</div>
                                             </div>
-                                            <input type="text" class="form-control" th:field="*{mscGrade}">
+                                            <input maxlength="100" type="text" class="form-control"
+                                                   th:field="*{mscGrade}">
                                         </div>
                                     </div>
                                 </div>
@@ -744,16 +761,7 @@
                         </strong>
                     </div>
                     <div class="card-body">
-                        <table>
-                            <thead>
-                            <tr class="col-sm-12">
-                                <td class="col-sm-4" align="right" style="padding: 10px">
-                                    <label id="addbtn" class="btn btn-success" onclick="addRow()" name="addRow">Add
-                                        New</label>
-                                </td>
-                            </tr>
-                            </thead>
-                            <tbody>
+                        <div class="row">
                             <div class="col-md-12" th:unless="${#lists.isEmpty(applicant.workExperienceList)}">
                                 <div class="alert alert-warning">
                                     <ul style="max-height:150px;">
@@ -765,114 +773,165 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div id="container">
-                                <tr th:id="${rowStat.index}" th:attr="data-id=${rowStat.index}"
-                                    class="border workRow" style="display: none; margin: 20px;"
-                                    th:each="row,rowStat : *{workExperienceList}">
-                                    <td class="col-sm-12" style="padding: 20px;">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">Organization Name:</div>
-                                                        </div>
-                                                        <input th:id="organizationName+${rowStat.index}" type="text"
-                                                               class="form-control"
-                                                               th:field="*{workExperienceList[__${rowStat.index}__].organizationName}">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-sm-12 col-md-6">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">Designation:</div>
-                                                        </div>
-                                                        <input th:id="designation+${rowStat.index}" type="text"
-                                                               class="form-control"
-                                                               th:field="*{workExperienceList[__${rowStat.index}__].designation}">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-12 col-md-6">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">Job Responsibility</div>
-                                                        </div>
-                                                        <input th:id="jobResponsibility+${rowStat.index}" type="text"
-                                                               class="form-control"
-                                                               th:field="*{workExperienceList[__${rowStat.index}__].jobResponsibility}">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="row">
-                                            <div class="col-sm-12 col-md-4">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">From Date</div>
-                                                        </div>
-                                                        <input th:id="fromDate+${rowStat.index}" type="date"
-                                                               class="form-control"
-                                                               th:field="*{workExperienceList[__${rowStat.index}__].fromDate}">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-4">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">To Date:</div>
-                                                        </div>
-                                                        <input th:id="toDate+${rowStat.index}" type="date"
-                                                               class="form-control"
-                                                               th:field="*{workExperienceList[__${rowStat.index}__].toDate}">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-4">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">Upload</div>
-                                                        </div>
-                                                        <input th:id="experienceFile+${rowStat.index}" type="file"
-                                                               class="form-control"
-                                                               accept=".jpg, .jpeg, .png, .pdf, .zip"
-                                                               th:field="*{workExperienceList[__${rowStat.index}__].experienceFile}">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-4">
-
-                                            </div>
-                                            <div class="col-md-4" align="center">
-                                                <label th:id="${rowStat.index}" class="btn btn-danger" name="removeRow"
-                                                       onclick="removeRow(this)"><i class="fa fa-trash-o"></i>
-                                                </label>
-                                                <input th:id="visibility+${rowStat.index}" type="hidden"
-                                                       th:field="*{workExperienceList[__${rowStat.index}__].visbility}">
-                                            </div>
-                                        </div>
-
-                                    </td>
-                                </tr>
+                        </div>
+                        <div class="row" align="center">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4" style="padding: 10px">
+                                <label id="addbtn" class="btn btn-success" onclick="addRow()" name="addRow">Add
+                                    New</label>
+                                <input id="serialList" th:attr="data-serial=${applicant.getSerialList()}" type="hidden"
+                                       th:field="*{serialList}">
+                                <input id="pointer" th:attr="data-pointer=${applicant.pointer}" type="hidden"
+                                       th:field="*{pointer}">
                             </div>
-                            </tbody>
-                        </table>
+                        </div>
+                        <div id="container">
+                            <div th:id="${rowStat.index}" th:attr="data-id=${rowStat.index}"
+                                 class="border workRow" style="display: none; margin: 20px;"
+                                 th:each="row,rowStat : *{workExperienceList}">
+                                <div class="col-sm-12 col-md-12" style="padding: 20px;">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6">
+                                            <div class="form-group required">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">Organization Name:</div>
+                                                    </div>
+                                                    <input maxlength="100" th:id="organizationName+${rowStat.index}"
+                                                           type="text"
+                                                           class="form-control"
+                                                           th:field="*{workExperienceList[__${rowStat.index}__].organizationName}">
+                                                </div>
+                                                <div style="padding-left:10px; color: red"
+                                                     th:if="${applicant.workExperienceList[__${rowStat.index}__].organizationNameError!=''}">
+                                                        <span class="error"
+                                                              th:text="${applicant.workExperienceList[__${rowStat.index}__].organizationNameError}"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6">
+                                            <div class="form-group required">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">Designation:</div>
+                                                    </div>
+                                                    <input maxlength="100" th:id="designation+${rowStat.index}"
+                                                           type="text"
+                                                           class="form-control"
+                                                           th:field="*{workExperienceList[__${rowStat.index}__].designation}">
+                                                </div>
+                                                <div style="padding-left:10px; color: red"
+                                                     th:if="${applicant.workExperienceList[__${rowStat.index}__].designationError!=''}">
+                                                        <span class="error"
+                                                              th:text="${applicant.workExperienceList[__${rowStat.index}__].designationError}"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group required">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">Job Responsibility</div>
+                                                    </div>
+                                                    <input maxlength="200"
+                                                           th:id="jobResponsibility+${rowStat.index}" type="text"
+                                                           class="form-control"
+                                                           th:field="*{workExperienceList[__${rowStat.index}__].jobResponsibility}">
+                                                </div>
+                                                <div style="padding-left:10px; color: red"
+                                                     th:if="${applicant.workExperienceList[__${rowStat.index}__].jobResponsibilityError!=''}">
+                                                        <span class="error"
+                                                              th:text="${applicant.workExperienceList[__${rowStat.index}__].jobResponsibilityError}"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-4">
+                                            <div class="form-group required">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">From Date</div>
+                                                    </div>
+                                                    <input th:id="fromDate+${rowStat.index}" type="date"
+                                                           class="form-control"
+                                                           th:field="*{workExperienceList[__${rowStat.index}__].fromDate}">
+                                                </div>
+                                                <div style="padding-left:10px; color: red"
+                                                     th:if="${applicant.workExperienceList[__${rowStat.index}__].fromDateError!=''}">
+                                                        <span class="error"
+                                                              th:text="${applicant.workExperienceList[__${rowStat.index}__].fromDateError}"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" align="center">
+                                            <label th:for="currentWork-+${rowStat.index}">
+                                                <input onclick="hideToDate(this)" th:id="currentWork-+${rowStat.index}" type="checkbox"
+                                                       th:field="*{workExperienceList[__${rowStat.index}__].currentlyWorking}">
+                                                Currently work here
+                                            </label>
+                                        </div>
+                                        <div th:id="todatediv+${rowStat.index}" class="col-sm-12 col-md-4">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">To Date:</div>
+                                                    </div>
+                                                    <input id="toDate" th:id="toDate+${rowStat.index}" type="date"
+                                                           class="form-control"
+                                                           th:field="*{workExperienceList[__${rowStat.index}__].toDate}">
+                                                </div>
+                                                <div style="padding-left:10px; color: red"
+                                                     th:if="${applicant.workExperienceList[__${rowStat.index}__].toDateError!=''}">
+                                                        <span class="error"
+                                                              th:text="${applicant.workExperienceList[__${rowStat.index}__].toDateError}"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" align="center">
+                                        <div class="col-md-4"></div>
+                                        <div class="col-sm-2 col-md-4">
+                                            <div class="form-group required">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">Upload</div>
+                                                    </div>
+                                                    <input th:id="experienceFile+${rowStat.index}" type="file"
+                                                           class="form-control"
+                                                           accept=".jpg, .jpeg, .png, .pdf, .zip"
+                                                           th:field="*{workExperienceList[__${rowStat.index}__].experienceFile}">
+
+                                                </div>
+                                                <div style="padding-left:10px; color: red"
+                                                     th:if="${applicant.workExperienceList[__${rowStat.index}__].experienceFileError!=''}">
+                                                        <span class="error"
+                                                              th:text="${applicant.workExperienceList[__${rowStat.index}__].experienceFileError}"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" align="center">
+                                        <div class="col-md-4">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label th:id="${rowStat.index}" class="btn btn-danger" name="removeRow"
+                                                   onclick="removeRow(this)"><i class="fa fa-trash-o"></i>
+                                            </label>
+                                            <input th:id="visibility+${rowStat.index}" type="hidden"
+                                                   th:field="*{workExperienceList[__${rowStat.index}__].visbility}">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -958,7 +1017,8 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Thana (if not found)</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{presentOtherThana}"
+                                        <input maxlength="100" type="text" class="form-control"
+                                               th:field="*{presentOtherThana}"
                                                th:errorclass="alert-danger">
                                     </div>
                                 </div>
@@ -971,7 +1031,8 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Address</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{presentAddress}"
+                                        <input maxlength="250" type="text" class="form-control"
+                                               th:field="*{presentAddress}"
                                                th:errorclass="alert-danger">
                                     </div>
                                     <span class="error" style="padding-left:10px; color: red"
@@ -1054,7 +1115,8 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Thana (if not found)</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{permanentOtherThana}"
+                                        <input maxlength="100" type="text" class="form-control"
+                                               th:field="*{permanentOtherThana}"
                                                th:errorclass="alert-danger">
                                     </div>
                                 </div>
@@ -1067,7 +1129,8 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Address</div>
                                         </div>
-                                        <input type="text" class="form-control" th:field="*{permanentAddress}"
+                                        <input maxlength="250" type="text" class="form-control"
+                                               th:field="*{permanentAddress}"
                                                th:errorclass="alert-danger">
                                     </div>
                                     <span class="error" style="padding-left:10px; color: red"
@@ -1241,6 +1304,12 @@
 <script>
     $(document).ready(function () {
 
+        serial = $('#serialList').data('serial');
+        pointer = $('#pointer').data('pointer');
+        console.log("after loaded serial: " + serial + "pointer: " + pointer);
+        rows = []
+
+        rearrangeWorkDiv();
 
         if ($('#declaration').is(":checked")) {
             $('#submitBtn').attr("disabled", false);
@@ -1291,7 +1360,9 @@
     });
 
     //scroll into work experience
-    document.getElementById('workExperienceDivId').scrollIntoView(true);
+    /*
+        document.getElementById('workExperienceDivId').scrollIntoView(true);
+    */
 
     function addDistrict() {
         var mySelect = $('#presentDistrictId');
@@ -1462,43 +1533,46 @@
         }
     }
 
+    function hideToDate(th) {
+        var index = th.id.split("-");
+        console.log(index[1]);
+        if ($(th).is(":checked")) {
+            $('#toDate'+index[1]).val("");
+            $('#todatediv'+index[1]).css("display", "none");
+        } else if ($(th).prop("checked") == false) {
+            $('#todatediv'+index[1]).css("display", "block");
+        }
+    }
 
 
     function addRow() {
-        var serial = [];
-        var rows = [];
-        /*$('#addbtn').off("click");*/
-        var j = 0;
-        for (var i = 0; i < 10; i++) {
-            if ($('#visibility' + i).val() == 0) {
-                serial.push(i);
-                j++;
+        $('#addbtn').off("click");
+        pointer++;
+        if (pointer < 10) {
+            for (var i = 0; i < 10; i++) {
+                if ($('#visibility' + i).val() == 0) {
+                    $('#' + i).css("display", "block");
+                    $('#visibility' + i).val(1);
+                    for (var j = pointer; j > 0; j--) {
+                        serial[j] = serial[j - 1]
+                    }
+                    serial[0] = i;
+                    break;
+                }
             }
+            $('.workRow').each(function () {
+                rows[$(this).data('id')] = $(this);
+            });
+            $.each(serial, function (index, value) {
+                $('#container').append(rows[value]);
+            });
+        } else {
+            alert("You reached maximum 10 work experience. Don't need to add more work experience.")
         }
-        for (var i = 0; i < 10; i++) {
-            if ($('#visibility' + i).val() == 1) {
-                serial.push(i);
-                j++;
-            }
-        }
-        console.log(serial+" "+j);
-        for (i = 9; i=>0; i--) {
-            if ($('#visibility' + i).val() == 0) {
-                $('#' + i).css("display", "block");
-                $('#visibility' + i).val(1);
-                console.log(i);
-                break;
-            }
-        }
-
-        $('.workRow').each(function () {
-            rows[$(this).data('id')] = $(this);
-        });
-
-        $.each(serial, function (index, value) {
-            $('#container').append(rows[value]);
-        });
-
+        console.log(serial + " pointer:" + pointer);
+        $('#serialList').val(serial);
+        $('#pointer').val(pointer);
+        $('#addbtn').on("click");
 
     }
 
@@ -1519,21 +1593,48 @@
 
     }*/
 
+
     function removeRow(ths) {
+        $(ths).off("click");
         var index = ths.id;
-        console.log(index);
-
-
+        var position = serial.indexOf(parseInt(index));
+        if (position < pointer) {
+            for (var i = position; i < pointer; i++) {
+                serial[i] = serial[i + 1];
+            }
+            serial[pointer] = parseInt(index);
+            pointer--;
+        } else {
+            pointer--;
+        }
+        console.log(serial + " pointer:" + pointer);
+        $('#serialList').val(serial);
+        $('#pointer').val(pointer);
         $('#organizationName' + index).val("");
         $('#designation' + index).val("");
         $('#jobResponsibility' + index).val("");
         $('#toDate' + index).val("");
         $('#fromDate' + index).val("");
         $('#experienceFile' + index).val("");
-        $('#'+index).css("display","none");
+        $('#' + index).css("display", "none");
         $('#visibility' + index).val(0);
-
+        $(ths).on("click");
     }
 
+
+    function rearrangeWorkDiv() {
+        $('.workRow').each(function () {
+            rows[$(this).data('id')] = $(this);
+        });
+        $.each(serial, function (index, value) {
+            $('#container').append(rows[value]);
+        });
+        for (var i = 0; i < 9; i++) {
+            if ($('#visibility' + i).val() == 1) {
+                $('#' + i).css("display", "block");
+            }
+
+        }
+    }
 
 </script>

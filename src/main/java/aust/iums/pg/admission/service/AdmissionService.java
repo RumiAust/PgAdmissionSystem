@@ -177,16 +177,18 @@ public class AdmissionService {
 
       if (pApp.getWorkExperienceList().size()>0) {
             for (WorkExperienceList data : pApp.getWorkExperienceList()) {
-                JobExperience obj = new JobExperience();
-                //fileStorageService.saveFile(data.getExperienceFile(), "document", pApp, "exp");
-                obj.setApplicationSn(applicantSerialNo);
-                obj.setOrganizationName(data.getOrganizationName());
-                obj.setDesignation(data.getDesignation());
-                obj.setJobResponsibilities(data.getJobResponsibility());
-                obj.setFromDate(PgUtils.formateDate(data.getFromDate()));
-                obj.setToDate(PgUtils.formateDate(data.getToDate()));
-                obj.setApplicant(applicant);
-                workExperienceLists.add(obj);
+                if(data.getVisbility()==1) {
+                    JobExperience obj = new JobExperience();
+                    //fileStorageService.saveFile(data.getExperienceFile(), "document", pApp, "exp");
+                    obj.setApplicationSn(applicantSerialNo);
+                    obj.setOrganizationName(data.getOrganizationName());
+                    obj.setDesignation(data.getDesignation());
+                    obj.setJobResponsibilities(data.getJobResponsibility());
+                    obj.setFromDate(PgUtils.formateDate(data.getFromDate()));
+                    obj.setToDate(PgUtils.formateDate(data.getToDate()));
+                    obj.setApplicant(applicant);
+                    workExperienceLists.add(obj);
+                }
             }
         }*/
 

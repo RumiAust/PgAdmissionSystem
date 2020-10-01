@@ -121,15 +121,9 @@ public class ApplicationForm {
     //work experience
     List<WorkExperienceList> workExperienceList;
     private String workExperienceDivId;
-    List<Serial> serialList;
+    private List<Number> serialList;
+    private int pointer;
 
-    public List<Serial> getSerialList() {
-        return serialList;
-    }
-
-    public void setSerialList(List<Serial> serialList) {
-        this.serialList = serialList;
-    }
 
     //contact info
     @NotNull(message = "Please select division.")
@@ -185,6 +179,21 @@ public class ApplicationForm {
     // modal Id
     private String modalId;
 
+    public int getPointer() {
+        return pointer;
+    }
+
+    public void setPointer(int pointer) {
+        this.pointer = pointer;
+    }
+
+    public List<Number> getSerialList() {
+        return serialList;
+    }
+
+    public void setSerialList(List<Number> serialList) {
+        this.serialList = serialList;
+    }
 
     public String getPresentOtherThana() {
         return presentOtherThana;

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +39,14 @@ public class AdmissionHelper {
   public Semester getActiveSemester(){
     Semester semester=mAdmissionService.getSemesters(SemesterEnum.ACTIVE.getValue());
     return semester;
+  }
+  public Optional<Semester> getSemesterById(Long pSemesterId){
+    Optional<Semester> semester=mAdmissionService.getSemesterById(pSemesterId);
+    return semester;
+  }
+  public Optional<Program> getProgramById(Long pProgramId){
+    Optional<Program> program=mAdmissionService.getProgramById(pProgramId);
+    return program;
   }
 
   public ApplicationDeadline getDeadlineBy(Long pSemesterId,Long pProgramId){
@@ -86,7 +93,7 @@ public class AdmissionHelper {
    return mAdmissionService.getDetailsBy(pSerialNo, pDateOfBirth);
   }
 
-   public ByteArrayInputStream getApplicationFormPdf(String applicationSn, String dateOfBirth) throws IOException, DocumentException {
+   public ByteArrayInputStream getApplicationFormPdf(String applicationSn, String dateOfBirth) throws IOException, DocumentException, ParseException {
     return pApplicationFormPdfGenerator.createApplicationForm(applicationSn, dateOfBirth);
    }
 

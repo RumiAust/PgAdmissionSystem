@@ -194,10 +194,10 @@
 
         req.onload = function (event) {
             var blob = req.response;
-            console.log(blob.size);
+            //console.log(blob.size);
             var link=document.createElement('a');
             link.href=window.URL.createObjectURL(blob);
-            link.download="Dossier_" + new Date() + ".pdf";
+            link.download=applicationSn+"_" + new Date() + ".pdf";
             link.click();
         };
 

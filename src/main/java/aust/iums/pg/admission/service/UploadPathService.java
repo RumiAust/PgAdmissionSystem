@@ -47,7 +47,7 @@ public class UploadPathService {
         String basePath = "";
         semes = mHelper.getActiveSemester();
 
-        String semester = semes.getSemesterName();
+        String semester = semes.getSemesterName().replaceAll(" ", "-").toLowerCase();
         String program = form.getProgramName();
         String application_sn = form.getApplicationSerialNumber();
         if (type == FileTypeEnum.PHOTO) {

@@ -28,6 +28,7 @@ import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.text.ParseException;
+import java.time.Instant;
 import java.util.*;
 
 /**
@@ -126,7 +127,8 @@ public class AdmissionController {
             String serialNo = mHelper.saveInfo(applicant);
             applicant.setWorkExperienceDivId("");
             model.addAttribute("serialNo", serialNo);
-            model.addAttribute("deadline", deadline);
+            String toDate = PgUtils.instantFormatter(deadline.getToDate());
+            model.addAttribute("deadline", toDate);
             return "success-page";
         }
 
@@ -140,7 +142,7 @@ public class AdmissionController {
     }
 
     @RequestMapping(value = "/downloadAppForm/{applicationSn}/{dateOfBirth}", method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<InputStreamResource> downloadAppForm(HttpServletResponse response, @PathVariable(name = "applicationSn") String applicationSn, @PathVariable(name = "dateOfBirth") String dateOfBirth) throws IOException, DocumentException {
+    public ResponseEntity<InputStreamResource> downloadAppForm(HttpServletResponse response, @PathVariable(name = "applicationSn") String applicationSn, @PathVariable(name = "dateOfBirth") String dateOfBirth) throws IOException, DocumentException, ParseException {
         ByteArrayInputStream bis = mHelper.getApplicationFormPdf(applicationSn, dateOfBirth);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=applicant_form.pdf");
@@ -362,6 +364,7 @@ public class AdmissionController {
         String perDistrict[] = applicant.getPermanentDistrictId().split("-");
         applicant.setPermanentDistrictId(perDistrict[0]);
         applicant.setPermanentDistrict(perDistrict[1]);
+
         if (applicant.getPermanentOtherThana() == null) {
             String perThana[] = applicant.getPermanentThanaId().split("-");
             applicant.setPermanentThanaId(perThana[0]);
@@ -370,6 +373,16 @@ public class AdmissionController {
             applicant.setPresentThanaId("9999");
             applicant.setPresentThana(applicant.getPermanentOtherThana());
         }
+
+      if(applicant.getPermanentOtherThana() ==null) {
+        String perThana[] = applicant.getPermanentThanaId().split("-");
+        applicant.setPermanentThanaId(perThana[0]);
+        applicant.setPermanentThana(perThana[1]);
+      }else {
+        applicant.setPermanentThanaId("9999");
+        applicant.setPermanentThana(applicant.getPermanentOtherThana());
+      }
+
     }
 
     @PostMapping(value = "/apply", params = {"addRow"})

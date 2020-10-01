@@ -150,7 +150,7 @@ public class AdmissionController {
             model.addAttribute("deadline", toDate);
 
             String dob=applicant.getDateOfBirth();
-            //mHelper.sendApplicantFormToApplicant(applicant, serialNo, dob);
+             mHelper.sendApplicantFormToApplicant(applicant, serialNo, dob);
             return "success-page";
         }
 

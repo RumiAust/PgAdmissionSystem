@@ -171,7 +171,7 @@ public class AdmissionService {
 
 
         List<JobExperience> workExperienceLists = new ArrayList<>();
-        if (pApp.getWorkExperienceList() != null) {
+        /*if (pApp.getWorkExperienceList() != null) {
             for (WorkExperienceList data : pApp.getWorkExperienceList()) {
                 JobExperience obj = new JobExperience();
                 //fileStorageService.saveFile(data.getExperienceFile(), "document", pApp, "exp");
@@ -184,7 +184,7 @@ public class AdmissionService {
                 obj.setApplicant(applicant);
                 workExperienceLists.add(obj);
             }
-        }
+        }*/
 
 
         List<ApplicantEducationalInfo> educationalInfoList = new ArrayList<>();

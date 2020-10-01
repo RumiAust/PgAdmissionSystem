@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -34,6 +35,7 @@ import java.util.stream.Collectors;
 
 
 @Service
+@Transactional(readOnly = true)
 public class ApplicationFormPdfGenerator {
       @Value("${pgAdmission.file.image.photo-destination}")
       String apPhotoBasePath;
@@ -47,10 +49,13 @@ public class ApplicationFormPdfGenerator {
   boolean isFacultyEngg=false;
   private final  Logger log = LoggerFactory.getLogger(ApplicationFormPdfGenerator.class);
 
-  @Autowired
-  AdmissionHelper mHelper;
+  private final AdmissionHelper mHelper;
 
-    public ByteArrayInputStream createApplicationForm(String applicationSn, String dateOfBirth ) throws DocumentException, IOException, ParseException {
+  public ApplicationFormPdfGenerator(AdmissionHelper mHelper) {
+    this.mHelper = mHelper;
+  }
+
+  public ByteArrayInputStream createApplicationForm(String applicationSn, String dateOfBirth ) throws DocumentException, IOException, ParseException {
 
       log.info(" [{}]: Applicant form pdf generation for aust admission test Starts ",applicationSn);
       this.isDraft = isDraft;

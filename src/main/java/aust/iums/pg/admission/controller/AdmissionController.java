@@ -7,6 +7,7 @@ import aust.iums.pg.admission.dto.WorkExperienceList;
 import aust.iums.pg.admission.enums.FileTypeEnum;
 import aust.iums.pg.admission.helper.AdmissionHelper;
 import aust.iums.pg.admission.model.*;
+import aust.iums.pg.admission.service.AdmissionService;
 import aust.iums.pg.admission.service.FileStorageService;
 import aust.iums.pg.admission.service.PgAdmissionMailService;
 import aust.iums.pg.admission.utils.PgUtils;
@@ -19,6 +20,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -42,17 +44,23 @@ import java.util.*;
 
 @Controller
 public class AdmissionController {
-    @Autowired
-    FileStorageService fileStorageService;
+    private final FileStorageService fileStorageService;
+    private final AdmissionHelper mHelper;
+    private final PgAdmissionMailService mPgAdmissionMailService;
+    private final AdmissionService admissionService;
 
-    @Autowired
-    AdmissionHelper mHelper;
 
-    @Autowired
-    PgAdmissionMailService mPgAdmissionMailService;
 
     private final Logger log = LoggerFactory.getLogger(AdmissionController.class);
     Semester semester;
+
+
+    public AdmissionController(FileStorageService fileStorageService, AdmissionHelper mHelper, PgAdmissionMailService mPgAdmissionMailService, AdmissionService admissionService) {
+        this.fileStorageService = fileStorageService;
+        this.mHelper = mHelper;
+        this.mPgAdmissionMailService = mPgAdmissionMailService;
+        this.admissionService = admissionService;
+    }
 
     @ModelAttribute("applicant")
     public ApplicationForm applicantModel() {
@@ -142,14 +150,13 @@ public class AdmissionController {
             model.addAttribute("deadline", toDate);
 
             String dob=applicant.getDateOfBirth();
-
-            ByteArrayInputStream bis = mHelper.getApplicationFormPdf(serialNo, dob);
-            applicant.setApplicationSerialNumber(serialNo);
-            mPgAdmissionMailService.sendEmailFromTemplate(applicant,"Aust","Admission",bis);
+            //mHelper.sendApplicantFormToApplicant(applicant, serialNo, dob);
             return "success-page";
         }
 
     }
+
+
 
     @GetMapping("/statusCheck")
     public String statusCheck(Model model) {

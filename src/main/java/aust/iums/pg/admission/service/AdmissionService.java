@@ -3,12 +3,16 @@ package aust.iums.pg.admission.service;
 import aust.iums.pg.admission.dto.ApplicationForm;
 import aust.iums.pg.admission.dto.WorkExperienceList;
 import aust.iums.pg.admission.enums.*;
+import aust.iums.pg.admission.helper.AdmissionHelper;
 import aust.iums.pg.admission.model.*;
 import aust.iums.pg.admission.repository.*;
 import aust.iums.pg.admission.utils.PgUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.Instant;
@@ -22,40 +26,34 @@ import java.util.Optional;
  */
 
 @Service
+@Transactional
 public class AdmissionService {
 
-    @Autowired
-    SemesterRepository mSemesterRepository;
+    private final SemesterRepository mSemesterRepository;
+    private final ProgramRepository mProgramRepository;
+    private final DivisionRepository mDivisionRepository;
+    private final DistrictRepository mDistrictRepository;
+    private final ThanaRepository mThanaRepository;
+    private final ApplicantRepository mApplicantRepository;
+    private final ApplicantPersonalInfoRepository mApplicantPersonalInfoRepository;
+    private final ApplicantEducationalInfoRepository mApplicantEducationalInfoRepository;
+    private final ApplicantAddressRepository mApplicantAddressRepository;
+    private final JobExperienceRepository mJobExperienceRepository;
+    private final FileStorageService fileStorageService;
 
-    @Autowired
-    ProgramRepository mProgramRepository;
-
-    @Autowired
-    DivisionRepository mDivisionRepository;
-
-    @Autowired
-    DistrictRepository mDistrictRepository;
-
-    @Autowired
-    ThanaRepository mThanaRepository;
-
-    @Autowired
-    ApplicantRepository mApplicantRepository;
-
-    @Autowired
-    ApplicantPersonalInfoRepository mApplicantPersonalInfoRepository;
-
-    @Autowired
-    ApplicantEducationalInfoRepository mApplicantEducationalInfoRepository;
-
-    @Autowired
-    ApplicantAddressRepository mApplicantAddressRepository;
-
-    @Autowired
-    JobExperienceRepository mJobExperienceRepository;
-
-    @Autowired
-    FileStorageService fileStorageService;
+    public AdmissionService(SemesterRepository mSemesterRepository, ProgramRepository mProgramRepository, DivisionRepository mDivisionRepository, DistrictRepository mDistrictRepository, ThanaRepository mThanaRepository, ApplicantRepository mApplicantRepository, ApplicantPersonalInfoRepository mApplicantPersonalInfoRepository, ApplicantEducationalInfoRepository mApplicantEducationalInfoRepository, ApplicantAddressRepository mApplicantAddressRepository, JobExperienceRepository mJobExperienceRepository, FileStorageService fileStorageService) {
+        this.mSemesterRepository = mSemesterRepository;
+        this.mProgramRepository = mProgramRepository;
+        this.mDivisionRepository = mDivisionRepository;
+        this.mDistrictRepository = mDistrictRepository;
+        this.mThanaRepository = mThanaRepository;
+        this.mApplicantRepository = mApplicantRepository;
+        this.mApplicantPersonalInfoRepository = mApplicantPersonalInfoRepository;
+        this.mApplicantEducationalInfoRepository = mApplicantEducationalInfoRepository;
+        this.mApplicantAddressRepository = mApplicantAddressRepository;
+        this.mJobExperienceRepository = mJobExperienceRepository;
+        this.fileStorageService = fileStorageService;
+    }
 
     public Semester getSemesters(Integer pStatus) {
         Semester semester = mSemesterRepository.findAllByIsActive(pStatus.intValue());
@@ -237,12 +235,13 @@ public class AdmissionService {
 
 
         mApplicantPersonalInfoRepository.save(app);
+        mApplicantPersonalInfoRepository.flush();
         mApplicantEducationalInfoRepository.saveAll(educationalInfoList);
         if (workExperienceLists.size() > 0) {
             mJobExperienceRepository.saveAll(workExperienceLists);
         }
         mApplicantAddressRepository.saveAll(addressList);
-
+        mApplicantAddressRepository.flush();
 
     /*for(MultipartFile file:eduFile){
       if (!file.isEmpty()){
@@ -279,5 +278,7 @@ public class AdmissionService {
         }
         return applicantSerialNo;
     }
+
+
 
 }

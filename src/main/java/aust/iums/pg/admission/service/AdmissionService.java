@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.text.ParseException;
@@ -40,8 +41,9 @@ public class AdmissionService {
     private final ApplicantAddressRepository mApplicantAddressRepository;
     private final JobExperienceRepository mJobExperienceRepository;
     private final FileStorageService fileStorageService;
+    private final EntityManager entityManager;
 
-    public AdmissionService(SemesterRepository mSemesterRepository, ProgramRepository mProgramRepository, DivisionRepository mDivisionRepository, DistrictRepository mDistrictRepository, ThanaRepository mThanaRepository, ApplicantRepository mApplicantRepository, ApplicantPersonalInfoRepository mApplicantPersonalInfoRepository, ApplicantEducationalInfoRepository mApplicantEducationalInfoRepository, ApplicantAddressRepository mApplicantAddressRepository, JobExperienceRepository mJobExperienceRepository, FileStorageService fileStorageService) {
+    public AdmissionService(SemesterRepository mSemesterRepository, ProgramRepository mProgramRepository, DivisionRepository mDivisionRepository, DistrictRepository mDistrictRepository, ThanaRepository mThanaRepository, ApplicantRepository mApplicantRepository, ApplicantPersonalInfoRepository mApplicantPersonalInfoRepository, ApplicantEducationalInfoRepository mApplicantEducationalInfoRepository, ApplicantAddressRepository mApplicantAddressRepository, JobExperienceRepository mJobExperienceRepository, FileStorageService fileStorageService, EntityManager entityManager) {
         this.mSemesterRepository = mSemesterRepository;
         this.mProgramRepository = mProgramRepository;
         this.mDivisionRepository = mDivisionRepository;
@@ -53,6 +55,7 @@ public class AdmissionService {
         this.mApplicantAddressRepository = mApplicantAddressRepository;
         this.mJobExperienceRepository = mJobExperienceRepository;
         this.fileStorageService = fileStorageService;
+        this.entityManager = entityManager;
     }
 
     public Semester getSemesters(Integer pStatus) {
@@ -125,6 +128,7 @@ public class AdmissionService {
         applicant.setSelectedRejectedOn(Instant.now());
         applicant.setApplicationFeePaidOn(Instant.now());
         applicant = mApplicantRepository.saveAndFlush(applicant);
+        entityManager.refresh(applicant);
 
         ApplicantPersonaIInfo app = new ApplicantPersonaIInfo();
         app.setApplicant(applicant);
@@ -234,14 +238,20 @@ public class AdmissionService {
         //eduFile.add(pApp.getSscFile());
 
 
-        mApplicantPersonalInfoRepository.save(app);
-        mApplicantPersonalInfoRepository.flush();
+        mApplicantPersonalInfoRepository.saveAndFlush(app);
+        entityManager.refresh(app);
+
         mApplicantEducationalInfoRepository.saveAll(educationalInfoList);
+        mApplicantEducationalInfoRepository.flush();
+        educationalInfoList.forEach(entityManager::refresh);
         if (workExperienceLists.size() > 0) {
             mJobExperienceRepository.saveAll(workExperienceLists);
+            mJobExperienceRepository.flush();
+            workExperienceLists.forEach(entityManager::refresh);
         }
         mApplicantAddressRepository.saveAll(addressList);
         mApplicantAddressRepository.flush();
+        addressList.forEach(entityManager::refresh);
 
     /*for(MultipartFile file:eduFile){
       if (!file.isEmpty()){

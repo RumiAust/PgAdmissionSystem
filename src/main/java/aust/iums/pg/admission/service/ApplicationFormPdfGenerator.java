@@ -3,6 +3,7 @@ package aust.iums.pg.admission.service;
 import aust.iums.pg.admission.enums.AdmissionEnum;
 import aust.iums.pg.admission.helper.AdmissionHelper;
 import aust.iums.pg.admission.model.*;
+import aust.iums.pg.admission.repository.ApplicantPersonalInfoRepository;
 import aust.iums.pg.admission.repository.ApplicantRepository;
 import aust.iums.pg.admission.utils.PgUtils;
 import com.itextpdf.text.*;
@@ -35,7 +36,7 @@ import java.util.stream.Collectors;
 
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class ApplicationFormPdfGenerator {
       @Value("${pgAdmission.file.image.photo-destination}")
       String apPhotoBasePath;
@@ -50,12 +51,14 @@ public class ApplicationFormPdfGenerator {
   private final  Logger log = LoggerFactory.getLogger(ApplicationFormPdfGenerator.class);
 
   private final AdmissionHelper mHelper;
+  private final ApplicantPersonalInfoRepository applicantPersonalInfoRepository;
 
-  public ApplicationFormPdfGenerator(AdmissionHelper mHelper) {
-    this.mHelper = mHelper;
-  }
+    public ApplicationFormPdfGenerator(AdmissionHelper mHelper, ApplicantPersonalInfoRepository applicantPersonalInfoRepository) {
+        this.mHelper = mHelper;
+        this.applicantPersonalInfoRepository = applicantPersonalInfoRepository;
+    }
 
-  public ByteArrayInputStream createApplicationForm(String applicationSn, String dateOfBirth ) throws DocumentException, IOException, ParseException {
+    public ByteArrayInputStream createApplicationForm(String applicationSn, String dateOfBirth ) throws DocumentException, IOException, ParseException {
 
       log.info(" [{}]: Applicant form pdf generation for aust admission test Starts ",applicationSn);
       this.isDraft = isDraft;
@@ -83,7 +86,7 @@ public class ApplicationFormPdfGenerator {
         Optional<Program>program=mHelper.getProgramById(programId);
         additionalPath=additionalPath+"/"+program.get().getProgramShortName();
         String photoBasePath, signatureBasePath;
-        photoBasePath = apPhotoBasePath + additionalPath + "/" + applicationSn+ ".jpg";
+        photoBasePath = apPhotoBasePath +"/"+ additionalPath + "/" + applicationSn+ ".jpg";
         signatureBasePath = apSignatureBasePath + additionalPath + "/" + applicationSn + ".jpg";
 
 
@@ -273,9 +276,10 @@ public class ApplicationFormPdfGenerator {
       cell.setMinimumHeight(minimumPersonalInfoRowHeight);
       cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
       pInfo.addCell(cell);
-      String fName=applicant.get().getApplicantPersonaIInfo().getFirstName().toUpperCase();
-      String  mName=applicant.get().getApplicantPersonaIInfo().getMiddleName() ==null ? " ":applicant.get().getApplicantPersonaIInfo().getMiddleName().toUpperCase();
-      String lName=applicant.get().getApplicantPersonaIInfo().getLastName()==null ? " ":applicant.get().getApplicantPersonaIInfo().getLastName().toUpperCase();
+      ApplicantPersonaIInfo applicantPersonaIInfo = applicantPersonalInfoRepository.getByApplicant_Id(applicant.get().getId());
+      String fName=applicantPersonaIInfo.getFirstName().toUpperCase();
+      String  mName=applicantPersonaIInfo.getMiddleName() ==null ? " ":applicantPersonaIInfo.getMiddleName().toUpperCase();
+      String lName=applicantPersonaIInfo.getLastName()==null ? " ":applicantPersonaIInfo.getLastName().toUpperCase();
       String  fullName=fName+mName+lName;
       paragraph= new Paragraph(""+fullName, font11R);
       paragraph.add(dottedline);
@@ -297,7 +301,7 @@ public class ApplicationFormPdfGenerator {
       cell.setMinimumHeight(minimumPersonalInfoRowHeight);
       cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
       pInfo.addCell(cell);
-      paragraph= new Paragraph(""+applicant.get().getApplicantPersonaIInfo().getFatherName().toUpperCase(), font11R);
+      paragraph= new Paragraph(""+applicantPersonaIInfo.getFatherName().toUpperCase(), font11R);
       paragraph.add(dottedline);
       cell = new PdfPCell(paragraph);
       cell.setBorder(0);
@@ -317,7 +321,7 @@ public class ApplicationFormPdfGenerator {
       cell.setMinimumHeight(minimumPersonalInfoRowHeight);
       cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
       pInfo.addCell(cell);
-      paragraph= new Paragraph(""+applicant.get().getApplicantPersonaIInfo().getMotherName().toUpperCase(), font11R);
+      paragraph= new Paragraph(""+applicantPersonaIInfo.getMotherName().toUpperCase(), font11R);
       paragraph.add(dottedline);
       cell = new PdfPCell(paragraph);
       cell.setBorder(0);
@@ -338,7 +342,7 @@ public class ApplicationFormPdfGenerator {
       cell.setMinimumHeight(minimumPersonalInfoRowHeight);
       cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
       pInfo.addCell(cell);
-      paragraph= new Paragraph(""+applicant.get().getApplicantPersonaIInfo().getGender(), font11R);
+      paragraph= new Paragraph(""+applicantPersonaIInfo.getGender(), font11R);
       paragraph.add(dottedline);
       cell = new PdfPCell(paragraph);
       cell.setBorder(0);
@@ -357,7 +361,7 @@ public class ApplicationFormPdfGenerator {
       cell.setMinimumHeight(minimumPersonalInfoRowHeight);
       cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
       pInfo.addCell(cell);
-      paragraph= new Paragraph(""+applicant.get().getApplicantPersonaIInfo().getReligion(), font11R);
+      paragraph= new Paragraph(""+applicantPersonaIInfo.getReligion(), font11R);
       paragraph.add(dottedline);
       cell = new PdfPCell(paragraph);
       cell.setBorder(0);
@@ -378,7 +382,7 @@ public class ApplicationFormPdfGenerator {
       cell.setMinimumHeight(minimumPersonalInfoRowHeight);
       cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
       pInfo.addCell(cell);
-      paragraph= new Paragraph(""+applicant.get().getApplicantPersonaIInfo().getNationality(), font11R);
+      paragraph= new Paragraph(""+applicantPersonaIInfo.getNationality(), font11R);
       paragraph.add(dottedline);
       cell = new PdfPCell(paragraph);
       cell.setBorder(0);
@@ -386,7 +390,7 @@ public class ApplicationFormPdfGenerator {
       cell.setColspan(3);//…
       cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
       pInfo.addCell(cell);
-      String birthDate=PgUtils.dateToString(applicant.get().getApplicantPersonaIInfo().getDateOfBirth());
+      String birthDate=PgUtils.dateToString(applicantPersonaIInfo.getDateOfBirth());
       cell = new PdfPCell(new Phrase("7. Date of Birth", font11R));
       cell.setBorder(0);
       cell.setMinimumHeight(minimumPersonalInfoRowHeight);
@@ -418,7 +422,7 @@ public class ApplicationFormPdfGenerator {
       cell.setMinimumHeight(minimumPersonalInfoRowHeight);
       cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
       pInfo.addCell(cell);
-      paragraph= new Paragraph(""+applicant.get().getApplicantPersonaIInfo().getPlaceOfBirth()==null ? " ":applicant.get().getApplicantPersonaIInfo().getPlaceOfBirth(), font11R);
+      paragraph= new Paragraph(""+applicantPersonaIInfo.getPlaceOfBirth()==null ? " ":applicantPersonaIInfo.getPlaceOfBirth(), font11R);
       paragraph.add(dottedline);
       cell = new PdfPCell(paragraph);
       cell.setBorder(0);
@@ -439,7 +443,7 @@ public class ApplicationFormPdfGenerator {
       cell.setMinimumHeight(minimumPersonalInfoRowHeight);
       cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
       pInfo.addCell(cell);
-      paragraph= new Paragraph(""+applicant.get().getApplicantPersonaIInfo().getMobileNumber(), font11R);
+      paragraph= new Paragraph(""+applicantPersonaIInfo.getMobileNumber(), font11R);
       paragraph.add(dottedline);
       cell = new PdfPCell(paragraph);
       cell.setBorder(0);
@@ -458,7 +462,7 @@ public class ApplicationFormPdfGenerator {
       cell.setMinimumHeight(minimumPersonalInfoRowHeight);
       cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
       pInfo.addCell(cell);
-      paragraph= new Paragraph(""+applicant.get().getApplicantPersonaIInfo().getEmailAddress(), font11R);
+      paragraph= new Paragraph(""+applicantPersonaIInfo.getEmailAddress(), font11R);
       paragraph.add(dottedline);
       cell = new PdfPCell(paragraph);
       cell.setBorder(0);

@@ -8,4 +8,5 @@ import org.springframework.data.repository.CrudRepository;
  * Created by Monjur-E-Morshed on 9/13/2020.
  */
 public interface ApplicantPersonalInfoRepository extends JpaRepository<ApplicantPersonaIInfo,Long> {
+    ApplicantPersonaIInfo getByApplicant_Id(Long id);
 }

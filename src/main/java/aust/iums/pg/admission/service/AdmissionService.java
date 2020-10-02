@@ -236,8 +236,6 @@ public class AdmissionService {
         educationalInfoList.add(eduInfo);
 
 
-        //List<MultipartFile> eduFile=new ArrayList<>();
-        //eduFile.add(pApp.getSscFile());
 
 
         mApplicantPersonalInfoRepository.saveAndFlush(app);

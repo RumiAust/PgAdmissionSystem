@@ -26,8 +26,6 @@ import javax.mail.internet.MimeMessage;
  */
 @Service
 public class PgAdmissionMailService {
-  @Value("${spring.mail.username}")
-  String form;
 
   private final Logger log = LoggerFactory.getLogger(PgAdmissionMailService.class);
 
@@ -70,7 +68,7 @@ public class PgAdmissionMailService {
     try {
       MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, StandardCharsets.UTF_8.name());
       message.setTo(to);
-      message.setFrom(form);
+      //message.setFrom(form);
       message.setSubject(subject);
       message.setText(content, isHtml);
       message.addAttachment(fileName, new ByteArrayResource(IOUtils.toByteArray(fileContent)), "application/pdf");

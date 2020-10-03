@@ -177,8 +177,8 @@ public class AdmissionController {
         };*/
     }
 
-  @RequestMapping(value = "/downloadAppForm/applicantNo/{applicationSn}", method = RequestMethod.GET)
-  public void downloadAppForm(HttpServletResponse response, @PathVariable(name = "applicationSn") String applicationSn) throws IOException{
+  @RequestMapping(value = "/sendEmail/applicantNo/{applicationSn}", method = RequestMethod.GET)
+  public void sendEmail(@PathVariable(name = "applicationSn") String applicationSn) {
     System.out.println("hello world");
 
   }

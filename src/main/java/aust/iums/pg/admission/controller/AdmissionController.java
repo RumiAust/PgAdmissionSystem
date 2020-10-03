@@ -131,6 +131,8 @@ public class AdmissionController {
         if (bindingResult.hasErrors() || otherErrors) {
             log.error("errors: " + bindingResult.toString());
             applicant.setDeclaration(false);
+            Boolean hasError = true;
+            model.addAttribute("hasError",hasError);
             return "application-form";
         } else {
             addressMap(applicant);

@@ -177,6 +177,12 @@ public class AdmissionController {
         };*/
     }
 
+  @RequestMapping(value = "/downloadAppForm/applicantNo/{applicationSn}", method = RequestMethod.GET)
+  public void downloadAppForm(HttpServletResponse response, @PathVariable(name = "applicationSn") String applicationSn) throws IOException{
+    System.out.println("hello world");
+    
+  }
+
 
     @PostMapping("/result")
     public String getResult(@ModelAttribute StatusCheckDto pStatusCheckDto, Model model) throws ParseException {

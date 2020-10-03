@@ -143,6 +143,7 @@ public class AdmissionController {
             model.addAttribute("deadline", toDate);
 
             String dob=applicant.getDateOfBirth();
+            model.addAttribute("dateOfBirth",dob);
           //  mHelper.sendApplicantFormToApplicant(applicant, serialNo, dob);
             return "success-page";
         }
@@ -177,8 +178,8 @@ public class AdmissionController {
         };*/
     }
 
-  @RequestMapping(value = "/sendEmail/applicantNo/{applicationSn}", method = RequestMethod.GET)
-  public void sendEmail(@PathVariable(name = "applicationSn") String applicationSn) {
+  @RequestMapping(value = "/sendEmail/applicantNo/{applicationSn}/dateofBirth/{dob}", method = RequestMethod.GET)
+  public void sendEmail(@PathVariable(name = "applicationSn") String applicationSn, @PathVariable(name = "dob") String dateOfBirth) {
     System.out.println("hello world");
 
   }

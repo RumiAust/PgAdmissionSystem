@@ -871,7 +871,8 @@
                                         </div>
                                         <div class="col-md-4" align="center">
                                             <label th:for="currentWork-+${rowStat.index}">
-                                                <input onclick="hideToDate(this)" th:id="currentWork-+${rowStat.index}" type="checkbox"
+                                                <input onclick="hideToDate(this)" th:id="currentWork-+${rowStat.index}"
+                                                       type="checkbox"
                                                        th:field="*{workExperienceList[__${rowStat.index}__].currentlyWorking}">
                                                 Currently work here
                                             </label>
@@ -1311,6 +1312,12 @@
 
         rearrangeWorkDiv();
 
+        for (var i = 0; i < 10; i++) {
+            if ($('#currentWork-' + i).is(":checked")) {
+                $('#todatediv' + i).css("display", "none");
+            }
+        }
+
         if ($('#declaration').is(":checked")) {
             $('#submitBtn').attr("disabled", false);
         }
@@ -1537,10 +1544,10 @@
         var index = th.id.split("-");
         console.log(index[1]);
         if ($(th).is(":checked")) {
-            $('#toDate'+index[1]).val("");
-            $('#todatediv'+index[1]).css("display", "none");
+            $('#toDate' + index[1]).val("");
+            $('#todatediv' + index[1]).css("display", "none");
         } else if ($(th).prop("checked") == false) {
-            $('#todatediv'+index[1]).css("display", "block");
+            $('#todatediv' + index[1]).css("display", "block");
         }
     }
 

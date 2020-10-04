@@ -55,7 +55,6 @@
         <div align="center">
             <h1><img src="logo-aust.png" width="40" height="40" alt="">&nbsp;&nbsp;Ahsanullah University of Science
                 and Technology</h1>
-            <h4><strong>Master's Program Application Form</strong></h4> </br>
         </div>
         <h6 th:if="${hideText !='yes'}"><strong>All field's with <em style="color: red">*</em> sign must be filled
             up to perform search.</strong></h6>
@@ -63,45 +62,64 @@
             <div class="card border-secondary mb-3" style="margin-top: 10px">
                 <div class="card-body">
                     <div th:if="${valid ==true}">
-                        <h4 align="center" class="bg-info">Applicant Information</h4>
+                        <h4 align="center" class="bg-info" style="color: white;padding: 5px">Master's Application Information</h4>
                         <div style="margin-top: 15px">
                             <div align="center">
-                                <table style="width:60%">
+                                <table style="width:100%">
                                     <tr>
-                                        <td>Applicant Serial No :</td>
-                                        <td><strong th:text="${applicantDetails.get().getApplicationSn()}"></strong>
+                                        <td  style="width: 30%">Applicant Serial No :</td>
+                                        <td   style="width: 70%"><strong th:text="${applicantDetails.get().getApplicationSn()}"></strong>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="width: 10px">Applicant Name :</td>
-                                        <td style="width:20px"><strong
+                                        <td >Applicant Name :</td>
+                                        <td ><strong
                                                 th:text="${applicantDetails.get().getApplicantPersonaIInfo().getFirstName()}+' '+${applicantDetails.get().getApplicantPersonaIInfo().getMiddleName()}+' '+${applicantDetails.get().getApplicantPersonaIInfo().getLastName()}"></strong>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="width: 10px">Semester Name :</td>
-                                        <td style="width:20px"><strong
+                                        <td >Semester Name :</td>
+                                        <td ><strong
                                                 th:text="${applicantDetails.get().getSemester().getSemesterName()}"></strong>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Applied Program :</td>
+                                        <td >Applied Program :</td>
                                         <td><strong
                                                 th:text="${applicantDetails.get().getProgram().getProgramLongName()}"></strong>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="width: 10px">Application Status :</td>
-                                        <td style="width:20px;color: deeppink"><h6><strong
-                                                th:text="${applicantDetails.get().getStatus()}"></strong></h6></td>
+                                        <td >Application Status :</td>
+                                        <td style="width:20px;color: deeppink"><h6><strong th:text="${applicantDetails.get().getStatus()}"></strong></h6></td>
                                     </tr>
-                                    <tr th:if="${applicantDetails.get().getStatus() =='APPLIED'}">
-                                        <td>Deposit Slip :</td>
+                                    <tr th:if="${applicantDetails.get().getStatus() =='ADMISSION_OFFERED'}">
+                                        <td >Deposit Slip :</td>
                                         <td><a href=""><img src="pdf.png" width="30" height="30" alt="download pdf"></a>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Application Form :</td>
+                                        <td >Message :</td>
+                                        <td>
+                                           <p th:if="${applicantDetails.get().getStatus() =='APPLIED'}" class="text-dark">
+                                             <strong>  You online application has been received successfully. You need to pay 500/= bdt through Bkash
+                                               to complete you application.Without Payment confirmation you application won't be considered.
+                                             </strong>
+                                           </p>
+                                            <p th:if="${applicantDetails.get().getStatus() =='PAYMENT_COMPLETED'}" class="text-success">
+                                                <strong>
+                                                    You payment has been received successfully and you application is completed.
+                                                </strong>
+                                            </p>
+                                            <p th:if="${applicantDetails.get().getStatus() =='ADMISSION_OFFERED'}" class="text-success">
+                                                <strong>
+                                                  Congratulations.You have made it.You have been offered admission.
+                                                </strong>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td >Application Form :</td>
                                         <td>
                                             <input type="button" id="downloadLink"
                                                    th:attr="data-id=${applicantDetails.get().getApplicationSn()}, data-name=${applicantDetails.get().getApplicantPersonaIInfo().getDateOfBirth()}"
@@ -111,14 +129,6 @@
                                     </tr>
                                 </table>
                             </div>
-
-                            <!-- <div class="row" style="margin-top: 10px">
-                                 <div class="col-sm-12 col-md-4">
-                                 </div>
-                                 <div class="col-sm-12 col-md-4">
-
-                                 </div>
-                             </div>-->
 
                         </div>
                     </div>

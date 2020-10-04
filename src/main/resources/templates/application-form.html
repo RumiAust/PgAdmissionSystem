@@ -896,7 +896,7 @@
                                             </label>
                                         </div>
                                         <div th:id="todatediv+${rowStat.index}" class="col-sm-12 col-md-4">
-                                            <div class="form-group">
+                                            <div class="form-group required">
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">To Date:</div>
@@ -1189,56 +1189,52 @@
                             </div>
                             <div class="col-md-6 justify-content-end"
                                  style="border-style: solid;border-color: antiquewhite; border-width: 1px;">
-                                <div class="form-group" style="position: relative">
-                                    <label class="form-control-label" for="field_photo">Photo</label>
-                                    <div>
-                                        <div style="display: none" id="photo-div"
-                                             class="form-text text-danger clearfix">
-                                            <img id="photo" src="#" class="img-fluid rounded" width="170" height="165"
-                                                 alt="Photo"/>
+                                <div style="display: none" id="photo-div"
+                                     class="form-text text-danger clearfix">
+                                    <img id="photo" src="#" class="img-fluid rounded" width="170" height="165"
+                                         alt="Photo"/>
+                                </div>
+                                <div class="form-group required" style="padding-top: 15px">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Photo</div>
                                         </div>
                                         <input class="form-control border" type="file" name="file"
                                                th:value="${applicant.photo}" accept=".jpg, .jpeg"
                                                id="file_photo" th:field="*{photo}" th:errorclass="alert-danger"/>
+
                                     </div>
-                                    <input type="hidden" class="form-control" name="photo" id="field_photo"
-                                           formControlName="photo"/>
                                     <div style="padding-left:10px; color: red" th:if="${applicant.photoError!=''}">
                                         <span class="error"
                                               th:text="${applicant.photoError}"></span>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="col-md-6 justify-content-end"
                                  style="border-style: solid;border-color: antiquewhite; border-width: 1px;">
-                                <div class="form-group" style="position: relative">
-                                    <label class="form-control-label" for="field_photo">Signature</label>
-                                    <div>
-                                        <div style="display: none" id="signature-div"
-                                             class="form-text text-danger clearfix">
-                                            <img id="signature" src="#" class="img-fluid rounded" width="170"
-                                                 height="165"
-                                                 alt="Photo"/>
+                                <div style="display: none" id="signature-div"
+                                     class="form-text text-danger clearfix">
+                                    <img id="signature" src="#" class="img-fluid rounded" width="170"
+                                         height="165"
+                                         alt="signature"/>
+                                </div>
+                                <div class="form-group required" style="padding-top: 15px">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Signature</div>
                                         </div>
                                         <input class="form-control border" type="file" name="file" accept=".jpg, .jpeg"
                                                id="file_signature" th:field="*{signature}"
                                                th:errorclass="alert-danger"/>
+
                                     </div>
-                                    <input type="hidden" class="form-control" name="photo" id="field_signature"
-                                           formControlName="signature"/>
                                     <div class="error" style="padding-left:10px; color: red"
                                          th:if="${applicant.signatureError!=''}">
                                         <span th:text="${applicant.signatureError}"></span>
                                     </div>
                                 </div>
                             </div>
-                            <!--
-
-                                                        <h1 th:text="${successmessage}"></h1>
-                                                        <h1 th:text="${errormessage}"></h1>-->
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -1358,10 +1354,13 @@
 
                 reader.onload = function (e) {
                     $('#photo').attr('src', e.target.result);
-                    $('#photo-div').attr('style', '');
+                    $('#photo-div').attr('style', 'padding-top: 10px');
                 }
 
                 reader.readAsDataURL(input.files[0]); // convert to base64 string
+            } else {
+                $('#photo-div').css('display', 'none');
+
             }
         }
 
@@ -1371,10 +1370,13 @@
 
                 reader.onload = function (e) {
                     $('#signature').attr('src', e.target.result);
-                    $('#signature-div').attr('style', '');
+                    $('#signature-div').attr('style', 'padding-top: 10px');
                 }
 
                 reader.readAsDataURL(input.files[0]); // convert to base64 string
+            }
+            else {
+                $('#signature-div').css('display', 'none');
             }
         }
 

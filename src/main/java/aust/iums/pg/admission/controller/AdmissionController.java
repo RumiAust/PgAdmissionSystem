@@ -180,7 +180,7 @@ public class AdmissionController {
         };*/
     }
 
-  @RequestMapping(value = "/sendEmail/applicantNo/{applicationSn}/dateofBirth/{dob}", method = RequestMethod.GET)
+  @RequestMapping(value = "/sendEmail/applicantNo/{applicationSn}/dateOfBirth/{dob}", method = RequestMethod.GET)
   public void sendEmail(@PathVariable(name = "applicationSn") String applicationSn, @PathVariable(name = "dob") String dateOfBirth) {
     System.out.println("hello world");
 

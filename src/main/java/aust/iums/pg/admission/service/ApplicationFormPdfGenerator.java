@@ -577,6 +577,9 @@ public class ApplicationFormPdfGenerator {
 
 
       //education table
+      chunk = new Chunk(" ");
+      paragraph= new Paragraph(chunk);
+      document.add(paragraph);
 
       PdfPTable educationInfo = new PdfPTable(16);
       educationInfo.setSpacingBefore(5);
@@ -878,6 +881,10 @@ public class ApplicationFormPdfGenerator {
       paragraph = new Paragraph();
       paragraph.add(chunkNo);
       paragraph.add(chunkDetails);
+      document.add(paragraph);
+
+      chunk = new Chunk(" ");
+      paragraph= new Paragraph(chunk);
       document.add(paragraph);
 
       PdfPTable jobInfo = new PdfPTable(14);

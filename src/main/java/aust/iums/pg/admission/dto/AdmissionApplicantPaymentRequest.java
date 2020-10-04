@@ -20,6 +20,5 @@ public class AdmissionApplicantPaymentRequest implements Serializable {
     private BigDecimal amount;
     private String serialNo;
     private Integer semesterId;
-    private Integer programId;
     private FacultyType facultyType;
 }

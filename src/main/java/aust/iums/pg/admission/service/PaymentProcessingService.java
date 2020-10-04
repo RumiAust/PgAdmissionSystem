@@ -1,6 +1,7 @@
 package aust.iums.pg.admission.service;
 
 import aust.iums.pg.admission.dto.AdmissionApplicantPaymentRequest;
+import aust.iums.pg.admission.enums.FacultyType;
 import aust.iums.pg.admission.enums.PaymentCategory;
 import aust.iums.pg.admission.enums.PaymentStatus;
 import aust.iums.pg.admission.model.Applicant;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 
 @Service
 @Transactional
@@ -36,20 +38,33 @@ public class PaymentProcessingService {
         this.applicationFeeRepository = applicationFeeRepository;
     }
 
-    public void sendApplicantPaymentInformationToIUMS(final Applicant applicant){
-
+    public void sendApplicantPaymentInformationToIUMS(final Applicant applicant) throws Exception{
+        Payment applicationPayment = prepareApplicationPayment(applicant);
+        applicationPayment = paymentRepository.save(applicationPayment);
+        AdmissionApplicantPaymentRequest paymentRequest = prepareApplicationApplicationPaymentRequestData(applicationPayment, applicant);
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("APIKEY", "PG_ADMISSION");
-
+        String responseStr = restTemplate.postForObject(iumsApi+"/admission-application/payment", paymentRequest, String.class, headers);
+        if(!responseStr.equals("success"))
+            throw new Exception("Error in processing payment.");
     }
 
-    private AdmissionApplicantPaymentRequest prepareApplicationApplicationPaymentRequestData(final Applicant applicant){
-        Payment applicationPayment = prepareApplicationPayment(applicant);
+    private AdmissionApplicantPaymentRequest prepareApplicationApplicationPaymentRequestData(final Payment payment, final Applicant applicant){
         AdmissionApplicantPaymentRequest paymentRequest = new AdmissionApplicantPaymentRequest();
-
+        paymentRequest.setTransactionId(payment.getTransactionId());
+        paymentRequest.setTransactionValidTill(Date.from(payment.getTransactionValidTill()));
+        paymentRequest.setAmount(payment.getAmount());
+        paymentRequest.setSerialNo(applicant.getApplicationSn());
+        paymentRequest.setSemesterId(Integer.parseInt( applicant.getSemester().getId().toString())) ;
+        if(applicant.getProgram().getProgramShortName().toLowerCase().contains("mba"))
+            paymentRequest.setFacultyType(FacultyType.BUSINESS);
+        else
+            paymentRequest.setFacultyType(FacultyType.ENGINEERING);
         return paymentRequest;
     }
+
+
 
     private Payment prepareApplicationPayment(final Applicant applicant){
         Payment payment = new Payment();

@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name="application_fee")
-@Getter @Setter @NoArgsConstructor @ToString
+@Getter @Setter @NoArgsConstructor @ToString(callSuper = true, includeFieldNames = true)
 public class ApplicationFee extends AbstractAuditingEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")

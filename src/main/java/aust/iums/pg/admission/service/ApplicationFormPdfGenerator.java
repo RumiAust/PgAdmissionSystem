@@ -639,7 +639,7 @@ public class ApplicationFormPdfGenerator {
 
       //ssc
 
-      cell = new PdfPCell(new Phrase("SSC or Equivalent", font11R));
+      cell = new PdfPCell(new Phrase("SSC or Equivalent", fontSchoolNameR));
       cell.setMinimumHeight(20);
       cell.setColspan(3);
       cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -689,7 +689,7 @@ public class ApplicationFormPdfGenerator {
 
       //hsc
 
-      cell = new PdfPCell(new Phrase("HSC or Equivalent", font11R));
+      cell = new PdfPCell(new Phrase("HSC or Equivalent", fontSchoolNameR));
       cell.setMinimumHeight(20);
       cell.setColspan(3);
       cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -739,7 +739,7 @@ public class ApplicationFormPdfGenerator {
 
       //bsc
 
-      cell = new PdfPCell(new Phrase("BBA/B.Com/B.Sc./B.A./ Equivalent", font11R));
+      cell = new PdfPCell(new Phrase("BBA/B.Com/B.Sc./B.A./ Equivalent", fontSchoolNameR));
       cell.setMinimumHeight(20);
       cell.setColspan(3);
       cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -789,7 +789,7 @@ public class ApplicationFormPdfGenerator {
 
       //msc
 
-      cell = new PdfPCell(new Phrase("M.Com/M.A./MBA/M.Sc.", font11R));
+      cell = new PdfPCell(new Phrase("M.Com/M.A./MBA/M.Sc.", fontSchoolNameR));
       cell.setMinimumHeight(20);
       cell.setColspan(3);
       cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -923,7 +923,7 @@ public class ApplicationFormPdfGenerator {
 
       if(jobExperienceList.size()>0){
         for(int i=0;i<jobExperienceList.size();i++) {
-          cell = new PdfPCell(new Phrase("" + jobExperienceList.get(i).getOrganizationName(), font11B));
+          cell = new PdfPCell(new Phrase("" + jobExperienceList.get(i).getOrganizationName(), fontSchoolNameR));
           cell.setMinimumHeight(20);
           cell.setColspan(4);
           cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -931,7 +931,7 @@ public class ApplicationFormPdfGenerator {
           cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
           jobInfo.addCell(cell);
 
-          cell = new PdfPCell(new Phrase(""+jobExperienceList.get(i).getDesignation(), font11B));
+          cell = new PdfPCell(new Phrase(""+jobExperienceList.get(i).getDesignation(), fontSchoolNameR));
           cell.setMinimumHeight(20);
           cell.setColspan(2);
           cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -939,7 +939,7 @@ public class ApplicationFormPdfGenerator {
           cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
           jobInfo.addCell(cell);
 
-          cell = new PdfPCell(new Phrase(""+jobExperienceList.get(i).getJobResponsibilities(), font11B));
+          cell = new PdfPCell(new Phrase(""+jobExperienceList.get(i).getJobResponsibilities(), fontSchoolNameR));
           cell.setMinimumHeight(20);
           cell.setColspan(4);
           cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -949,7 +949,7 @@ public class ApplicationFormPdfGenerator {
 
           String fromDate=PgUtils.dateToString(jobExperienceList.get(i).getFromDate());
           String toDate=PgUtils.dateToString(jobExperienceList.get(i).getToDate());
-          cell = new PdfPCell(new Phrase(fromDate+" - "+toDate, font11B));
+          cell = new PdfPCell(new Phrase(fromDate+" To "+toDate, fontSchoolNameR));
           cell.setMinimumHeight(20);
           cell.setColspan(4);
           cell.setVerticalAlignment(Element.ALIGN_MIDDLE);

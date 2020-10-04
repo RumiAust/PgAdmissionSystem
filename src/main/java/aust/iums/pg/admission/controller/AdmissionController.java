@@ -181,8 +181,15 @@ public class AdmissionController {
     }
 
   @RequestMapping(value = "/sendEmail/applicantNo/{applicationSn}/dateOfBirth/{dob}", method = RequestMethod.GET)
-  public void sendEmail(@PathVariable(name = "applicationSn") String applicationSn, @PathVariable(name = "dob") String dateOfBirth) {
+  public void sendEmail(@PathVariable(name = "applicationSn") String applicationSn, @PathVariable(name = "dob") String dateOfBirth) throws ParseException {
     System.out.println("hello world");
+    Optional<ApplicantPersonaIInfo> personalInfo=mHelper.getInfoBy(applicationSn);
+    if(personalInfo.isPresent()){
+     /* if(personalInfo.get().getDateOfBirth().equals(PgUtils.formateDate(dateOfBirth))){
+
+      }*/
+      log.info("Sending emial.......");
+    }
 
   }
 

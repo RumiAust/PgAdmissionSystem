@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.security.PublicKey;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -106,5 +107,9 @@ public class AdmissionHelper {
     //Thread.sleep(10*1000);
     ByteArrayInputStream bis = getApplicationFormPdf(serialNo, dateOfBirth);
     pgAdmissionMailService.sendEmailFromTemplate(applicant,"Aust","Admission",bis);
+  }
+
+  public Optional<ApplicantPersonaIInfo> getInfoBy(String pSerialNo){
+   return mAdmissionService.getPersonalInfoBy(pSerialNo);
   }
 }

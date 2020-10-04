@@ -25,8 +25,9 @@
         <a class="navbar-brand" href="#"><i class="fa fa-question" style="color: red"></i>&nbsp;FAQ</a>
     </form>
 </nav>
+<div>
 <div class="container" style="border: 1px solid black;margin-top: 40px;margin-bottom: 20px;color: green;background: aliceblue"  >
-        <p align="center">Your Application Serial Number is: <font style="font-weight: bold; font-size: 30px;color:blue" th:text="${serialNo}"></font></p>
+        <p align="center">Your Application Serial Number is: <font style="font-weight: bold; font-size: 30px;color:blue" id="downloadLink" th:text="${serialNo}" th:attr="data-serial-number=${serialNo},data-date-of-birth=${dateOfBirth}" ></font></p>
         <br/>
         <div style="padding-left: 40px">
             <p><span><fa-icon icon="hand-point-right"></fa-icon></span><b style="color: #211b19">1.</b> You must pay the application fees through <b>Bkash</b>. Detail of the application fees payment process is described <a target="_blank" href="http://admission.aust.edu/application-instruction.html#feesPayment" style="color: blue;">here</a>.</p>
@@ -39,6 +40,24 @@
         <hr>
         <p align="center"><span><fa-icon icon="hand-point-right"></fa-icon></span> Click <a style="color:blue;" href="/statusCheck">Here</a> to check your Application status and download <strong>Deposit Slip</strong> and <strong>Application Form</strong>.</p>
 </div>
+</div>
 
 </body>
 </html>
+<script type="text/javascript">
+    document.body.onload = function()
+    {
+
+        var mySelect = $('#downloadLink');
+        var applicationSn = mySelect.data('serial-number');
+        var dob = mySelect.data('date-of-birth');
+        $.ajax({
+            type: "get",
+            contentType: "application/json",
+            url: "sendEmail/applicantNo/" + applicationSn+"/dateofBirth/" + dob,
+            success: function (data) {
+            }
+        });
+
+    }
+</script>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head>
+        <title>Admission Application Status</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="shortcut icon" th:href="@{|${baseUrl}/favicon.ico|}" />
+    </head>
+    <body>
+        <p>
+            Dear <b  th:text="${studentName}"></b>,
+        </p>
+        <p>
+            Your admission application has been successfully received.
+        </p>
+        <p>
+            Your application serial no : <b th:text="${serialNo}" style="color: #3E8ACC; size: A5;"></b>
+        </p>
+        <p>
+            Your application form is attached with this email.
+        </p>
+        <p>
+            <span>Regards, </span>
+            <br/>
+            <em>Admission Committee</em>
+            <br/>
+            <em>Ahsanullah University of Science and Technology,</em>
+            <br/>
+            <em>Tejgaon, Dhaka.</em>
+        </p>
+    </body>
+</html>

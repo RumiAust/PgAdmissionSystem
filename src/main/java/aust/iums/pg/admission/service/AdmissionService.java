@@ -6,9 +6,10 @@ import aust.iums.pg.admission.enums.*;
 import aust.iums.pg.admission.model.*;
 import aust.iums.pg.admission.repository.*;
 import aust.iums.pg.admission.utils.PgUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.Instant;
@@ -22,54 +23,53 @@ import java.util.Optional;
  */
 
 @Service
+@Transactional
 public class AdmissionService {
 
-    @Autowired
-    SemesterRepository mSemesterRepository;
+    private final SemesterRepository mSemesterRepository;
+    private final ProgramRepository mProgramRepository;
+    private final DivisionRepository mDivisionRepository;
+    private final DistrictRepository mDistrictRepository;
+    private final ThanaRepository mThanaRepository;
+    private final ApplicantRepository mApplicantRepository;
+    private final ApplicantPersonalInfoRepository mApplicantPersonalInfoRepository;
+    private final ApplicantEducationalInfoRepository mApplicantEducationalInfoRepository;
+    private final ApplicantAddressRepository mApplicantAddressRepository;
+    private final JobExperienceRepository mJobExperienceRepository;
+    private final FileStorageService fileStorageService;
+    private final EntityManager entityManager;
+    private final FileStorageRepository mFileStorageRepository;
 
-    @Autowired
-    ProgramRepository mProgramRepository;
-
-    @Autowired
-    DivisionRepository mDivisionRepository;
-
-    @Autowired
-    DistrictRepository mDistrictRepository;
-
-    @Autowired
-    ThanaRepository mThanaRepository;
-
-    @Autowired
-    ApplicantRepository mApplicantRepository;
-
-    @Autowired
-    ApplicantPersonalInfoRepository mApplicantPersonalInfoRepository;
-
-    @Autowired
-    ApplicantEducationalInfoRepository mApplicantEducationalInfoRepository;
-
-    @Autowired
-    ApplicantAddressRepository mApplicantAddressRepository;
-
-    @Autowired
-    JobExperienceRepository mJobExperienceRepository;
-
-    @Autowired
-    FileStorageService fileStorageService;
+    public AdmissionService(SemesterRepository mSemesterRepository, ProgramRepository mProgramRepository, DivisionRepository mDivisionRepository, DistrictRepository mDistrictRepository, ThanaRepository mThanaRepository, ApplicantRepository mApplicantRepository, ApplicantPersonalInfoRepository mApplicantPersonalInfoRepository, ApplicantEducationalInfoRepository mApplicantEducationalInfoRepository, ApplicantAddressRepository mApplicantAddressRepository, JobExperienceRepository mJobExperienceRepository, FileStorageService fileStorageService, EntityManager entityManager, FileStorageRepository mFileStorageRepository) {
+        this.mSemesterRepository = mSemesterRepository;
+        this.mProgramRepository = mProgramRepository;
+        this.mDivisionRepository = mDivisionRepository;
+        this.mDistrictRepository = mDistrictRepository;
+        this.mThanaRepository = mThanaRepository;
+        this.mApplicantRepository = mApplicantRepository;
+        this.mApplicantPersonalInfoRepository = mApplicantPersonalInfoRepository;
+        this.mApplicantEducationalInfoRepository = mApplicantEducationalInfoRepository;
+        this.mApplicantAddressRepository = mApplicantAddressRepository;
+        this.mJobExperienceRepository = mJobExperienceRepository;
+        this.fileStorageService = fileStorageService;
+        this.entityManager = entityManager;
+        this.mFileStorageRepository = mFileStorageRepository;
+    }
 
     public Semester getSemesters(Integer pStatus) {
         Semester semester = mSemesterRepository.findAllByIsActive(pStatus.intValue());
         return semester;
     }
-  public Optional<Semester> getSemesterById(Long pId) {
-    Optional<Semester> semester = mSemesterRepository.findById(pId);
-    return semester;
-  }
 
-  public Optional<Program> getProgramById(Long pId) {
-    Optional<Program> program = mProgramRepository.findById(pId);
-    return program;
-  }
+    public Optional<Semester> getSemesterById(Long pId) {
+        Optional<Semester> semester = mSemesterRepository.findById(pId);
+        return semester;
+    }
+
+    public Optional<Program> getProgramById(Long pId) {
+        Optional<Program> program = mProgramRepository.findById(pId);
+        return program;
+    }
 
     public List<Program> getPrograms() {
         List<Program> programList = (List<Program>) mProgramRepository.findAll();
@@ -90,6 +90,7 @@ public class AdmissionService {
         List<Thana> thanas = (List<Thana>) mThanaRepository.findAll();
         return thanas;
     }
+
     public Optional<Thana> getThanaById(Long i) {
         Optional<Thana> thana = mThanaRepository.findById(i);
         return thana;
@@ -127,6 +128,7 @@ public class AdmissionService {
         applicant.setSelectedRejectedOn(Instant.now());
         applicant.setApplicationFeePaidOn(Instant.now());
         applicant = mApplicantRepository.saveAndFlush(applicant);
+        entityManager.refresh(applicant);
 
         ApplicantPersonaIInfo app = new ApplicantPersonaIInfo();
         app.setApplicant(applicant);
@@ -171,20 +173,27 @@ public class AdmissionService {
 
 
         List<JobExperience> workExperienceLists = new ArrayList<>();
-        /*if (pApp.getWorkExperienceList() != null) {
+        int size = pApp.getWorkExperienceList().size();
+
+        if (pApp.getWorkExperienceList().size() > 0) {
             for (WorkExperienceList data : pApp.getWorkExperienceList()) {
-                JobExperience obj = new JobExperience();
-                //fileStorageService.saveFile(data.getExperienceFile(), "document", pApp, "exp");
-                obj.setApplicationSn(applicantSerialNo);
-                obj.setOrganizationName(data.getOrganizationName());
-                obj.setDesignation(data.getDesignation());
-                obj.setJobResponsibilities(data.getJobResponsibility());
-                obj.setFromDate(PgUtils.formateDate(data.getFromDate()));
-                obj.setToDate(PgUtils.formateDate(data.getToDate()));
-                obj.setApplicant(applicant);
-                workExperienceLists.add(obj);
+                if (data.getVisbility() == 1) {
+                    JobExperience obj = new JobExperience();
+                    //fileStorageService.saveFile(data.getExperienceFile(), "document", pApp, "exp");
+                    obj.setApplicationSn(applicantSerialNo);
+                    obj.setOrganizationName(data.getOrganizationName());
+                    obj.setDesignation(data.getDesignation());
+                    obj.setJobResponsibilities(data.getJobResponsibility());
+                    obj.setFromDate(PgUtils.formateDate(data.getFromDate()));
+                    if (!data.getCurrentlyWorking())
+                        obj.setToDate(PgUtils.formateDate(data.getToDate()));
+                    else
+                        obj.setToDate(PgUtils.formateDate("0001-01-01"));
+                    obj.setApplicant(applicant);
+                    workExperienceLists.add(obj);
+                }
             }
-        }*/
+        }
 
 
         List<ApplicantEducationalInfo> educationalInfoList = new ArrayList<>();
@@ -230,52 +239,149 @@ public class AdmissionService {
         educationalInfoList.add(eduInfo);
 
 
-        //List<MultipartFile> eduFile=new ArrayList<>();
-        //eduFile.add(pApp.getSscFile());
+        mApplicantPersonalInfoRepository.saveAndFlush(app);
+        entityManager.refresh(app);
 
+      /*  mApplicantEducationalInfoRepository.saveAll(educationalInfoList);
+        mApplicantEducationalInfoRepository.flush();
+        educationalInfoList.forEach(entityManager::refresh);*/
 
-        mApplicantPersonalInfoRepository.save(app);
-        mApplicantEducationalInfoRepository.saveAll(educationalInfoList);
-        if (workExperienceLists.size() > 0) {
-            mJobExperienceRepository.saveAll(workExperienceLists);
+        String path = "";
+
+        //Save Educational Info
+        ApplicantEducationalInfo applicantEducationalInfo = mApplicantEducationalInfoRepository.saveAndFlush(educationalInfoList.get(0));
+        entityManager.refresh(educationalInfoList.get(0));
+        if (!pApp.getSscFile().isEmpty()) {
+            path = fileStorageService.saveFile(pApp.getSscFile(), -1, pApp, FileTypeEnum.SSC);
+            FileStorage fileStorage = new FileStorage();
+            fileStorage.setApplicationSn(applicantSerialNo);
+            fileStorage.setFileType(FileTypeEnum.SSC.toString());
+            if (path.length() > 251)
+                fileStorage.setFilePath(path.substring(0, 250));
+            else fileStorage.setFilePath(path);
+            fileStorage.setRefId(applicantEducationalInfo.getId());
+            fileStorage.setCreatedOn(Instant.now());
+            mFileStorageRepository.saveAndFlush(fileStorage);
+            entityManager.refresh(fileStorage);
         }
-        mApplicantAddressRepository.saveAll(addressList);
 
 
-    /*for(MultipartFile file:eduFile){
-      if (!file.isEmpty()){
-        fileStorageService.saveFile(file,"document", pApp, "");
-      }
-    }*/
+        applicantEducationalInfo = mApplicantEducationalInfoRepository.saveAndFlush(educationalInfoList.get(1));
+        entityManager.refresh(educationalInfoList.get(1));
+        if (!pApp.getHscFile().isEmpty()) {
+            path = fileStorageService.saveFile(pApp.getHscFile(), -1, pApp, FileTypeEnum.HSC);
+            FileStorage fileStorage = new FileStorage();
+            fileStorage.setApplicationSn(applicantSerialNo);
+            fileStorage.setFileType(FileTypeEnum.HSC.toString());
+            if (path.length() > 251)
+                fileStorage.setFilePath(path.substring(0, 250));
+            else fileStorage.setFilePath(path);
+            fileStorage.setRefId(applicantEducationalInfo.getId());
+            fileStorage.setCreatedOn(Instant.now());
+            mFileStorageRepository.saveAndFlush(fileStorage);
+            entityManager.refresh(fileStorage);
+        }
 
-        /*Save all Files*/
+
+        applicantEducationalInfo = mApplicantEducationalInfoRepository.saveAndFlush(educationalInfoList.get(2));
+        entityManager.refresh(educationalInfoList.get(2));
+        if (!pApp.getBscFile().isEmpty()) {
+            path = fileStorageService.saveFile(pApp.getBscFile(), -1, pApp, FileTypeEnum.BSC);
+            FileStorage fileStorage = new FileStorage();
+            fileStorage.setApplicationSn(applicantSerialNo);
+            fileStorage.setFileType(FileTypeEnum.BSC.toString());
+            if (path.length() > 251)
+                fileStorage.setFilePath(path.substring(0, 250));
+            else fileStorage.setFilePath(path);
+            fileStorage.setRefId(applicantEducationalInfo.getId());
+            fileStorage.setCreatedOn(Instant.now());
+            mFileStorageRepository.saveAndFlush(fileStorage);
+            entityManager.refresh(fileStorage);
+        }
+
+        applicantEducationalInfo = mApplicantEducationalInfoRepository.saveAndFlush(educationalInfoList.get(3));
+        entityManager.refresh(educationalInfoList.get(3));
+        if (!pApp.getMscFile().isEmpty()) {
+            path=fileStorageService.saveFile(pApp.getMscFile(), -1, pApp, FileTypeEnum.MSC);
+            FileStorage fileStorage = new FileStorage();
+            fileStorage.setApplicationSn(applicantSerialNo);
+            fileStorage.setFileType(FileTypeEnum.MSC.toString());
+            if (path.length() > 251)
+                fileStorage.setFilePath(path.substring(0, 250));
+            else fileStorage.setFilePath(path);
+            fileStorage.setRefId(applicantEducationalInfo.getId());
+            fileStorage.setCreatedOn(Instant.now());
+            mFileStorageRepository.saveAndFlush(fileStorage);
+            entityManager.refresh(fileStorage);
+        }
+
+
+
+
+        /*if (workExperienceLists.size() > 0) {
+            mJobExperienceRepository.saveAll(workExperienceLists);
+            mJobExperienceRepository.flush();
+            workExperienceLists.forEach(entityManager::refresh);
+        }*/
+
+        //Save Job Experience
         if (pApp.getWorkExperienceList() != null) {
+            int index = 0;
             for (WorkExperienceList data : pApp.getWorkExperienceList()) {
-                if (!data.getExperienceFile().isEmpty())
-                    fileStorageService.saveFile(data.getExperienceFile(), pApp,  FileTypeEnum.EXPERIENCE);
+                if (!data.getExperienceFile().isEmpty() && data.getVisbility() == 1) {
+                    JobExperience jobExperience = mJobExperienceRepository.saveAndFlush(workExperienceLists.get(index));
+                    entityManager.refresh(workExperienceLists.get(index));
+
+                    path = fileStorageService.saveFile(data.getExperienceFile(), index, pApp, FileTypeEnum.EXPERIENCE);
+                    FileStorage fileStorage = new FileStorage();
+                    fileStorage.setApplicationSn(applicantSerialNo);
+                    fileStorage.setFileType(FileTypeEnum.EXPERIENCE.toString());
+                    if (path.length() > 251)
+                        fileStorage.setFilePath(path.substring(0, 250));
+                    else fileStorage.setFilePath(path);
+
+                    fileStorage.setRefId(jobExperience.getId());
+                    fileStorage.setCreatedOn(Instant.now());
+                    mFileStorageRepository.saveAndFlush(fileStorage);
+                    entityManager.refresh(fileStorage);
+
+                }
+                index++;
             }
         }
 
-        if (!pApp.getSscFile().isEmpty()) {
-            fileStorageService.saveFile(pApp.getSscFile(),  pApp, FileTypeEnum.SSC);
-        }
-        if (!pApp.getHscFile().isEmpty()) {
-            fileStorageService.saveFile(pApp.getHscFile(), pApp,  FileTypeEnum.HSC);
-        }
-        if (!pApp.getBscFile().isEmpty()) {
-            fileStorageService.saveFile(pApp.getBscFile(), pApp,  FileTypeEnum.BSC);
-        }
-        if (!pApp.getMscFile().isEmpty()) {
-            fileStorageService.saveFile(pApp.getMscFile(), pApp,  FileTypeEnum.MSC);
-        }
+        mApplicantAddressRepository.saveAll(addressList);
+        mApplicantAddressRepository.flush();
+        addressList.forEach(entityManager::refresh);
 
+        //Save Photo
         if (!pApp.getPhoto().isEmpty()) {
-            fileStorageService.saveFile(pApp.getPhoto(), pApp,  FileTypeEnum.PHOTO);
+            path=fileStorageService.saveFile(pApp.getPhoto(), -1, pApp, FileTypeEnum.PHOTO);
+            FileStorage fileStorage = new FileStorage();
+            fileStorage.setApplicationSn(applicantSerialNo);
+            fileStorage.setFileType(FileTypeEnum.PHOTO.toString());
+            if (path.length() > 251)
+                fileStorage.setFilePath(path.substring(0, 250));
+            else fileStorage.setFilePath(path);
+            fileStorage.setCreatedOn(Instant.now());
+            mFileStorageRepository.saveAndFlush(fileStorage);
+            entityManager.refresh(fileStorage);
         }
+        //Save signature
         if (!pApp.getSignature().isEmpty()) {
-            fileStorageService.saveFile(pApp.getSignature(), pApp,  FileTypeEnum.SIGNATURE);
+            path=fileStorageService.saveFile(pApp.getSignature(), -1, pApp, FileTypeEnum.SIGNATURE);
+            FileStorage fileStorage = new FileStorage();
+            fileStorage.setApplicationSn(applicantSerialNo);
+            fileStorage.setFileType(FileTypeEnum.SIGNATURE.toString());
+            if (path.length() > 251)
+                fileStorage.setFilePath(path.substring(0, 250));
+            else fileStorage.setFilePath(path);
+            fileStorage.setCreatedOn(Instant.now());
+            mFileStorageRepository.saveAndFlush(fileStorage);
+            entityManager.refresh(fileStorage);
         }
         return applicantSerialNo;
     }
+
 
 }

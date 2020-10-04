@@ -1,13 +1,14 @@
 package aust.iums.pg.admission.controller;
 
 import aust.iums.pg.admission.dto.ApplicationForm;
-import aust.iums.pg.admission.dto.Serial;
 import aust.iums.pg.admission.dto.StatusCheckDto;
 import aust.iums.pg.admission.dto.WorkExperienceList;
 import aust.iums.pg.admission.enums.FileTypeEnum;
 import aust.iums.pg.admission.helper.AdmissionHelper;
 import aust.iums.pg.admission.model.*;
+import aust.iums.pg.admission.service.AdmissionService;
 import aust.iums.pg.admission.service.FileStorageService;
+import aust.iums.pg.admission.service.PgAdmissionMailService;
 import aust.iums.pg.admission.utils.PgUtils;
 import com.itextpdf.text.DocumentException;
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -26,11 +28,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.StreamingOutput;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.ParseException;
 import java.time.Instant;
 import java.util.*;
@@ -41,29 +40,35 @@ import java.util.*;
 
 @Controller
 public class AdmissionController {
-    @Autowired
-    FileStorageService fileStorageService;
+    private final FileStorageService fileStorageService;
+    private final AdmissionHelper mHelper;
+    private final PgAdmissionMailService mPgAdmissionMailService;
+    private final AdmissionService admissionService;
 
-    @Autowired
-    AdmissionHelper mHelper;
+
 
     private final Logger log = LoggerFactory.getLogger(AdmissionController.class);
     Semester semester;
+
+
+    public AdmissionController(FileStorageService fileStorageService, AdmissionHelper mHelper, PgAdmissionMailService mPgAdmissionMailService, AdmissionService admissionService) {
+        this.fileStorageService = fileStorageService;
+        this.mHelper = mHelper;
+        this.mPgAdmissionMailService = mPgAdmissionMailService;
+        this.admissionService = admissionService;
+    }
 
     @ModelAttribute("applicant")
     public ApplicationForm applicantModel() {
         ApplicationForm applicationForm = new ApplicationForm();
         applicationForm.setWorkExperienceList(new ArrayList<>());
-        applicationForm.setSerialList(new ArrayList<>());
+        applicationForm.setSerialList(new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)));
+        applicationForm.setPointer(-1);
         for (int i = 0; i < 10; i++) {
-            WorkExperienceList w =new WorkExperienceList();
+            WorkExperienceList w = new WorkExperienceList();
             w.setVisbility(0);
             applicationForm.getWorkExperienceList().add(w);
 
-            Serial serial = new Serial();
-            serial.setDivNumber(i);
-            serial.setVisibility(0);
-            applicationForm.getSerialList().add(serial);
         }
         applicationForm.setWorkExperienceDivId("");
 
@@ -121,11 +126,13 @@ public class AdmissionController {
     }
 
     @PostMapping(value = "/apply", params = {"save"})
-    public String greetingSubmit(@Valid @ModelAttribute("applicant") ApplicationForm applicant, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) throws IOException, ParseException {
+    public String greetingSubmit(@Valid @ModelAttribute("applicant") ApplicationForm applicant, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) throws Exception {
         boolean otherErrors = isOtherErrors(applicant);
         if (bindingResult.hasErrors() || otherErrors) {
             log.error("errors: " + bindingResult.toString());
             applicant.setDeclaration(false);
+            Boolean hasError = true;
+            model.addAttribute("hasError",hasError);
             return "application-form";
         } else {
             addressMap(applicant);
@@ -136,10 +143,16 @@ public class AdmissionController {
             model.addAttribute("serialNo", serialNo);
             String toDate = PgUtils.instantFormatter(deadline.getToDate());
             model.addAttribute("deadline", toDate);
+
+            String dob=applicant.getDateOfBirth();
+            model.addAttribute("dateOfBirth",dob);
+          //  mHelper.sendApplicantFormToApplicant(applicant, serialNo, dob);
             return "success-page";
         }
 
     }
+
+
 
     @GetMapping("/statusCheck")
     public String statusCheck(Model model) {
@@ -166,6 +179,12 @@ public class AdmissionController {
             }
         };*/
     }
+
+  @RequestMapping(value = "/sendEmail/applicantNo/{applicationSn}/dateofBirth/{dob}", method = RequestMethod.GET)
+  public void sendEmail(@PathVariable(name = "applicationSn") String applicationSn, @PathVariable(name = "dob") String dateOfBirth) {
+    System.out.println("hello world");
+
+  }
 
 
     @PostMapping("/result")
@@ -203,34 +222,6 @@ public class AdmissionController {
     }
 
 
-    @PostMapping(value = "/apply", params = {"addRow"})
-    public String addRow(@ModelAttribute("applicant") ApplicationForm applicationForm, final BindingResult bindingResult, Model model) {
-        applicationForm.getWorkExperienceList().add(new WorkExperienceList());
-        applicationForm.setWorkExperienceDivId("workExperienceDivId");
-        //addressMap(applicationForm);
-        return "application-form";
-    }
-
-    @PostMapping(value = "/apply", params = {"removeRow"})
-    public String removeRow(
-            @ModelAttribute("applicant") ApplicationForm applicationForm, final BindingResult bindingResult,
-            final HttpServletRequest req) {
-        final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
-        applicationForm.getWorkExperienceList().remove(rowId.intValue());
-        applicationForm.setWorkExperienceDivId("workExperienceDivId");
-        //  addressMap(applicationForm);
-        return "application-form";
-    }
-
-    @PostMapping(value = "/apply", params = {"modal"})
-    public String showModal(
-            @ModelAttribute("applicant") ApplicationForm applicationForm, final BindingResult bindingResult,
-            final HttpServletRequest req) {
-        applicationForm.setModalId("myModal");
-        addressMap(applicationForm);
-        return "application-form";
-    }
-
     @PostMapping(value = "/getDistrict/{divId}", produces = "application/json")
     public @ResponseBody
     List<District>
@@ -263,6 +254,7 @@ public class AdmissionController {
             try {
                 fileStorageService.validate(applicant.getPhoto(), FileTypeEnum.PHOTO);
             } catch (Exception e) {
+                otherErrors = true;
                 log.error(e.getMessage());
                 applicant.setPhotoError(e.getMessage());
             }
@@ -275,6 +267,7 @@ public class AdmissionController {
             try {
                 fileStorageService.validate(applicant.getSignature(), FileTypeEnum.SIGNATURE);
             } catch (Exception e) {
+                otherErrors = true;
                 log.error(e.getMessage());
                 applicant.setSignatureError(e.getMessage());
             }
@@ -287,6 +280,7 @@ public class AdmissionController {
             try {
                 fileStorageService.validate(applicant.getSscFile(), FileTypeEnum.SSC);
             } catch (Exception e) {
+                otherErrors = true;
                 log.error(e.getMessage());
                 applicant.setSscFileError(e.getMessage());
             }
@@ -299,6 +293,7 @@ public class AdmissionController {
             try {
                 fileStorageService.validate(applicant.getHscFile(), FileTypeEnum.HSC);
             } catch (Exception e) {
+                otherErrors = true;
                 log.error(e.getMessage());
                 applicant.setHscFileError(e.getMessage());
             }
@@ -311,6 +306,7 @@ public class AdmissionController {
             try {
                 fileStorageService.validate(applicant.getBscFile(), FileTypeEnum.BSC);
             } catch (Exception e) {
+                otherErrors = true;
                 log.error(e.getMessage());
                 applicant.setBscFileError(e.getMessage());
             }
@@ -320,6 +316,7 @@ public class AdmissionController {
             try {
                 fileStorageService.validate(applicant.getMscFile(), FileTypeEnum.MSC);
             } catch (Exception e) {
+                otherErrors = true;
                 log.error(e.getMessage());
                 applicant.setMscFileError(e.getMessage());
             }
@@ -327,12 +324,38 @@ public class AdmissionController {
 
         if (applicant.getWorkExperienceList() != null) {
             for (WorkExperienceList data : applicant.getWorkExperienceList()) {
-                if (!data.getExperienceFile().isEmpty()) {
-                    try {
-                        fileStorageService.validate(data.getExperienceFile(), FileTypeEnum.EXPERIENCE);
-                    } catch (Exception e) {
-                        log.error(e.getMessage());
-                        data.setExperienceFileError(e.getMessage());
+                if (data.getVisbility() == 1) {
+                    if (data.getOrganizationName().isEmpty()) {
+                        otherErrors = true;
+                        data.setOrganizationNameError("Please select organization name.");
+                    }
+                    if (data.getDesignation().isEmpty()) {
+                        otherErrors = true;
+                        data.setDesignationError("Please select designation.");
+                    }
+                    if (data.getJobResponsibility().isEmpty()) {
+                        otherErrors = true;
+                        data.setJobResponsibilityError("Please select job responsibility.");
+                    }
+                    if (data.getFromDate().isEmpty()) {
+                        otherErrors = true;
+                        data.setFromDateError("Please select from date.");
+                    }
+                    if (data.getToDate().isEmpty() && !data.getCurrentlyWorking()) {
+                        otherErrors = true;
+                        data.setToDateError("Please select to date.");
+                    }
+                    if (!data.getExperienceFile().isEmpty()) {
+                        try {
+                            fileStorageService.validate(data.getExperienceFile(), FileTypeEnum.EXPERIENCE);
+                        } catch (Exception e) {
+                            otherErrors = true;
+                            log.error(e.getMessage());
+                            data.setExperienceFileError(e.getMessage());
+                        }
+                    } else {
+                        otherErrors = true;
+                        data.setExperienceFileError("Please select file.");
                     }
                 }
             }
@@ -388,5 +411,32 @@ public class AdmissionController {
 
     }
 
+    @PostMapping(value = "/apply", params = {"addRow"})
+    public String addRow(@ModelAttribute("applicant") ApplicationForm applicationForm, final BindingResult bindingResult, Model model) {
+        applicationForm.getWorkExperienceList().add(new WorkExperienceList());
+        applicationForm.setWorkExperienceDivId("workExperienceDivId");
+        //addressMap(applicationForm);
+        return "application-form";
+    }
+
+    @PostMapping(value = "/apply", params = {"removeRow"})
+    public String removeRow(
+            @ModelAttribute("applicant") ApplicationForm applicationForm, final BindingResult bindingResult,
+            final HttpServletRequest req) {
+        final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
+        applicationForm.getWorkExperienceList().remove(rowId.intValue());
+        applicationForm.setWorkExperienceDivId("workExperienceDivId");
+        //  addressMap(applicationForm);
+        return "application-form";
+    }
+
+    @PostMapping(value = "/apply", params = {"modal"})
+    public String showModal(
+            @ModelAttribute("applicant") ApplicationForm applicationForm, final BindingResult bindingResult,
+            final HttpServletRequest req) {
+        applicationForm.setModalId("myModal");
+        addressMap(applicationForm);
+        return "application-form";
+    }
 
 }

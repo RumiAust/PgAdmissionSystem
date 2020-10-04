@@ -6,8 +6,11 @@ import aust.iums.pg.admission.model.*;
 import aust.iums.pg.admission.repository.*;
 import aust.iums.pg.admission.service.AdmissionService;
 import aust.iums.pg.admission.service.ApplicationFormPdfGenerator;
+import aust.iums.pg.admission.service.PgAdmissionMailService;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
@@ -23,18 +26,19 @@ import java.util.Optional;
 @Component
 public class AdmissionHelper {
 
-  @Autowired
-  AdmissionService mAdmissionService;
+  private final AdmissionService mAdmissionService;
+  private final ApplicationFormPdfGenerator pApplicationFormPdfGenerator;
+  private final ApplicationDeadlineRepository mApplicationDeadlineRepository;
+  private final PgAdmissionMailService pgAdmissionMailService;
 
-  @Autowired
-  ApplicationFormPdfGenerator pApplicationFormPdfGenerator;
-
-  @Autowired
-  ApplicationDeadlineRepository mApplicationDeadlineRepository;
-
-  public AdmissionHelper(AdmissionService pAdmissionService) {
-    this.mAdmissionService = pAdmissionService;
+  public AdmissionHelper(AdmissionService mAdmissionService, @Lazy ApplicationFormPdfGenerator pApplicationFormPdfGenerator, ApplicationDeadlineRepository mApplicationDeadlineRepository, PgAdmissionMailService pgAdmissionMailService) {
+    this.mAdmissionService = mAdmissionService;
+    this.pApplicationFormPdfGenerator = pApplicationFormPdfGenerator;
+    this.mApplicationDeadlineRepository = mApplicationDeadlineRepository;
+    this.pgAdmissionMailService = pgAdmissionMailService;
   }
+
+
 
   public Semester getActiveSemester(){
     Semester semester=mAdmissionService.getSemesters(SemesterEnum.ACTIVE.getValue());
@@ -97,4 +101,10 @@ public class AdmissionHelper {
     return pApplicationFormPdfGenerator.createApplicationForm(applicationSn, dateOfBirth);
    }
 
+  @Async
+  public void sendApplicantFormToApplicant(ApplicationForm applicant, String serialNo, String dateOfBirth) throws Exception{
+    //Thread.sleep(10*1000);
+    ByteArrayInputStream bis = getApplicationFormPdf(serialNo, dateOfBirth);
+    pgAdmissionMailService.sendEmailFromTemplate(applicant,"Aust","Admission",bis);
+  }
 }

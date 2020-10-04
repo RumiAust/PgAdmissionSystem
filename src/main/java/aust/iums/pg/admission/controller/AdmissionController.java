@@ -131,6 +131,8 @@ public class AdmissionController {
         if (bindingResult.hasErrors() || otherErrors) {
             log.error("errors: " + bindingResult.toString());
             applicant.setDeclaration(false);
+            Boolean hasError = true;
+            model.addAttribute("hasError",hasError);
             return "application-form";
         } else {
             addressMap(applicant);
@@ -143,6 +145,7 @@ public class AdmissionController {
             model.addAttribute("deadline", toDate);
 
             String dob=applicant.getDateOfBirth();
+            model.addAttribute("dateOfBirth",dob);
           //  mHelper.sendApplicantFormToApplicant(applicant, serialNo, dob);
             return "success-page";
         }
@@ -177,8 +180,8 @@ public class AdmissionController {
         };*/
     }
 
-  @RequestMapping(value = "/downloadAppForm/applicantNo/{applicationSn}", method = RequestMethod.GET)
-  public void downloadAppForm(HttpServletResponse response, @PathVariable(name = "applicationSn") String applicationSn) throws IOException{
+  @RequestMapping(value = "/sendEmail/applicantNo/{applicationSn}/dateofBirth/{dob}", method = RequestMethod.GET)
+  public void sendEmail(@PathVariable(name = "applicationSn") String applicationSn, @PathVariable(name = "dob") String dateOfBirth) {
     System.out.println("hello world");
 
   }

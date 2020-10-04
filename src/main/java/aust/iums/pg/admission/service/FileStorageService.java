@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
+
 /**
  * Created by Md. Minhaz Ur Rahman on 9/20/2020.
  */
@@ -48,18 +49,23 @@ public class FileStorageService {
     @Autowired
     ApplicantRepository mApplicantRepository;
 
-    public void saveFile(MultipartFile file, ApplicationForm form, FileTypeEnum docType) throws IOException {
+    public String saveFile(MultipartFile file, int experienceIndex, ApplicationForm form, FileTypeEnum docType) throws IOException {
         String fileName = file.getOriginalFilename();
         String applicantSerialNo = form.getApplicationSerialNumber();
 
-        String modifiedFileName="";
-        if(docType==FileTypeEnum.PHOTO || docType==FileTypeEnum.SIGNATURE)
-             modifiedFileName =  applicantSerialNo + "." + FilenameUtils.getExtension(fileName);
-        else if(docType==FileTypeEnum.SSC || docType==FileTypeEnum.HSC || docType==FileTypeEnum.BSC || docType==FileTypeEnum.MSC || docType==FileTypeEnum.EXPERIENCE)
-             modifiedFileName =  docType + "_" + System.currentTimeMillis() + "." + FilenameUtils.getExtension(fileName);
-
+        String modifiedFileName = "";
+        if (docType == FileTypeEnum.PHOTO || docType == FileTypeEnum.SIGNATURE)
+            modifiedFileName = applicantSerialNo + "." + FilenameUtils.getExtension(fileName);
+        else if (docType == FileTypeEnum.SSC || docType == FileTypeEnum.HSC || docType == FileTypeEnum.BSC || docType == FileTypeEnum.MSC)
+            modifiedFileName = docType + "_" + System.currentTimeMillis() + "." + FilenameUtils.getExtension(fileName);
+        else if (docType == FileTypeEnum.EXPERIENCE) {
+            String organizationName = form.getWorkExperienceList().get(experienceIndex).getOrganizationName().replaceAll(" ", "-");
+            String designation = form.getWorkExperienceList().get(experienceIndex).getDesignation().replaceAll(" ", "-");
+            modifiedFileName = organizationName + "_" + designation + "_" + System.currentTimeMillis() + "." + FilenameUtils.getExtension(fileName);
+        }
         Path path = uploadPathService.getFilePath(modifiedFileName, docType, form);
         Files.write(path, file.getBytes());
+        return path.toString();
         /*fileStorage.setFileName(modifiedFileName);
         fileStorage.setFileType("photo");*/
 
@@ -86,7 +92,7 @@ public class FileStorageService {
             if ((file.getSize() / 1000) > maxSize) {
                 throw new RuntimeException("Invalid applicant signature size. Maximum allowed signature size is " + maxSize + " KB");
             }
-        } else if (type == FileTypeEnum.BSC || type==FileTypeEnum.HSC || type==FileTypeEnum.SSC ||type== FileTypeEnum.BSC || type==FileTypeEnum.MSC || type==FileTypeEnum.EXPERIENCE) {
+        } else if (type == FileTypeEnum.BSC || type == FileTypeEnum.HSC || type == FileTypeEnum.SSC || type == FileTypeEnum.BSC || type == FileTypeEnum.MSC || type == FileTypeEnum.EXPERIENCE) {
             if (!(file.getOriginalFilename().endsWith(".jpg") || file.getOriginalFilename().endsWith(".png") || file.getOriginalFilename().endsWith(".jpeg") || file.getOriginalFilename().endsWith(".pdf") || file.getOriginalFilename().endsWith(".zip")))
                 throw new RuntimeException("Invalid applicant file type( accepted: jpeg, jpg, png, pdf, zip)");
             if ((file.getSize() / 1000) > maxDocumentSize) {

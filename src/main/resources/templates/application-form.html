@@ -7,12 +7,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link th:href="@{/css/main.css}" rel="stylesheet">
-    <!--<script type="text/javascript" th:src="@{/js/main.js}"></script>-->
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/js/main.js}" src="../static/js/main.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
@@ -36,6 +36,24 @@
 
 <div>
     <form action="#" th:action="@{/apply}" th:object="${applicant}" method="post" enctype="multipart/form-data">
+        <input type="hidden" id="errorCheck" th:attr="data-has-error=${hasError}">
+        <div class="modal fade" id="formular">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-block alert-danger">
+                            <h4>Error !</h4>
+                            Resolve error and try again !
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container" style="border: 1px solid black;margin-top: 40px;margin-bottom: 20px">
             <div align="center">
                 <h1><img src="logo-aust.png" width="40" height="40" alt="">&nbsp;&nbsp;Ahsanullah University of Science
@@ -871,13 +889,14 @@
                                         </div>
                                         <div class="col-md-4" align="center">
                                             <label th:for="currentWork-+${rowStat.index}">
-                                                <input onclick="hideToDate(this)" th:id="currentWork-+${rowStat.index}" type="checkbox"
+                                                <input onclick="hideToDate(this)" th:id="currentWork-+${rowStat.index}"
+                                                       type="checkbox"
                                                        th:field="*{workExperienceList[__${rowStat.index}__].currentlyWorking}">
                                                 Currently work here
                                             </label>
                                         </div>
                                         <div th:id="todatediv+${rowStat.index}" class="col-sm-12 col-md-4">
-                                            <div class="form-group">
+                                            <div class="form-group required">
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">To Date:</div>
@@ -1170,56 +1189,52 @@
                             </div>
                             <div class="col-md-6 justify-content-end"
                                  style="border-style: solid;border-color: antiquewhite; border-width: 1px;">
-                                <div class="form-group" style="position: relative">
-                                    <label class="form-control-label" for="field_photo">Photo</label>
-                                    <div>
-                                        <div style="display: none" id="photo-div"
-                                             class="form-text text-danger clearfix">
-                                            <img id="photo" src="#" class="img-fluid rounded" width="170" height="165"
-                                                 alt="Photo"/>
+                                <div style="display: none" id="photo-div"
+                                     class="form-text text-danger clearfix">
+                                    <img id="photo" src="#" class="img-fluid rounded" width="170" height="165"
+                                         alt="Photo"/>
+                                </div>
+                                <div class="form-group required" style="padding-top: 15px">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Photo</div>
                                         </div>
                                         <input class="form-control border" type="file" name="file"
                                                th:value="${applicant.photo}" accept=".jpg, .jpeg"
                                                id="file_photo" th:field="*{photo}" th:errorclass="alert-danger"/>
+
                                     </div>
-                                    <input type="hidden" class="form-control" name="photo" id="field_photo"
-                                           formControlName="photo"/>
                                     <div style="padding-left:10px; color: red" th:if="${applicant.photoError!=''}">
                                         <span class="error"
                                               th:text="${applicant.photoError}"></span>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="col-md-6 justify-content-end"
                                  style="border-style: solid;border-color: antiquewhite; border-width: 1px;">
-                                <div class="form-group" style="position: relative">
-                                    <label class="form-control-label" for="field_photo">Signature</label>
-                                    <div>
-                                        <div style="display: none" id="signature-div"
-                                             class="form-text text-danger clearfix">
-                                            <img id="signature" src="#" class="img-fluid rounded" width="170"
-                                                 height="165"
-                                                 alt="Photo"/>
+                                <div style="display: none" id="signature-div"
+                                     class="form-text text-danger clearfix">
+                                    <img id="signature" src="#" class="img-fluid rounded" width="170"
+                                         height="165"
+                                         alt="signature"/>
+                                </div>
+                                <div class="form-group required" style="padding-top: 15px">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Signature</div>
                                         </div>
                                         <input class="form-control border" type="file" name="file" accept=".jpg, .jpeg"
                                                id="file_signature" th:field="*{signature}"
                                                th:errorclass="alert-danger"/>
+
                                     </div>
-                                    <input type="hidden" class="form-control" name="photo" id="field_signature"
-                                           formControlName="signature"/>
                                     <div class="error" style="padding-left:10px; color: red"
                                          th:if="${applicant.signatureError!=''}">
                                         <span th:text="${applicant.signatureError}"></span>
                                     </div>
                                 </div>
                             </div>
-                            <!--
-
-                                                        <h1 th:text="${successmessage}"></h1>
-                                                        <h1 th:text="${errormessage}"></h1>-->
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -1298,343 +1313,5 @@
         </div>
     </div>
 </footer>
-
 </body>
 </html>
-<script>
-    $(document).ready(function () {
-
-        serial = $('#serialList').data('serial');
-        pointer = $('#pointer').data('pointer');
-        console.log("after loaded serial: " + serial + "pointer: " + pointer);
-        rows = []
-
-        rearrangeWorkDiv();
-
-        if ($('#declaration').is(":checked")) {
-            $('#submitBtn').attr("disabled", false);
-        }
-        if ($('#presentDivisionId').val() !== "") {
-            addDistrict();
-        }
-        if ($('#permanentDivisionId').val() !== "") {
-            addPermanentDistrict();
-        }
-
-
-        function readPhotoURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#photo').attr('src', e.target.result);
-                    $('#photo-div').attr('style', '');
-                }
-
-                reader.readAsDataURL(input.files[0]); // convert to base64 string
-            }
-        }
-
-        function readSignatureURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#signature').attr('src', e.target.result);
-                    $('#signature-div').attr('style', '');
-                }
-
-                reader.readAsDataURL(input.files[0]); // convert to base64 string
-            }
-        }
-
-        $("#file_photo").change(function () {
-            readPhotoURL(this);
-        });
-        $("#file_signature").change(function () {
-            readSignatureURL(this);
-        });
-
-        //show modal
-        //$('#myModal').modal('toggle');
-    });
-
-    //scroll into work experience
-    /*
-        document.getElementById('workExperienceDivId').scrollIntoView(true);
-    */
-
-    function addDistrict() {
-        var mySelect = $('#presentDistrictId');
-        var mySelect2 = $('#presentThanaId');
-        var divisionId = $('#presentDivisionId').val();
-        if (divisionId !== "") {
-            $.ajax({
-                type: "POST",
-                contentType: "application/json",
-                url: "getDistrict/" + divisionId,
-                data: JSON.stringify({'divId': divisionId}),
-                dataType: 'json',
-                success: function (data) {
-                    mySelect.find('option').remove();
-                    var value = mySelect.data('id');
-                    if (value !== undefined) {
-                        mySelect.append('<option value="">Select District</option>');
-                        $.each(data, function () {
-                            if (value == (this.id + "-" + this.districtName)) {
-                                mySelect.append($('<option selected="selected"></option>').val(this.id + "-" + this.districtName).html(this.districtName));
-                                addThana();
-                            } else mySelect.append($('<option></option>').val(this.id + "-" + this.districtName).html(this.districtName));
-                        });
-                    } else {
-                        mySelect.append('<option selected="selected" value="">Select District</option>');
-                        $.each(data, function () {
-                            mySelect.append(
-                                $('<option></option>').val(this.id + "-" + this.districtName).html(this.districtName));
-                        });
-                    }
-                }
-            });
-        } else {
-            mySelect.find('option').remove();
-            mySelect2.find('option').remove();
-        }
-    }
-
-    function addThana() {
-        var mySelect = $('#presentThanaId');
-        var districtId = $('#presentDistrictId').val();
-        if (districtId !== "") {
-            $.ajax({
-                type: "GET",
-                contentType: "application/json",
-                url: "getThana/" + districtId,
-                success: function (data) {
-                    mySelect.find('option').remove();
-                    var value = mySelect.data('id');
-                    if (value !== undefined) {
-                        mySelect.append('<option value="">Select Thana</option>');
-                        $.each(data, function () {
-                            if (value == (this.id + "-" + this.thanaName))
-                                mySelect.append($('<option selected="selected"></option>').val(this.id + "-" + this.thanaName).html(this.thanaName));
-                            else mySelect.append($('<option></option>').val(this.id + "-" + this.thanaName).html(this.thanaName));
-
-                        });
-                    } else {
-                        mySelect.append('<option selected="selected" value="">Select Thana</option>');
-                        $.each(data, function () {
-                            mySelect.append(
-                                $('<option></option>').val(this.id + "-" + this.thanaName).html(this.thanaName));
-                        });
-                    }
-                    checkOther();
-                }
-            });
-        } else {
-            mySelect.find('option').remove();
-        }
-    }
-
-
-    function addPermanentDistrict() {
-        var mySelect = $('#permanentDistrictId');
-        var mySelect2 = $('#permanentThanaId');
-        var divisionId = $('#permanentDivisionId').val();
-        if (divisionId !== "") {
-            $.ajax({
-                type: "POST",
-                contentType: "application/json",
-                url: "getDistrict/" + divisionId,
-                data: JSON.stringify({'divId': divisionId}),
-                dataType: 'json',
-                success: function (data) {
-                    mySelect.find('option').remove();
-                    var value = mySelect.data('id');
-                    if (value !== undefined) {
-                        mySelect.append('<option value="">Select District</option>');
-                        $.each(data, function () {
-                            if (value == (this.id + "-" + this.districtName)) {
-                                mySelect.append($('<option selected="selected"></option>').val(this.id + "-" + this.districtName).html(this.districtName));
-                                addPermanentThana();
-                            } else mySelect.append($('<option></option>').val(this.id + "-" + this.districtName).html(this.districtName));
-                        });
-                    } else {
-                        mySelect.append('<option selected="selected" value="">Select District</option>');
-                        $.each(data, function () {
-                            mySelect.append(
-                                $('<option></option>').val(this.id + "-" + this.districtName).html(this.districtName));
-                        });
-                    }
-                }
-            });
-        } else {
-            mySelect.find('option').remove();
-            mySelect2.find('option').remove();
-        }
-    }
-
-    function addPermanentThana() {
-        var mySelect = $('#permanentThanaId');
-        var districtId = $('#permanentDistrictId').val();
-        if (districtId !== "") {
-            $.ajax({
-                type: "GET",
-                contentType: "application/json",
-                url: "getThana/" + districtId,
-                success: function (data) {
-                    mySelect.find('option').remove();
-                    var value = mySelect.data('id');
-                    if (value !== undefined) {
-                        mySelect.append('<option value="">Select Thana</option>');
-                        $.each(data, function () {
-                            if (value == (this.id + "-" + this.thanaName))
-                                mySelect.append($('<option selected="selected"></option>').val(this.id + "-" + this.thanaName).html(this.thanaName));
-                            else mySelect.append($('<option></option>').val(this.id + "-" + this.thanaName).html(this.thanaName));
-                        });
-                    } else {
-                        mySelect.append('<option selected="selected" value="">Select Thana</option>');
-                        $.each(data, function () {
-                            mySelect.append(
-                                $('<option></option>').val(this.id + "-" + this.thanaName).html(this.thanaName));
-                        });
-                    }
-                    checkOther();
-                }
-
-            });
-        } else {
-            mySelect.find('option').remove();
-        }
-    }
-
-
-    function checkOther() {
-        var thanaId = $('#presentThanaId').val();
-        if (thanaId == "9999-Others") {
-            $('.otherPresentThana').css("display", "block");
-        } else {
-            $('.otherPresentThana').css("display", "none");
-        }
-
-        var permanentThanaId = $('#permanentThanaId').val();
-        if (permanentThanaId == "9999-Others") {
-            $('.otherPermanentThana').css("display", "block");
-        } else {
-            $('.otherPermanentThana').css("display", "none");
-        }
-
-    }
-
-    function enableSubmit(th) {
-        if ($(th).is(":checked")) {
-            $('#submitBtn').attr("disabled", false);
-        } else if ($('#declaration').prop("checked") == false) {
-            $('#submitBtn').attr("disabled", true);
-        }
-    }
-
-    function hideToDate(th) {
-        var index = th.id.split("-");
-        console.log(index[1]);
-        if ($(th).is(":checked")) {
-            $('#toDate'+index[1]).val("");
-            $('#todatediv'+index[1]).css("display", "none");
-        } else if ($(th).prop("checked") == false) {
-            $('#todatediv'+index[1]).css("display", "block");
-        }
-    }
-
-
-    function addRow() {
-        $('#addbtn').off("click");
-        pointer++;
-        if (pointer < 10) {
-            for (var i = 0; i < 10; i++) {
-                if ($('#visibility' + i).val() == 0) {
-                    $('#' + i).css("display", "block");
-                    $('#visibility' + i).val(1);
-                    for (var j = pointer; j > 0; j--) {
-                        serial[j] = serial[j - 1]
-                    }
-                    serial[0] = i;
-                    break;
-                }
-            }
-            $('.workRow').each(function () {
-                rows[$(this).data('id')] = $(this);
-            });
-            $.each(serial, function (index, value) {
-                $('#container').append(rows[value]);
-            });
-        } else {
-            alert("You reached maximum 10 work experience. Don't need to add more work experience.")
-        }
-        console.log(serial + " pointer:" + pointer);
-        $('#serialList').val(serial);
-        $('#pointer').val(pointer);
-        $('#addbtn').on("click");
-
-    }
-
-    /*function replaceData(index) {
-
-        for (var i = index; i >= 0; i--) {
-            if ($('#visibility' + index - 1).val() == 1) {
-                $('#organizationName' + index).val($('#organizationName' + index - 1).val());
-                $('#designation' + index).val($('#organizationName' + index - 1).val());
-                $('#jobResponsibility' + index).val($('#organizationName' + index - 1).val());
-                $('#toDate' + index).val($('#organizationName' + index - 1).val());
-                $('#fromDate' + index).val($('#organizationName' + index - 1).val());
-                $('#experienceFile' + index).val($('#organizationName' + index - 1).val());
-            } else if ($('#visibility' + index - 1).val() == 0) {
-                break;
-            }
-        }
-
-    }*/
-
-
-    function removeRow(ths) {
-        $(ths).off("click");
-        var index = ths.id;
-        var position = serial.indexOf(parseInt(index));
-        if (position < pointer) {
-            for (var i = position; i < pointer; i++) {
-                serial[i] = serial[i + 1];
-            }
-            serial[pointer] = parseInt(index);
-            pointer--;
-        } else {
-            pointer--;
-        }
-        console.log(serial + " pointer:" + pointer);
-        $('#serialList').val(serial);
-        $('#pointer').val(pointer);
-        $('#organizationName' + index).val("");
-        $('#designation' + index).val("");
-        $('#jobResponsibility' + index).val("");
-        $('#toDate' + index).val("");
-        $('#fromDate' + index).val("");
-        $('#experienceFile' + index).val("");
-        $('#' + index).css("display", "none");
-        $('#visibility' + index).val(0);
-        $(ths).on("click");
-    }
-
-
-    function rearrangeWorkDiv() {
-        $('.workRow').each(function () {
-            rows[$(this).data('id')] = $(this);
-        });
-        $.each(serial, function (index, value) {
-            $('#container').append(rows[value]);
-        });
-        for (var i = 0; i < 9; i++) {
-            if ($('#visibility' + i).val() == 1) {
-                $('#' + i).css("display", "block");
-            }
-
-        }
-    }
-
-</script>

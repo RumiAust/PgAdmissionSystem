@@ -180,13 +180,6 @@
         var mySelect = $('#downloadLink');
         var applicationSn = mySelect.data('id');
         var dateOfBirth = mySelect.data('name');
-       /* $.ajax({
-            type: "get",
-            contentType: "application/json",
-            url: "downloadAppForm/" + applicationSn + "/" + dateOfBirth,
-            success: function (data) {
-            }
-        });*/
 
         var req = new XMLHttpRequest();
         req.open("GET", "downloadAppForm/" + applicationSn + "/" + dateOfBirth, true);

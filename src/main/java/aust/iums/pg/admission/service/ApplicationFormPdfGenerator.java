@@ -7,9 +7,7 @@ import aust.iums.pg.admission.repository.ApplicantPersonalInfoRepository;
 import aust.iums.pg.admission.repository.ApplicantRepository;
 import aust.iums.pg.admission.utils.PgUtils;
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.*;
 import com.itextpdf.text.pdf.draw.DottedLineSeparator;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 import org.slf4j.Logger;
@@ -26,6 +24,7 @@ import java.io.OutputStream;
 import java.net.URL;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
@@ -93,6 +92,7 @@ public class ApplicationFormPdfGenerator {
         Document document = new Document();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PdfWriter writer = PdfWriter.getInstance(document, baos);
+      writer.setPageEvent(new ApplicationFormFooter());
         document.open();
         document.setPageSize(PageSize.A4);
 
@@ -1292,4 +1292,29 @@ public class ApplicationFormPdfGenerator {
         return new ByteArrayInputStream(baos.toByteArray());
 
     }
+
+  public class ApplicationFormFooter extends PdfPageEventHelper{
+
+    @Override
+    public void onStartPage(PdfWriter writer, Document document) {
+      //  super.onStartPage(writer, document);
+      LocalDateTime myDateObj = LocalDateTime.now();
+      DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy");
+      String formattedDate = myDateObj.format(myFormatObj);
+      String documentRefNo="";
+      documentRefNo=formattedDate+"/AUST/PG/00";
+      /*if(isFacultyEngg){
+        documentRefNo=formattedDate+"/AUST/UG/01";
+      }else{
+        documentRefNo=formattedDate+"/AUST/UG/02";
+      }*/
+      PdfContentByte cb = writer.getDirectContent();
+      ColumnText.showTextAligned(cb, Element.ALIGN_RIGHT, new Phrase(PgUtils.getHeaderParagraph(documentRefNo)),
+          document.right() + 10, document.top() + 10, 0);
+
+    }
+  }
+
 }
+
+

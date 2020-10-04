@@ -1,5 +1,10 @@
 package aust.iums.pg.admission.utils;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,6 +38,14 @@ public class PgUtils {
     DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     String strDate = dateFormat.format(pDate);
     return strDate;
+  }
+  public static Paragraph getHeaderParagraph(String pInfo) {
+    Font headerFont = new Font(Font.FontFamily.TIMES_ROMAN, 6.0f, Font.BOLDITALIC, BaseColor.GRAY);
+    DateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
+    Paragraph ugHeaderParagraph =
+        new Paragraph(pInfo, headerFont);
+    ugHeaderParagraph.setAlignment(Element.ALIGN_RIGHT);
+    return ugHeaderParagraph;
   }
 
 }

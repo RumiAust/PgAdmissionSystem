@@ -47,4 +47,27 @@ public class PgUtils {
     return ugHeaderParagraph;
   }
 
+  public static boolean checkDateValidity(String startDate, String endDate, Boolean deadLineStatus) {
+    try {
+      if(startDate != null && endDate != null) {
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date startDateConvert, lastApplyDate, currentDate,crDateConverter;
+        crDateConverter = new Date();
+        String date=dateFormat.format(crDateConverter);
+        //currentDate=UmsUtils.convertToDate(date,"dd-MM-yyyy");
+        //startDateConvert = UmsUtils.convertToDate(startDate, "dd-MM-yyyy");
+        //lastApplyDate = UmsUtils.convertToDate(endDate, "dd-MM-yyyy");
+      /*  if(currentDate.compareTo(startDateConvert) >= 0 && currentDate.compareTo(lastApplyDate) <= 0) {
+          deadLineStatus = true;
+        }
+        else {
+          deadLineStatus = false;
+        }*/
+      }
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
+    return deadLineStatus;
+  }
+
 }

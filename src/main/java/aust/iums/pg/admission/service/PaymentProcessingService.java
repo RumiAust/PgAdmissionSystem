@@ -2,6 +2,7 @@ package aust.iums.pg.admission.service;
 
 import aust.iums.pg.admission.dto.AdmissionApplicantPaymentRequest;
 import aust.iums.pg.admission.dto.PaymentConfirmationDto;
+import aust.iums.pg.admission.enums.AdmissionEnum;
 import aust.iums.pg.admission.enums.FacultyType;
 import aust.iums.pg.admission.enums.PaymentCategory;
 import aust.iums.pg.admission.enums.PaymentStatus;
@@ -59,7 +60,8 @@ public class PaymentProcessingService {
         payment = paymentRepository.save(payment);
 
         Applicant applicant = payment.getApplicant();
-
+        applicant.setStatus(AdmissionEnum.PAYMENT_COMPLETED.getLabel());
+        applicantRepository.save(applicant);
     }
 
     private AdmissionApplicantPaymentRequest prepareApplicationApplicationPaymentRequestData(final Payment payment, final Applicant applicant){

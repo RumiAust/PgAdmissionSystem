@@ -41,7 +41,6 @@ public class PgUtils {
   }
   public static Paragraph getHeaderParagraph(String pInfo) {
     Font headerFont = new Font(Font.FontFamily.TIMES_ROMAN, 6.0f, Font.BOLDITALIC, BaseColor.GRAY);
-    DateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
     Paragraph ugHeaderParagraph =
         new Paragraph(pInfo, headerFont);
     ugHeaderParagraph.setAlignment(Element.ALIGN_RIGHT);

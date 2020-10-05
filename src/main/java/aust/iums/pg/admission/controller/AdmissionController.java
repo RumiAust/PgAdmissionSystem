@@ -49,6 +49,7 @@ public class AdmissionController {
 
     private final Logger log = LoggerFactory.getLogger(AdmissionController.class);
     Semester semester;
+  List<Program> programsCheck;
 
 
     public AdmissionController(FileStorageService fileStorageService, AdmissionHelper mHelper, PgAdmissionMailService mPgAdmissionMailService, AdmissionService admissionService) {
@@ -60,6 +61,7 @@ public class AdmissionController {
 
     @ModelAttribute("applicant")
     public ApplicationForm applicantModel() {
+      // programsCheck.size()>0 "Form":"Not in Admission Slot";
         ApplicationForm applicationForm = new ApplicationForm();
         applicationForm.setWorkExperienceList(new ArrayList<>());
         applicationForm.setSerialList(new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)));
@@ -99,6 +101,8 @@ public class AdmissionController {
     @ModelAttribute("programList")
     public List<Program> programListModel() {
         List<Program> programs = mHelper.getAllPrograms();
+         programsCheck= new ArrayList<>();
+        //loop --programId,SemesterId--deadline validKina
         return programs;
     }
 

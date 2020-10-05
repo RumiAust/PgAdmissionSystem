@@ -1,6 +1,7 @@
 package aust.iums.pg.admission.service;
 
 import aust.iums.pg.admission.dto.AdmissionApplicantPaymentRequest;
+import aust.iums.pg.admission.dto.PaymentConfirmationDto;
 import aust.iums.pg.admission.enums.FacultyType;
 import aust.iums.pg.admission.enums.PaymentCategory;
 import aust.iums.pg.admission.enums.PaymentStatus;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
+import java.time.Instant;
 import java.util.Date;
 
 @Service
@@ -48,6 +50,16 @@ public class PaymentProcessingService {
         String responseStr = restTemplate.postForObject(iumsApi+"/admission-application/payment", paymentRequest, String.class, headers);
         if(!responseStr.equals("success"))
             throw new Exception("Error in processing payment.");
+    }
+
+    public void confirmAdmissionPayment(final PaymentConfirmationDto paymentConfirmationDto) throws Exception{
+        Payment payment = paymentRepository.getByTransactionId(paymentConfirmationDto.getTransactionId());
+        payment.setStatus(PaymentStatus.PAID);
+        payment.setPaidOn(Instant.now());
+        payment = paymentRepository.save(payment);
+
+        Applicant applicant = payment.getApplicant();
+
     }
 
     private AdmissionApplicantPaymentRequest prepareApplicationApplicationPaymentRequestData(final Payment payment, final Applicant applicant){

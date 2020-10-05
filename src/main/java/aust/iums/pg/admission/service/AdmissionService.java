@@ -117,7 +117,11 @@ public class AdmissionService {
         return info;
     }
 
-    public String save(ApplicationForm pApp) throws Exception {
+  public Optional<ApplicantPersonaIInfo> getPersonalInfoBy(String pSerialNo){
+     return  mApplicantPersonalInfoRepository.findByApplicationSn(pSerialNo);
+  }
+
+    public String save(ApplicationForm pApp) throws ParseException, IOException {
         String applicantSerialNo = mApplicantRepository.getApplicantSerialNo().toString();
         pApp.setApplicationSerialNumber(applicantSerialNo);
         Applicant applicant = new Applicant();

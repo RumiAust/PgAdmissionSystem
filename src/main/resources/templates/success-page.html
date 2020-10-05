@@ -38,7 +38,7 @@
         th:text="${deadline}"></b>.</p>
         </div>
         <hr>
-        <p align="center"><span><fa-icon icon="hand-point-right"></fa-icon></span> Click <a style="color:blue;" href="/statusCheck">Here</a> to check your Application status and download <strong>Deposit Slip</strong> and <strong>Application Form</strong>.</p>
+        <p align="center"><span><fa-icon icon="hand-point-right"></fa-icon></span> Click <a style="color:blue;" href="/statusCheck" target="_blank">Here</a> to check your Application status and download <strong>Deposit Slip</strong> and <strong>Application Form</strong>.</p>
 </div>
 </div>
 
@@ -54,10 +54,14 @@
         $.ajax({
             type: "get",
             contentType: "application/json",
-            url: "sendEmail/applicantNo/" + applicationSn+"/dateofBirth/" + dob,
+            url: "sendEmail/applicantNo/" + applicationSn+"/dateOfBirth/" + dob,
             success: function (data) {
             }
         });
 
+    }
+
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
     }
 </script>

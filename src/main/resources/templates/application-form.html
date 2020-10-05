@@ -34,7 +34,7 @@
     </form>
 </nav>
 
-<div>
+<div id="mainDiv" th:attr="data-program-list-size=${programList.size()}" th:unless="${#lists.isEmpty(programList)}">
     <form action="#" th:action="@{/apply}" th:object="${applicant}" method="post" enctype="multipart/form-data">
         <input type="hidden" id="errorCheck" th:attr="data-has-error=${hasError}">
         <div class="modal fade" id="formular">
@@ -48,6 +48,10 @@
                     <div class="modal-body">
                         <div class="alert alert-block alert-danger">
                             <h4>Error !</h4>
+                            <div class="error" style="color: red"
+                                 th:if="${applicant.programDeadlineOverError!=''}">
+                                <span th:text="${applicant.programDeadlineOverError}"></span>
+                            </div>
                             Resolve error and try again !
                         </div>
                     </div>
@@ -70,7 +74,7 @@
                 <div class="card border-secondary mb-3" style="margin-top: 10px">
                     <div class="card-body">
                         <div align="center">
-                            <h4><label>Select Program:</label>&nbsp;&nbsp;
+                            <h4><label>Program:</label>&nbsp;&nbsp;
                                 <select th:field="*{programId}" th:errorclass="alert-danger">
                                     <option selected="selected" value="">Select Program</option>
                                     <option class="form-control form-control-sm" th:each="p : ${programList}"
@@ -1288,17 +1292,20 @@
             </div>
         </div>
     </form>
-</div>
-
-<div class="row" style="margin-bottom: 20px">
-    <div class="col-md-4"></div>
-    <div class="col-sm-12 col-md-4" align="center">
-        <button id="submitBtn" disabled type="button" class="btn btn-success" data-toggle="modal"
-                data-target="#exampleModalCenter">
-            Submit
-        </button>
+    <div class="row" style="margin-bottom: 20px">
+        <div class="col-md-4"></div>
+        <div class="col-sm-12 col-md-4" align="center">
+            <button id="submitBtn" disabled type="button" class="btn btn-success" data-toggle="modal"
+                    data-target="#exampleModalCenter">
+                Submit
+            </button>
+        </div>
     </div>
 </div>
+<div style="padding: 200px 0" th:if="${#lists.isEmpty(programList)}">
+    <h4 align="center" class="bg-info" style="color: white;padding: 5px">All program's deadline is over.</h4>
+</div>
+
 
 
 <footer class="page-footer font-small blue-grey lighten-5">

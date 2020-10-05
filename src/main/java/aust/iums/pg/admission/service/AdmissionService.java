@@ -39,8 +39,9 @@ public class AdmissionService {
     private final FileStorageService fileStorageService;
     private final EntityManager entityManager;
     private final FileStorageRepository mFileStorageRepository;
+    private final PaymentProcessingService paymentProcessingService;
 
-    public AdmissionService(SemesterRepository mSemesterRepository, ProgramRepository mProgramRepository, DivisionRepository mDivisionRepository, DistrictRepository mDistrictRepository, ThanaRepository mThanaRepository, ApplicantRepository mApplicantRepository, ApplicantPersonalInfoRepository mApplicantPersonalInfoRepository, ApplicantEducationalInfoRepository mApplicantEducationalInfoRepository, ApplicantAddressRepository mApplicantAddressRepository, JobExperienceRepository mJobExperienceRepository, FileStorageService fileStorageService, EntityManager entityManager, FileStorageRepository mFileStorageRepository) {
+    public AdmissionService(SemesterRepository mSemesterRepository, ProgramRepository mProgramRepository, DivisionRepository mDivisionRepository, DistrictRepository mDistrictRepository, ThanaRepository mThanaRepository, ApplicantRepository mApplicantRepository, ApplicantPersonalInfoRepository mApplicantPersonalInfoRepository, ApplicantEducationalInfoRepository mApplicantEducationalInfoRepository, ApplicantAddressRepository mApplicantAddressRepository, JobExperienceRepository mJobExperienceRepository, FileStorageService fileStorageService, EntityManager entityManager, FileStorageRepository mFileStorageRepository, PaymentProcessingService paymentProcessingService) {
         this.mSemesterRepository = mSemesterRepository;
         this.mProgramRepository = mProgramRepository;
         this.mDivisionRepository = mDivisionRepository;
@@ -54,6 +55,7 @@ public class AdmissionService {
         this.fileStorageService = fileStorageService;
         this.entityManager = entityManager;
         this.mFileStorageRepository = mFileStorageRepository;
+        this.paymentProcessingService = paymentProcessingService;
     }
 
     public Semester getSemesters(Integer pStatus) {
@@ -115,7 +117,7 @@ public class AdmissionService {
         return info;
     }
 
-    public String save(ApplicationForm pApp) throws ParseException, IOException {
+    public String save(ApplicationForm pApp) throws Exception {
         String applicantSerialNo = mApplicantRepository.getApplicantSerialNo().toString();
         pApp.setApplicationSerialNumber(applicantSerialNo);
         Applicant applicant = new Applicant();
@@ -263,6 +265,8 @@ public class AdmissionService {
             fileStorage.setCreatedOn(Instant.now());
             mFileStorageRepository.saveAndFlush(fileStorage);
             entityManager.refresh(fileStorage);
+
+            paymentProcessingService.sendApplicantPaymentInformationToIUMS(applicant);
         }
 
 

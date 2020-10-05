@@ -192,7 +192,7 @@ public class AdmissionService {
                     if (!data.getCurrentlyWorking())
                         obj.setToDate(PgUtils.formateDate(data.getToDate()));
                     else
-                        obj.setToDate(PgUtils.formateDate("0001-01-01"));
+                        obj.setToDate(null);
                     obj.setApplicant(applicant);
                     workExperienceLists.add(obj);
                 }

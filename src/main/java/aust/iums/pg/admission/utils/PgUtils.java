@@ -55,7 +55,7 @@ public class PgUtils {
             if (startDate != null && endDate != null) {
                 //DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 Date currentDate = new Date();
-                System.out.println("curr date: "+currentDate+"start date: "+ startDate+"End date: "+ endDate);
+                //System.out.println("curr date: "+currentDate+"start date: "+ startDate+"End date: "+ endDate);
                 if (currentDate.compareTo(startDate) >= 0 && currentDate.compareTo(endDate) <= 0) {
                     deadLineStatus = true;
                 } else {

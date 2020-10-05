@@ -1,75 +1,76 @@
 $(document).ready(function () {
-
-    hasError = $('#errorCheck').data('has-error');
-    if (hasError == true) {
-        $('#formular').modal('toggle');
-    }
-
-    serial = $('#serialList').data('serial');
-    pointer = $('#pointer').data('pointer');
-    console.log("after loaded serial: " + serial + "pointer: " + pointer);
-    rows = []
-
-    rearrangeWorkDiv();
-
-    for (var i = 0; i < 10; i++) {
-        if ($('#currentWork-' + i).is(":checked")) {
-            $('#todatediv' + i).css("display", "none");
+    var programSize = $('#mainDiv').data('program-list-size');
+    if(programSize>0) {
+        hasError = $('#errorCheck').data('has-error');
+        if (hasError == true) {
+            $('#formular').modal('toggle');
         }
-    }
 
-    if ($('#declaration').is(":checked")) {
-        $('#submitBtn').attr("disabled", false);
-    }
-    if ($('#presentDivisionId').val() !== "") {
-        addDistrict();
-    }
-    if ($('#permanentDivisionId').val() !== "") {
-        addPermanentDistrict();
-    }
+        serial = $('#serialList').data('serial');
+        pointer = $('#pointer').data('pointer');
+        //console.log("after loaded serial: " + serial + "pointer: " + pointer);
+        rows = []
 
+        rearrangeWorkDiv();
 
-    function readPhotoURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#photo').attr('src', e.target.result);
-                $('#photo-div').attr('style', 'padding-top: 10px');
+        for (var i = 0; i < 10; i++) {
+            if ($('#currentWork-' + i).is(":checked")) {
+                $('#todatediv' + i).css("display", "none");
             }
-
-            reader.readAsDataURL(input.files[0]); // convert to base64 string
-        } else {
-            $('#photo-div').css('display', 'none');
-
         }
-    }
 
-    function readSignatureURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+        if ($('#declaration').is(":checked")) {
+            $('#submitBtn').attr("disabled", false);
+        }
+        if ($('#presentDivisionId').val() !== "") {
+            addDistrict();
+        }
+        if ($('#permanentDivisionId').val() !== "") {
+            addPermanentDistrict();
+        }
 
-            reader.onload = function (e) {
-                $('#signature').attr('src', e.target.result);
-                $('#signature-div').attr('style', 'padding-top: 10px');
+
+        function readPhotoURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#photo').attr('src', e.target.result);
+                    $('#photo-div').attr('style', 'padding-top: 10px');
+                }
+
+                reader.readAsDataURL(input.files[0]); // convert to base64 string
+            } else {
+                $('#photo-div').css('display', 'none');
+
             }
+        }
 
-            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        function readSignatureURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#signature').attr('src', e.target.result);
+                    $('#signature-div').attr('style', 'padding-top: 10px');
+                }
+
+                reader.readAsDataURL(input.files[0]); // convert to base64 string
+            } else {
+                $('#signature-div').css('display', 'none');
+            }
         }
-        else {
-            $('#signature-div').css('display', 'none');
-        }
+
+        $("#file_photo").change(function () {
+            readPhotoURL(this);
+        });
+        $("#file_signature").change(function () {
+            readSignatureURL(this);
+        });
+
+        //show modal
+        //$('#myModal').modal('toggle');
     }
-
-    $("#file_photo").change(function () {
-        readPhotoURL(this);
-    });
-    $("#file_signature").change(function () {
-        readSignatureURL(this);
-    });
-
-    //show modal
-    //$('#myModal').modal('toggle');
 });
 
 //scroll into work experience
@@ -282,7 +283,9 @@ function addRow() {
     } else {
         alert("You reached maximum 10 work experience. Don't need to add more work experience.")
     }
+/*
     console.log(serial + " pointer:" + pointer);
+*/
     $('#serialList').val(serial);
     $('#pointer').val(pointer);
     $('#addbtn').on("click");
@@ -320,7 +323,6 @@ function removeRow(ths) {
     } else {
         pointer--;
     }
-    console.log(serial + " pointer:" + pointer);
     $('#serialList').val(serial);
     $('#pointer').val(pointer);
     $('#organizationName' + index).val("");

@@ -175,9 +175,20 @@ public class ApplicationForm {
     private String hscFileError;
     private String bscFileError;
     private String mscFileError;
+    private String programDeadlineOverError;
 
     // modal Id
     private String modalId;
+
+
+
+    public String getProgramDeadlineOverError() {
+        return programDeadlineOverError;
+    }
+
+    public void setProgramDeadlineOverError(String programDeadlineOverError) {
+        this.programDeadlineOverError = programDeadlineOverError;
+    }
 
     public int getPointer() {
         return pointer;

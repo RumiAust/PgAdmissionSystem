@@ -46,10 +46,9 @@ public class AdmissionController {
     private final AdmissionService admissionService;
 
 
-
     private final Logger log = LoggerFactory.getLogger(AdmissionController.class);
     Semester semester;
-  List<Program> programsCheck;
+    List<Program> programsCheck;
 
 
     public AdmissionController(FileStorageService fileStorageService, AdmissionHelper mHelper, PgAdmissionMailService mPgAdmissionMailService, AdmissionService admissionService) {
@@ -60,8 +59,7 @@ public class AdmissionController {
     }
 
     @ModelAttribute("applicant")
-    public ApplicationForm applicantModel() {
-      // programsCheck.size()>0 "Form":"Not in Admission Slot";
+    public ApplicationForm applicantModel(Model model) {
         ApplicationForm applicationForm = new ApplicationForm();
         applicationForm.setWorkExperienceList(new ArrayList<>());
         applicationForm.setSerialList(new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)));
@@ -93,7 +91,8 @@ public class AdmissionController {
     @ModelAttribute("passingYearList")
     public List<Integer> passingYearModel() {
         List<Integer> passingYearList = new ArrayList<>();
-        for (Integer i = 2000; i < 2031; i++)
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        for (Integer i = year; i >= year - 30; i--)
             passingYearList.add(i);
         return passingYearList;
     }
@@ -101,9 +100,16 @@ public class AdmissionController {
     @ModelAttribute("programList")
     public List<Program> programListModel() {
         List<Program> programs = mHelper.getAllPrograms();
-         programsCheck= new ArrayList<>();
-        //loop --programId,SemesterId--deadline validKina
-        return programs;
+        programsCheck = new ArrayList<>();
+        for (Program program : programs) {
+            ApplicationDeadline deadline = mHelper.getDeadlineBy(mHelper.getActiveSemester().getId(), program.getId());
+            Boolean status = PgUtils.checkDateValidity(Date.from(deadline.getFromDate()), Date.from(deadline.getToDate()));
+            if (status) {
+                programsCheck.add(program);
+            }
+
+        }
+        return programsCheck;
     }
 
     @ModelAttribute("divisionList")
@@ -136,7 +142,7 @@ public class AdmissionController {
             log.error("errors: " + bindingResult.toString());
             applicant.setDeclaration(false);
             Boolean hasError = true;
-            model.addAttribute("hasError",hasError);
+            model.addAttribute("hasError", hasError);
             return "application-form";
         } else {
             addressMap(applicant);
@@ -148,14 +154,13 @@ public class AdmissionController {
             String toDate = PgUtils.instantFormatter(deadline.getToDate());
             model.addAttribute("deadline", toDate);
 
-            String dob=applicant.getDateOfBirth();
-            model.addAttribute("dateOfBirth",dob);
-          //  mHelper.sendApplicantFormToApplicant(applicant, serialNo, dob);
+            String dob = applicant.getDateOfBirth();
+            model.addAttribute("dateOfBirth", dob);
+            //  mHelper.sendApplicantFormToApplicant(applicant, serialNo, dob);
             return "success-page";
         }
 
     }
-
 
 
     @GetMapping("/statusCheck")
@@ -184,18 +189,18 @@ public class AdmissionController {
         };*/
     }
 
-  @RequestMapping(value = "/sendEmail/applicantNo/{applicationSn}/dateOfBirth/{dob}", method = RequestMethod.GET)
-  public void sendEmail(@PathVariable(name = "applicationSn") String applicationSn, @PathVariable(name = "dob") String dateOfBirth) throws ParseException {
-    System.out.println("hello world");
-    Optional<ApplicantPersonaIInfo> personalInfo=mHelper.getInfoBy(applicationSn);
-    if(personalInfo.isPresent()){
+    @RequestMapping(value = "/sendEmail/applicantNo/{applicationSn}/dateOfBirth/{dob}", method = RequestMethod.GET)
+    public void sendEmail(@PathVariable(name = "applicationSn") String applicationSn, @PathVariable(name = "dob") String dateOfBirth) throws ParseException {
+        System.out.println("hello world");
+        Optional<ApplicantPersonaIInfo> personalInfo = mHelper.getInfoBy(applicationSn);
+        if (personalInfo.isPresent()) {
      /* if(personalInfo.get().getDateOfBirth().equals(PgUtils.formateDate(dateOfBirth))){
 
       }*/
-      log.info("Sending emial.......");
-    }
+            log.info("Sending emial.......");
+        }
 
-  }
+    }
 
 
     @PostMapping("/result")
@@ -258,6 +263,15 @@ public class AdmissionController {
 
     private boolean isOtherErrors(ApplicationForm applicant) {
         boolean otherErrors = false;
+        if (!applicant.getProgramId().isEmpty()) {
+            String programInfo[] = applicant.getProgramId().split("-");
+            ApplicationDeadline deadline = mHelper.getDeadlineBy(mHelper.getActiveSemester().getId(), Long.parseLong(programInfo[0]));
+            Boolean status = PgUtils.checkDateValidity(Date.from(deadline.getFromDate()), Date.from(deadline.getToDate()));
+            if (!status) {
+                otherErrors = true;
+                applicant.setProgramDeadlineOverError(programInfo[1]+" program's deadline is over. You can not apply for this program now.");
+            }
+        }
         if (applicant.getPhoto().isEmpty()) {
             otherErrors = true;
             applicant.setPhotoError("Please select photo.");
@@ -411,14 +425,14 @@ public class AdmissionController {
             applicant.setPresentThana(applicant.getPermanentOtherThana());
         }
 
-      if(applicant.getPermanentOtherThana() ==null) {
-        String perThana[] = applicant.getPermanentThanaId().split("-");
-        applicant.setPermanentThanaId(perThana[0]);
-        applicant.setPermanentThana(perThana[1]);
-      }else {
-        applicant.setPermanentThanaId("9999");
-        applicant.setPermanentThana(applicant.getPermanentOtherThana());
-      }
+        if (applicant.getPermanentOtherThana() == null) {
+            String perThana[] = applicant.getPermanentThanaId().split("-");
+            applicant.setPermanentThanaId(perThana[0]);
+            applicant.setPermanentThana(perThana[1]);
+        } else {
+            applicant.setPermanentThanaId("9999");
+            applicant.setPermanentThana(applicant.getPermanentOtherThana());
+        }
 
     }
 

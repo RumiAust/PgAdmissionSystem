@@ -955,7 +955,7 @@ public class ApplicationFormPdfGenerator {
                 if (jobExperienceList.get(i).getToDate() != null) {
                     toDate = PgUtils.dateToString(jobExperienceList.get(i).getToDate());
                 } else {
-                    toDate = "Currently Working";
+                    toDate = "present";
                 }
                 cell = new PdfPCell(new Phrase(fromDate + " To " + toDate, fontSchoolNameR));
                 cell.setMinimumHeight(20);

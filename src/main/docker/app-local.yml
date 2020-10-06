@@ -14,4 +14,4 @@ services:
       - UMS_BANK_API=http://localhost:8080/ums-webservice-bank
       - PG_SLEEP=3 # gives time for other services to boot before the application
     ports:
-      - "8082:8082"
+      - "8083:8083"

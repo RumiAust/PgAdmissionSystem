@@ -120,7 +120,12 @@ public class AdmissionService {
   }
 
     public String save(ApplicationForm pApp) throws ParseException, IOException {
-        String applicantSerialNo = mApplicantRepository.getApplicantSerialNo().toString();
+        String applicantSerialNo ;
+         if((pApp.getProgramId()=="122") ||(pApp.getProgramId() =="1333") ){
+           applicantSerialNo = mApplicantRepository.getApplicantSerialNoForSoB().toString();
+         }else{
+           applicantSerialNo = mApplicantRepository.getApplicantSerialNo().toString();
+         }
         pApp.setApplicationSerialNumber(applicantSerialNo);
         Applicant applicant = new Applicant();
         applicant.setSemesterId(Long.parseLong(pApp.getSemesterId()));

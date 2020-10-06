@@ -16,6 +16,9 @@ public interface ApplicantRepository extends JpaRepository<Applicant,Long> {
   @Query(value = "SELECT applicant_sn.nextval FROM dual", nativeQuery = true)
   Integer getApplicantSerialNo();
 
+  @Query(value = "SELECT applicant_sn_bba.nextval FROM dual", nativeQuery = true)
+  Integer getApplicantSerialNoForSoB();
+
   Optional<Applicant> findByApplicationSn(String serialNo);
 
   Optional<Applicant> findByApplicationSnAndApplicantPersonaIInfo_DateOfBirth(String pSerialNo, Date pDateOfBirth);

@@ -1,0 +1,15 @@
+version: '3.6'
+services:
+  pgadmission-app:
+    image: pgadmission
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_DATASOURCE_URL=jdbc:oracle:thin:@pgadmission-oracle:1521:pgadmission
+      - PG_PHOTO_DESTINATION=opt/pg/photo
+      - PG_SIGNATURE_DESTINATION=opt/pg/signature
+      - PG_FILE_DESTINATION=opt/pg/file
+      - UMS_BANK_API=http://localhost:8080/ums-webservice-bank
+      - PG_SLEEP=10 # gives time for other services to boot before the application
+    ports:
+      - "8082:8082"

@@ -90,7 +90,7 @@ public class AdmissionHelper {
     return thanas;
   }
 
-  public String saveInfo(ApplicationForm pApplicationForm) throws ParseException, IOException {
+  public String saveInfo(ApplicationForm pApplicationForm) throws ParseException, IOException, Exception {
    String serialNo= mAdmissionService.save(pApplicationForm);
    return serialNo;
   }

@@ -6,6 +6,7 @@ import aust.iums.pg.admission.enums.*;
 import aust.iums.pg.admission.model.*;
 import aust.iums.pg.admission.repository.*;
 import aust.iums.pg.admission.utils.PgUtils;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,10 +14,7 @@ import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by Monjur-E-Morshed on 9/17/2020.
@@ -39,8 +37,10 @@ public class AdmissionService {
     private final FileStorageService fileStorageService;
     private final EntityManager entityManager;
     private final FileStorageRepository mFileStorageRepository;
+    private final PaymentProcessingService paymentProcessingService;
+    private final Environment environment;
 
-    public AdmissionService(SemesterRepository mSemesterRepository, ProgramRepository mProgramRepository, DivisionRepository mDivisionRepository, DistrictRepository mDistrictRepository, ThanaRepository mThanaRepository, ApplicantRepository mApplicantRepository, ApplicantPersonalInfoRepository mApplicantPersonalInfoRepository, ApplicantEducationalInfoRepository mApplicantEducationalInfoRepository, ApplicantAddressRepository mApplicantAddressRepository, JobExperienceRepository mJobExperienceRepository, FileStorageService fileStorageService, EntityManager entityManager, FileStorageRepository mFileStorageRepository) {
+    public AdmissionService(SemesterRepository mSemesterRepository, ProgramRepository mProgramRepository, DivisionRepository mDivisionRepository, DistrictRepository mDistrictRepository, ThanaRepository mThanaRepository, ApplicantRepository mApplicantRepository, ApplicantPersonalInfoRepository mApplicantPersonalInfoRepository, ApplicantEducationalInfoRepository mApplicantEducationalInfoRepository, ApplicantAddressRepository mApplicantAddressRepository, JobExperienceRepository mJobExperienceRepository, FileStorageService fileStorageService, EntityManager entityManager, FileStorageRepository mFileStorageRepository, PaymentProcessingService paymentProcessingService, Environment environment) {
         this.mSemesterRepository = mSemesterRepository;
         this.mProgramRepository = mProgramRepository;
         this.mDivisionRepository = mDivisionRepository;
@@ -54,6 +54,8 @@ public class AdmissionService {
         this.fileStorageService = fileStorageService;
         this.entityManager = entityManager;
         this.mFileStorageRepository = mFileStorageRepository;
+        this.paymentProcessingService = paymentProcessingService;
+        this.environment = environment;
     }
 
     public Semester getSemesters(Integer pStatus) {
@@ -119,7 +121,7 @@ public class AdmissionService {
      return  mApplicantPersonalInfoRepository.findByApplicationSn(pSerialNo);
   }
 
-    public String save(ApplicationForm pApp) throws ParseException, IOException {
+    public String save(ApplicationForm pApp) throws Exception {
         String applicantSerialNo ;
          if((pApp.getProgramId()==ProgramEnum.MBA.getValue().toString()) ||(pApp.getProgramId() ==ProgramEnum.EMBA.getValue().toString()) ){
            applicantSerialNo = mApplicantRepository.getApplicantSerialNoForSoB().toString();
@@ -272,6 +274,9 @@ public class AdmissionService {
             fileStorage.setCreatedOn(Instant.now());
             mFileStorageRepository.saveAndFlush(fileStorage);
             entityManager.refresh(fileStorage);
+
+            if(Arrays.stream(environment.getActiveProfiles()).anyMatch(env-> env.equalsIgnoreCase("prod")))
+                paymentProcessingService.sendApplicantPaymentInformationToIUMS(applicant);
         }
 
 

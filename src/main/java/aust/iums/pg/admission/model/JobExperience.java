@@ -41,8 +41,7 @@ public class JobExperience {
   @Column(name = "FROM_DATE", nullable = false)
   private Date fromDate;
 
-  @NotNull
-  @Column(name = "TO_DATE", nullable = false)
+  @Column(name = "TO_DATE")
   private Date toDate;
 
   public JobExperience() {

@@ -135,6 +135,11 @@ public class AdmissionController {
         return "application-form";
     }
 
+    @GetMapping("/success-page")
+    public String successPage(Model model, @ModelAttribute("serialNo") String serialNo, @ModelAttribute("deadline") String deadline, @ModelAttribute("dateOfBirth") String dateOfBirth) {
+        return "success-page";
+    }
+
     @PostMapping(value = "/apply", params = {"save"})
     public String greetingSubmit(@Valid @ModelAttribute("applicant") ApplicationForm applicant, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) throws Exception {
         boolean otherErrors = isOtherErrors(applicant);
@@ -149,13 +154,14 @@ public class AdmissionController {
             ApplicationDeadline deadline = mHelper.getDeadlineBy(Long.parseLong(applicant.getSemesterId()), Long.parseLong(applicant.getProgramId()));
             log.info(" [{}]: Applicant Infos ", applicant.toString());
             String serialNo = mHelper.saveInfo(applicant);
-            applicant.setWorkExperienceDivId("");
-            model.addAttribute("serialNo", serialNo);
             String toDate = PgUtils.instantFormatter(deadline.getToDate());
-            model.addAttribute("deadline", toDate);
-
             String dob = applicant.getDateOfBirth();
+            model.addAttribute("serialNo", serialNo);
+            model.addAttribute("deadline", toDate);
             model.addAttribute("dateOfBirth", dob);
+            /*redirectAttributes.addFlashAttribute("serialNo", serialNo);
+            redirectAttributes.addFlashAttribute("deadline", toDate);
+            redirectAttributes.addFlashAttribute("dateOfBirth", dob);*/
             //  mHelper.sendApplicantFormToApplicant(applicant, serialNo, dob);
             return "success-page";
         }
@@ -190,7 +196,8 @@ public class AdmissionController {
     }
 
     @RequestMapping(value = "/sendEmail/applicantNo/{applicationSn}/dateOfBirth/{dob}", method = RequestMethod.GET)
-    public void sendEmail(@PathVariable(name = "applicationSn") String applicationSn, @PathVariable(name = "dob") String dateOfBirth) throws ParseException {
+    public @ResponseBody
+    String sendEmail(@PathVariable(name = "applicationSn") String applicationSn, @PathVariable(name = "dob") String dateOfBirth) throws ParseException {
         System.out.println("hello world");
         Optional<ApplicantPersonaIInfo> personalInfo = mHelper.getInfoBy(applicationSn);
         if (personalInfo.isPresent()) {
@@ -199,7 +206,7 @@ public class AdmissionController {
       }*/
             log.info("Sending emial.......");
         }
-
+        return "done";
     }
 
 
@@ -269,7 +276,7 @@ public class AdmissionController {
             Boolean status = PgUtils.checkDateValidity(Date.from(deadline.getFromDate()), Date.from(deadline.getToDate()));
             if (!status) {
                 otherErrors = true;
-                applicant.setProgramDeadlineOverError(programInfo[1]+" program's deadline is over. You can not apply for this program now.");
+                applicant.setProgramDeadlineOverError(programInfo[1] + " program's deadline is over. You can not apply for this program now.");
             }
         }
         if (applicant.getPhoto().isEmpty()) {

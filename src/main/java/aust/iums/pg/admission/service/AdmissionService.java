@@ -6,7 +6,6 @@ import aust.iums.pg.admission.enums.*;
 import aust.iums.pg.admission.model.*;
 import aust.iums.pg.admission.repository.*;
 import aust.iums.pg.admission.utils.PgUtils;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -122,7 +121,12 @@ public class AdmissionService {
   }
 
     public String save(ApplicationForm pApp) throws Exception {
-        String applicantSerialNo = mApplicantRepository.getApplicantSerialNo().toString();
+        String applicantSerialNo ;
+         if((pApp.getProgramId()==ProgramEnum.MBA.getValue().toString()) ||(pApp.getProgramId() ==ProgramEnum.EMBA.getValue().toString()) ){
+           applicantSerialNo = mApplicantRepository.getApplicantSerialNoForSoB().toString();
+         }else{
+           applicantSerialNo = mApplicantRepository.getApplicantSerialNo().toString();
+         }
         pApp.setApplicationSerialNumber(applicantSerialNo);
         Applicant applicant = new Applicant();
         applicant.setSemesterId(Long.parseLong(pApp.getSemesterId()));
@@ -194,7 +198,7 @@ public class AdmissionService {
                     if (!data.getCurrentlyWorking())
                         obj.setToDate(PgUtils.formateDate(data.getToDate()));
                     else
-                        obj.setToDate(PgUtils.formateDate("0001-01-01"));
+                        obj.setToDate(null);
                     obj.setApplicant(applicant);
                     workExperienceLists.add(obj);
                 }
